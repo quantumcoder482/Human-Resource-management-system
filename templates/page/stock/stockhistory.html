@@ -1,0 +1,78 @@
+<md-card class="md-whiteframe-1dp md-padding">
+
+	<form class="form-inline">
+		<md-button class="md-raised md-accent" style="width:17%; text-align:center; float:right; background:#ff5722de; color: white;" ng-click="EndofDay(stocks)">
+			END OF DAY
+		</md-button>
+		<md-input-container>
+			<label>Search Text Here....</label>
+			<input  ng-model="search" maxlength="50">
+		</md-input-container>
+	</form>      
+	<div class="table-responsive-vertical"> 	
+		<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			<md-icon>fast_rewind</md-icon>
+		</md-button>
+		{{currentPage+1}}/{{numberOfPages()}}
+		<md-button ng-disabled="currentPage >= stocks.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			<md-icon>fast_forward</md-icon> 
+		</md-button>		
+		<table id="table" class="table table-hover">
+			<thead>
+				<tr>
+					<th ng-click="sort('id')" width="2%">No</th>
+					<th ng-click="sort('Ingredient')" width="5%">Ingredient</th>
+					<th ng-click="sort('Opening')" width="5%">Opening</th>
+					<th ng-click="sort('Deliver')" width="5%">Deliver</th>
+					<th ng-click="sort('Available')" width="5%">Available</th>
+					<th ng-click="sort('Ending')" width="5%">Ending</th>
+					<th ng-click="sort('Actual')" width="5%">Actual</th>
+					<th ng-click="sort('Ideal')" width="5%">Ideal</th>
+					<th ng-click="sort('Variance')" width="5%">Variance</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="s in stocks |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+					<td data-title="No">{{s.id}}</td>
+					<td data-title="Ingredient">{{ s.title }}</td>
+					<td data-title="Opening">{{ s.stock }}</td>
+					<td data-title="Deliver">
+						<md-input-container flex="5">
+							<input type="number" name="deliver" min="{{0}}" ng-model="stocks[$index].deliver" style="width: 10em;"/>
+							<!--<div ng-messages="myForm.myNumber.$error">
+								<div ng-message='number'>this field should be number</div>
+								<div ng-message='min'>this field should be not negative</div>
+							</div>-->
+						</md-input-container>
+					</td>
+					<td data-title="Available">{{ stocks[$index].deliver + s.stock }}</td>
+					<td data-title="Ending">
+						<md-input-container flex="5">
+							<input type="number" name="ending" min="{{0}}" ng-model="stocks[$index].ending" style="width: 10em;"/>
+							<!--<div ng-messages="myForm.myNumber.$error">
+								<div ng-message='number'>this field should be number</div>
+								<div ng-message='min'>this field should be not negative</div>
+							</div>-->
+						</md-input-container>			    	
+					</td>
+					<td data-title="Actual">{{s.stock - stocks[$index].ending}}</td>
+					<td data-title="Ideal">{{ s.ideal }}</td>
+					<td data-title="Variance">{{ s.ideal - s.stock + stocks[$index].ending}}</td>
+				</tr>
+				<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
+			</tbody>
+		</table> 
+		<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			<md-icon>fast_rewind</md-icon>
+		</md-button>
+		{{currentPage+1}}/{{numberOfPages()}}
+		<md-button ng-disabled="currentPage >= stocks.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			<md-icon>fast_forward</md-icon> 
+		</md-button>
+	</div>
+	<div layout="row" layout-align="end center" flex="100">
+		<md-button ng-disabled="thisForm.$invalid || wait " ng-click="submit(stocks)" class="md-raised md-accent">
+			Save Stock History
+		</md-button>
+	</div>
+</md-card>

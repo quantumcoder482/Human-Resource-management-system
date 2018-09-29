@@ -1,0 +1,31 @@
+<md-dialog layout="column" flex="50" aria-label="dialog product">
+    <form role="form" name="thisForm">
+        <md-toolbar>
+          <div class="md-toolbar-tools">
+            <h2> Product Details</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+              <md-icon aria-label="Close dialog">clear</md-icon>
+            </md-button>
+          </div>
+        </md-toolbar>
+        <md-dialog-content class="autoScroll" style="max-width:1800px;max-height:810px;">
+          <div layout="row">
+            <p flex="40">Title</p> <p flex="5"> : </p>
+            <p>{{product.title}}</p>
+          </div>
+          <md-divider ></md-divider>
+          <div layout="row">
+            <p flex="40">Quantity</p> <p flex="5"> : </p>
+            <p>{{product.quantity}}</p>
+          </div>
+          <md-divider ></md-divider>
+          <div layout="row"> 
+            <p flex="40">Price</p> <p flex="5"> : </p>
+            <p>{{product.price}}</p>
+          </div>
+          <md-divider >
+          </md-divider>
+        </md-dialog-content>
+    </form>
+</md-dialog>

@@ -1,0 +1,63 @@
+<md-dialog layout="column" flex="50" aria-label="dialog vendor">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll booking_detail" style="max-width:800px;max-height:810px;">      
+      <div layout="row">
+        <md-input-container flex="100">
+          <p>Customer Name: {{booking_detail.contact_name}}</p>
+        </md-input-container>
+      </div>    
+      <div layout="row">
+        <md-input-container flex="50" >
+          <p>Phone Number: {{booking_detail.contact_number}}</p>
+        </md-input-container>
+        <md-input-container flex="50" >
+          <p>Address: {{booking_detail.contact_address}}</p>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="100">
+          <p>Booking Detail: <br>{{booking_detail.info}}</p>
+        </md-input-container>
+      </div>  
+      <div layout="row">
+        <md-input-container flex="50">
+          <p> Total Price: {{booking_detail.payable_amount}} </p>
+        </md-input-container>
+        <md-input-container flex="50">
+          <p> Bill Price: {{booking_detail.bill_amount}} </p>
+        </md-input-container>
+      </div> 
+      <div layout="row">
+        <md-input-container flex="50">
+          <p> Payment: {{booking_detail.paid}} </p>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="50">
+          <p>Booking Date: {{booking_detail.booking_date}} </p>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="100">
+          <p>Action DateTime: {{booking_detail.date}} </p>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions md-padding" layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-accent" ng-click="print_booking()" >
+        Print
+      </md-button>
+      <md-button class="md-raised md-accent" ng-click="hide()" >
+        Close
+      </md-button>
+    </div>
+</md-dialog>

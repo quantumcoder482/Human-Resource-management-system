@@ -1,0 +1,93 @@
+<md-card class="md-whiteframe-1dp md-padding">
+    <form class="form-inline">
+        <md-input-container>
+            <label>Search Text Here....</label>
+            <input  ng-model="search" maxlength="50">
+        </md-input-container>
+    </form>
+    <div class="table-responsive-vertical">
+        <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+            <md-icon>fast_rewind</md-icon>
+        </md-button>
+        {{currentPage+1}}/{{numberOfPages()}}
+        <md-button ng-disabled="currentPage >= vend_pay.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+            <md-icon>fast_forward</md-icon> 
+        </md-button>
+        <table id="table" class="table table-hover">
+            <thead>            
+                <tr>
+                    <th width="2%" ng-click="sort('id')">No</th>
+                    <th width="10%" ng-click="sort('vender_id')">Vendor Name</th>
+                    <th width="5%" ng-click="sort('ingredient_id')">Ingredient</th>
+                    <th width="5%" ng-click="sort('amount')">Quantity</th>
+                    <th width="5%" ng-click="sort('unit')">Unit</th>
+                    <th width="5%" ng-click="sort('price')">Total price</th>
+                    <th width="5%" ng-click="sort('in_date')">InDate</th>
+                    <th width="1%" ng-click="sort('pay_state')" style="text-align: center;"><small>Dues</small></th>
+                    <th width="1%" ng-click="sort('pay_state')" style="text-align: center;"><small>Paid</small></th>
+                    <th width="1%" ng-click="sort('pay_state')" style="text-align: center;"><small>Dispute</small></th>
+                    <th width="5%" ng-click="sort('pay_date')">PayDate</th>
+                    <th width="1%">Action</th>
+                </tr>            
+            </thead>
+            <tbody>
+                <tr ng-repeat="u in vend_pay |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+                    <td data-title="No">{{$index+1}}</td>
+                    <td data-title="Name">{{u.name}}</td>
+                    <td data-title="Ingredient">{{u.title}}</td>
+                    <td data-title="Amount">{{u.amount}} </td>
+                    <td data-title="Unit">{{u.unit}} </td>
+                    <td data-title="Total Price">{{u.amount * u.price}} </td>
+                    <td data-title="InDate">{{u.in_date}} </td>
+                    <td data-title="State" style="padding: 0rem 0rem 0rem 1rem;">
+                        <label class="checkbox-inline">
+                            <md-checkbox ng-model="u.first" ng-change="u.second = false; u.third = false;" aria-label="tmpFullPay?" class="payment md-warn" ng-click="UpdateVendPayState($event, u, 'first')"> </md-checkbox>
+                        </label>
+                    </td> 
+                    <td data-title="State" style="padding: 0rem 0rem 0rem 1rem;">
+                        <label class="checkbox-inline">
+                            <md-checkbox ng-model="u.second" ng-change="u.first = false; u.third = false;" aria-label="tmpRemained?" class="payment" ng-click="UpdateVendPayState($event, u, 'second')"></md-checkbox>
+                        </label>
+                    </td> 
+                    <td data-title="State" style="padding: 0rem 0rem 0rem 1rem;">
+                        <label class="checkbox-inline">
+                            <md-checkbox ng-model="u.third" ng-change="u.first = false; u.second = false;" aria-label="tmpDispute?"  class="payment md-primary" ng-click="UpdateVendPayState($event, u, 'third')"> </md-checkbox>
+                        </label>
+                    </td>  
+                    <td data-title="PayDate">{{u.pay_date}} </td>                  
+                    <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+                        <md-menu md-position-mode="target-right target" >
+                            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                                <md-icon>more_vert</md-icon>
+                                <!--<md-icon ng-if="u.is_banned">clear</md-icon>-->
+                            </md-button>
+                            <md-menu-content width=3>
+                                <md-title class="md-padding">MENU - {{u.name}}</md-title>                            
+                                <md-menu-item>
+                                    <md-button layout-fill md-ink-ripple ng-click="editVendorPay($event, u)">
+                                        <md-icon md-class="md-primary" md-menu-align-target>create</md-icon>
+                                        Edit
+                                    </md-button>
+                                </md-menu-item>                                                        
+                                <md-menu-item>
+                                    <md-button layout-fill md-ink-ripple ng-click="deleteVendorPay($event, u)">
+                                        <md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
+                                        Delete
+                                    </md-button>
+                                </md-menu-item> 
+                            </md-menu-content>  
+                        </md-menu>
+                    </td> 
+                </tr>
+                <tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
+            </tbody>
+        </table>         
+        <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+            <md-icon>fast_rewind</md-icon>
+        </md-button>
+        {{currentPage+1}}/{{numberOfPages()}}
+        <md-button ng-disabled="currentPage >= vend_pay.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+            <md-icon>fast_forward</md-icon> 
+        </md-button>
+    </div>
+</md-card>

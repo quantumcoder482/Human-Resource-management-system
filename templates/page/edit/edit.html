@@ -1,0 +1,151 @@
+<md-card class="md-whiteframe-1dp md-padding" >     
+    <md-input-container> 
+        <div class="table-responsive-vertical">
+			<form class="form-inline">
+				<md-input-container>
+					<label>Search Product Here....</label>
+					<input  ng-model="search" maxlength="50" ng-change="GetProducts(search)">
+				</md-input-container>
+			</form>
+			<table id="table" class="table table-hover"  style="max-height:50px" >
+				<thead>
+					<tr>
+						<th width="20%" ng-click="sort('p_title')">Product</th>
+						<th width="10%" ng-click="sort('p_price')">Price </th>
+						<th width="5%">Quantity </th>
+						<th width="2%"> Add </th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="p in products |orderBy:sortKey:reverse|filter:search">
+						<td data-title="Name">{{p.title}}</td>
+						<td data-title="Price">{{p.price }}</td>
+						<td data-title="quantity"><input type="number" style="width:40px" ng-init="p.quantity=1" ng-model="p.quantity"></td>
+						<td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
+							<md-button class="md-icon-button" ng-click="AddProduct($event, p)">
+							<md-icon>add_shopping_cart</md-icon>
+							</md-button>
+						</td>
+					</tr>
+					<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
+				</tbody>
+			</table>
+     	</div>
+   	</md-input-container> 
+</md-card>   
+<md-card class="md-whiteframe-1dp md-padding" >      
+   <md-input-container flex>  
+       <div class="table-responsive-vertical">
+          	<table id="table" class="table table-hover">
+				<thead>
+					<tr>
+						<th width="20%">Product</th>
+						<th width="10%">Price</th>
+						<th width="5%">Quantity</th>
+						<th width="2%">Remove</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="l in particulars">
+						<td data-title="product">{{ l.title }}</td>
+						<td data-title="price">{{ build.prices[$index] }}</td>
+						<td data-title="quantity">{{ build.quantity[$index] }} </td>					
+						<td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
+							<md-button class="md-icon-button" ng-click="RemoveProduct($event, l)">
+							<md-icon>delete</md-icon>
+							</md-button>
+						</td>
+					</tr>			
+				</tbody>
+			</table>
+   		</div>   
+ 	</md-input-container> 
+</md-card>   
+<md-card class="md-whiteframe-1dp md-padding">
+	<div class="table-responsive-vertical">
+    	<form role="form" name="thisForm" class="md-padding">          
+            <md-input-container>
+				<label>Search User by name or phone  Here....</label>
+				<input  ng-model="ufilter" maxlength="50" >
+            </md-input-container>            
+           	<md-input-container>
+				<label>Select User</label>
+				<md-select name="user_id" ng-model="build.user_id" ng-change="getUserDetails(build.user_id)">
+					<md-select-label>{{ cust.fname }}</md-select-label>
+					<md-option ng-repeat="c in cust | filter:ufilter" ng-value="c.id" >{{ c.name }}{{ "- " }}{{ c.contact }}</md-option>
+				</md-select>
+				<div ng-messages="thisForm.user_id.$error">
+					<div ng-message="required">required.</div>
+				</div>
+			</md-input-container>         
+           	<div layout="row">
+            	<md-input-container flex="50">            
+					<md-input-container>
+						<label>Conatct Name</label>
+						<input name="contact_name" ng-model="build.contact_name" />
+						<div ng-messages="thisForm.contact_name.$error">
+							<div ng-message='required'>required.</div>
+							<div ng-message='minlength'>min length 5.</div>
+						</div>
+					</md-input-container>
+                
+			
+					<md-input-container>
+						<label>Contact No</label>
+						<input name="contact_number" ng-model="build.contact_number" />
+						<div ng-messages="thisForm.contact_number.$error">
+							<div ng-message='required'>required.</div>
+							<div ng-message='minlength'>min length 10.</div>
+						</div>
+					</md-input-container>
+					<md-input-container>
+						<label>Contact Address</label>
+						<input name="contact_address" ng-model="build.contact_address" />
+						<div ng-messages="thisForm.contact_address.$error">
+							<div ng-message='required'>required.</div>
+							<div ng-message='minlength'>min length 5.</div>
+						</div>
+					</md-input-container>
+					<md-input-container>
+						<label>Order Comments</label>
+						<input name="order_comment" ng-model="build.order_comment" />
+						<div ng-messages="thisForm.order_comment.$error">
+							<div ng-message='required'>required.</div>
+							<div ng-message='minlength'>min length 5.</div>
+						</div>
+					</md-input-container>           
+              	</md-input-container>              
+               	<md-input-container flex="5"></md-input-container>             
+            	<md-input-container flex>
+					<md-input-container>
+						<label>Bill Amount</label>
+						<input name="bill_amount"  ng-model="build.bill_amount" readonly required />
+						<div ng-messages="thisForm.bill_amount.$error">
+							<div ng-message='required'>required.</div>
+						</div>
+					</md-input-container>
+					<md-input-container>
+						<label>Discount</label>
+						<input name="discount"  ng-model="build.discount" ng-change="ChangeDiscount(build.discount)" />
+						<div ng-messages="thisForm.discount.$error">
+							<div ng-message='required'>required.</div>
+						</div>
+					</md-input-container>
+					<md-input-container>
+						<label>Payable Amount</label>
+						<input required name="payable_amount" readonly ng-model="build.payable_amount" />
+						<div ng-messages="thisForm.payable_amount.$error">
+							<div ng-message='required'>required.</div>
+						</div>
+					</md-input-container>				
+               	</md-input-container>          
+            </div>           
+			<div layout="row" layout-align="end center" flex="100">
+				<md-button ng-disabled="thisForm.$invalid" ng-click="submit(build)" class="md-raised md-accent">
+					Build Order
+				</md-button>
+			</div>
+        </form>        
+	</div>
+</md-card>
+

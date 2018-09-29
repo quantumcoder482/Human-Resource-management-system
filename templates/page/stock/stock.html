@@ -1,0 +1,49 @@
+<md-card class="md-whiteframe-1dp md-padding">
+ 	<form class="form-inline">
+		<md-input-container>
+			<label>Search Text Here....</label>
+			<input  ng-model="search" maxlength="50">
+		</md-input-container>
+  	</form>      
+	<div class="table-responsive-vertical"> 
+		<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			<md-icon>fast_rewind</md-icon>
+		</md-button>
+		{{currentPage+1}}/{{numberOfPages()}}
+		<md-button ng-disabled="currentPage >= stocks.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			<md-icon>fast_forward</md-icon> 
+		</md-button>		
+		<table id="table" class="table table-hover">
+			<thead>
+				<tr>
+					<th ng-click="sort('id')" width="2%">No</th>
+					<th ng-click="sort('datetime')" width="5%">Date</th>
+					<th ng-click="sort('quantity')" width="5%">Stock Added</th>
+					<th ng-click="sort('stock_previous')" width="5%">Stock(Ideal)</th>
+					<th ng-click="sort('stock_actual')" width="5%">Stock(Actual)</th>
+					<th ng-click="sort('stock_previous-stock_actual')" width="5%">Waste</th>
+					<th ng-click="sort('remarks')" width="5%">Remarks</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-repeat="s in stocks |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+					<td data-title="No">{{$index+1}}</td>
+					<td data-title="DateTime">{{ s.datetime }}</td>
+					<td data-title="Quantity">{{ s.quantity }}</td>
+					<td data-title="Price">{{ s.stock_previous }}</td>
+					<td data-title="Price">{{ s.stock_actual }}</td>
+					<td data-title="Price">{{ s.stock_previous-s.stock_actual }}</td>
+					<td data-title="Price">{{ s.remarks }}</td>
+				</tr>
+				<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
+			</tbody>
+		</table> 
+		<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			<md-icon>fast_rewind</md-icon>
+		</md-button>
+		{{currentPage+1}}/{{numberOfPages()}}
+		<md-button ng-disabled="currentPage >= stocks.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			<md-icon>fast_forward</md-icon> 
+		</md-button>
+	</div>
+</md-card>

@@ -1,0 +1,63 @@
+<md-card class="md-whiteframe-1dp md-padding">
+   <div class="row">                 
+        <div class="col-lg-6 col-md-6">
+			<table id="table" class="table table-hover">
+				<thead>
+					<tr>
+						<th ng-click="sort('id')" width="20%">No</th>
+						<th ng-click="sort('title')" width="50%">Category</th>
+						<th ng-click="sort('status')" width="30%">Member</th>
+						<th width="1%">Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="f in emp_catagory |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+						<td data-title="No">{{$index+1}}</td>
+						<td data-title="Name">{{f.name}}</td>										
+						<td data-title="Num">{{f.num}}</td>						
+						<td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+							<md-menu md-position-mode="target-right target" >
+								<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+									<md-icon>more_vert</md-icon>
+								</md-button>
+								<md-menu-content width=3>
+									<md-title class="md-padding">MENU - {{f.title}}</md-title>
+									<md-menu-item>
+										<md-button layout-fill md-ink-ripple ng-click="UpdateEmployeeCatagory($event, f)">
+											<md-icon md-class="md-primary" md-menu-align-target>create</md-icon>
+											Edit
+										</md-button>
+									</md-menu-item>
+									<md-menu-item>
+										<md-button layout-fill md-ink-ripple ng-click="deleteEmployeeCategory($event, f)">
+											<md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
+											Delete
+										</md-button>
+									</md-menu-item>													
+								</md-menu-content>  
+							</md-menu>
+						</td> 
+						</tr>
+					<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
+				</tbody>
+			</table> 				
+        </div>
+        <div class="col-lg-6 col-md-6">
+			<form role="form" name="thisForm">
+				<md-input-container flex="50">
+					<label>New Catagory Name</label>
+					<input required name="cataname" ng-model="cata.name" />
+					<div ng-messages="thisForm.cataname.$error">
+						<div ng-message="required">required.</div>
+					</div>
+				</md-input-container>
+				<div class="md-actions md-padding" layout="row">
+					<span flex></span>
+					<md-button ng-disabled="thisForm.$invalid"  ng-click="empcata_add(cata)" style="margin-right:20px;" class="md-raised md-accent">
+						ADD
+					</md-button>
+				</div>
+			</form>				
+        </div>
+    </div>
+</md-card>

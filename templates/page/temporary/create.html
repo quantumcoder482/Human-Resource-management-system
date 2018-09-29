@@ -1,0 +1,98 @@
+<md-dialog layout="column" flex="50" aria-label="dialog temporary">
+  <form role="form" name="thisForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">      
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>Temporary Employee Name</label>
+          <input required name="name" ng-model="emp.name" />
+          <div ng-messages="thisForm.name.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>    
+      <div layout="row">
+        <md-input-container flex="30" >
+          <label>Contact</label>
+          <input required name="contact" ng-model="emp.contact" />
+          <div ng-messages="thisForm.contact.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='minlength'>min length 10.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="30" >
+          <label>Alternate</label>
+          <input name="alternate" ng-model="emp.alternate" />
+        </md-input-container>
+        <md-input-container flex="40" >
+          <label>aadhaar</label>
+          <input required name="aadhaar" ng-model="emp.aadhaar" />
+          <div ng-messages="thisForm.aadhaar.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='minlength'>min length 10.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>Address</label>
+          <input required name="address" ng-model="emp.address" />
+          <div ng-messages="thisForm.address.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>  
+      <div layout="row">
+        <md-input-container flex="50">
+          <label>Wroktype</label>
+          <input required name="worktype" ng-model="emp.worktype_id" />
+          <div ng-messages="thisForm.worktype.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label>Rate</label>
+          <input required name="rate" ng-model="emp.rate" />
+          <div ng-messages="thisForm.rate.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="50">
+          <label> Join Date(yyyy-mm-dd format)</label>
+          <input name="join_date" ng-model="emp.join" datetime-picker date-format="yyyy-mm-dd" date-only required onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+          <div ng-messages="thisForm.join_date.$error">
+            <div ng-message='required'>required.</div>
+            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label> Leave Date(yyyy-mm-dd format)</label>
+          <input name="leave_date" ng-model="emp.leave" datetime-picker date-format="yyyy-MM-dd" date-only required onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+          <div ng-messages="thisForm.leave_date.$error">
+            <div ng-message='required'>required.</div>
+            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+          </div>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions md-padding" layout="row">
+      <span flex></span>
+      <md-button class="md-warn" ng-click="hide()" >
+        CANCEL
+      </md-button>
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(emp)" style="margin-right:20px;" >
+        {{buttonText}}
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

@@ -1,0 +1,347 @@
+body {
+  overflow: hidden;
+  background-color: #EEEEEE;
+}
+
+md-whiteframe {
+  background: #000000;
+}
+
+#content {
+  padding: 24px;
+}
+
+.nav-header{
+    height:64px;
+    min-height:64px;
+    max-height:64px;
+}
+.md-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-sizing: content-box;
+}
+
+.md-avatar-big {
+    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-left: 16px;
+    width: 128px;
+    height: 128px;
+    border-radius: 50%;
+    box-sizing: content-box;
+}f
+
+/*my custom table style*/
+.md-table {
+  min-width: 100%;
+  border-collapse: collapse;
+}
+.md-table tbody tr:hover,
+.md-table tbody tr:focus {
+  background-color: #f2f2f2;
+  color: #828282;
+}
+.md-table th {
+  padding: 10px;
+}
+.md-table tr td {
+  padding: 0px 0px 0px 10px;
+  height:40px;
+  min-height:40px;
+}
+.md-table tr {
+  white-space: nowrap;
+  padding: 16px 16px 16px 0;
+}
+
+/* -- Material Design Table style -------------- */
+.table {
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 2rem;
+  background-color: #ffffff;
+  border-collapse: collapse;
+}
+
+.table > thead > tr,
+.table > tbody > tr,
+.table > tfoot > tr {
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.table > thead > tr > th {
+  text-align: left;
+  padding: 15px 10px 15px 20px;
+  vertical-align: middle;
+  border-top: 0;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.table > tbody > tr > th,
+.table > tfoot > tr > th,
+.table > thead > tr > td,
+.table > tbody > tr > td,
+.table > tfoot > tr > td {
+  text-align: left;
+  padding: 10px 10px 10px 20px;
+  vertical-align: center;
+  border-top: 0;
+  -webkit-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+.table > tbody > tr > td{
+  color: rgba(0, 0, 0, 0.870588);
+  vertical-align: center;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+.table > thead > tr > th {
+  color: rgba(0, 0, 0, 0.870588);
+  vertical-align: center;
+  border-bottom: 2px solid rgba(0, 0, 0, 0.22);
+}
+.table > caption + thead > tr:first-child > th,
+.table > colgroup + thead > tr:first-child > th,
+.table > thead:first-child > tr:first-child > th,
+.table > caption + thead > tr:first-child > td,
+.table > colgroup + thead > tr:first-child > td,
+.table > thead:first-child > tr:first-child > td {
+  border-top: 0;
+}
+.table > tbody + tbody {
+  border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+.table .table {
+  background-color: #ffffff;
+}
+.table .no-border {
+  border: 0;
+}
+.table-condensed > thead > tr > th,
+.table-condensed > tbody > tr > th,
+.table-condensed > tfoot > tr > th,
+.table-condensed > thead > tr > td,
+.table-condensed > tbody > tr > td,
+.table-condensed > tfoot > tr > td {
+  padding: 0.1rem;
+  vertical-align: center;
+}
+.table-bordered {
+  border: 0;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > tbody > tr > th,
+.table-bordered > tfoot > tr > th,
+.table-bordered > thead > tr > td,
+.table-bordered > tbody > tr > td,
+.table-bordered > tfoot > tr > td {
+  border: 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+.table-bordered > thead > tr > th,
+.table-bordered > thead > tr > td {
+  border-bottom-width: 2px;
+}
+.table-striped > tbody > tr:nth-child(odd) > td,
+.table-striped > tbody > tr:nth-child(odd) > th {
+  background-color: #f5f5f5;
+}
+.table-hover > tbody > tr:hover > td,
+.table-hover > tbody > tr:hover > th {
+  background-color: rgba(0, 0, 0, 0.12);
+}
+@media screen and (max-width: 768px) {
+  .table-responsive-vertical > .table {
+    margin-bottom: 0;
+    background-color: transparent;
+  }
+  .table-responsive-vertical > .table > thead,
+  .table-responsive-vertical > .table > tfoot {
+    display: none;
+  }
+  .table-responsive-vertical > .table > tbody {
+    display: block;
+  }
+  .table-responsive-vertical > .table > tbody > tr {
+    display: block;
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    margin-bottom: 1.6rem;
+  }
+  .table-responsive-vertical > .table > tbody > tr > td {
+    background-color: #ffffff;
+    display: block;
+    vertical-align: middle;
+    text-align: right;
+  }
+  .table-responsive-vertical > .table > tbody > tr > td[data-title]:before {
+    content: attr(data-title);
+    float: left;
+    font-size: inherit;
+    color: #757575;
+  }
+  .table-responsive-vertical.shadow-z-1 {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
+  .table-responsive-vertical.shadow-z-1 > .table > tbody > tr {
+    border: none;
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.12), 0 1px 2px 0 rgba(0, 0, 0, 0.24);
+  }
+  .table-responsive-vertical > .table-bordered {
+    border: 0;
+  }
+  .table-responsive-vertical > .table-bordered > tbody > tr > td {
+    border: 0;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  .table-responsive-vertical > .table-bordered > tbody > tr > td:last-child {
+    border-bottom: 0;
+  }
+  .table-responsive-vertical > .table-striped > tbody > tr > td,
+  .table-responsive-vertical > .table-striped > tbody > tr:nth-child(odd) {
+    background-color: #ffffff;
+  }
+  .table-responsive-vertical > .table-striped > tbody > tr > td:nth-child(odd) {
+    background-color: #f5f5f5;
+  }
+  .table-responsive-vertical > .table-hover > tbody > tr:hover > td,
+  .table-responsive-vertical > .table-hover > tbody > tr:hover {
+    background-color: #ffffff;
+  }
+  .table-responsive-vertical > .table-hover > tbody > tr > td:hover {
+    background-color: rgba(0, 0, 0, 0.12);
+  }
+}
+.table-striped.table-mc-red > tbody > tr:nth-child(odd) > td,
+.table-striped.table-mc-red > tbody > tr:nth-child(odd) > th {
+  background-color: #fde0dc;
+}
+.table-hover.table-mc-red > tbody > tr:hover > td,
+.table-hover.table-mc-red > tbody > tr:hover > th {
+  background-color: #f9bdbb;
+}
+md-toolbar.md-hue-2:not(.md-menu-toolbar) {
+    background-color: #0073aa;
+    color: rgb(255,255,255);
+}
+md-toolbar:not(.md-menu-toolbar) {
+    background-color: #0073aa;
+    color: rgb(255,255,255);
+}
+md-sidenav {
+  overflow-x: hidden;
+}
+md-menu-bar {
+    padding: 0;
+}
+md-menu-item {
+  height: 50px !important;
+}
+md-sidenav .md-open-menu-container.md-whiteframe-z2.md-default-theme.md-active.md-clickable {
+    height: -webkit-fill-available;
+    transform-origin: left top 0px;
+    z-index: 2147483647;
+    width: 100%;
+    top: 50px !important;
+    left: 0 !important;
+    margin-top: 64px;
+    background: white;
+    box-shadow: 0 0 black;
+}
+#gomenu {
+  color: #528c84;
+  font-weight: 700;
+  font-style: oblique;
+}
+.menuicon {
+  font-size: 25px !important;
+  color: #1c1b1beb !important;
+}
+.menutext {
+  font-size: 18px !important;
+  color: #1c1b1beb !important;
+}
+.menusubtext {
+  font-size: 16px !important;
+  color: #1c1b1beb !important;
+  margin-left: 25px !important;
+}
+.menutext span {
+  margin-left: 30px !important;
+}
+.angularjs-datetime-picker.ng-scope.ng-isolate-scope.ng-valid {
+  z-index: 9999999;
+}
+.submenutext {
+  font-size: 18px !important;
+  color: #0073aa !important;
+  font-weight: 600;
+}
+.submenuicon {
+  font-size: 25px !important;
+  color: #0073aa !important;
+}
+.submenutext span {
+  text-align: left;
+  margin-left: 20px;
+}
+
+md-checkbox.md-default-theme.payment.md-checked .md-icon {
+  background: green;
+}
+md-checkbox.md-default-theme.payment.md-primary.md-checked .md-icon {
+  background: blue;
+}
+md-checkbox.md-default-theme.payment.md-warn.md-checked .md-icon {
+  background: red;
+}
+.blue.md-checked .md-container .md-icon {
+  background: blue;
+}
+.green.md-checked .md-container .md-icon {
+  background: green;
+}
+small {
+  color: #aaa;
+}
+.panel-heading {
+  height: 106px;
+}
+.panel-heading h1 {
+  font-size: 50px;
+}
+.panel-mypanel4 .panel-heading {
+    box-shadow: 6px 5px 14px 2px #333;
+}
+.panel-mypanel5 .panel-heading {
+    box-shadow: 6px 5px 14px 2px #aa8b0f;
+}
+.panel-mypanel6 .panel-heading {
+    box-shadow: 6px 5px 14px 2px #b04438;
+    border-color: #d35400;
+}
+.panel-mypanel7 .panel-heading {
+    box-shadow: 6px 5px 14px 2px #879c9d;
+}
+.percent {
+    padding-left: 0px;
+}
+.ani_number {
+  color: red;
+}
+.booking_detail p {
+  font-size: 20px;
+  font-weight: 500;
+  font-family: cursive;
+  color: chocolate;
+}

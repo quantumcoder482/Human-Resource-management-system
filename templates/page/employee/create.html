@@ -1,0 +1,133 @@
+<md-dialog layout="column" flex="50" aria-label="dialog employee">
+  <form role="form" name="thisForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">      
+      <div layout="row">
+        <md-input-container flex="50">
+          <label>Employee  Name</label>
+          <input required name="name" ng-model="emp.name" />
+          <div ng-messages="thisForm.name.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+            <label>Sex</label>
+            <md-select name="sex" ng-model="emp.sex">
+              <md-option ng-value="1">male</md-option>
+              <md-option ng-value="2">female</md-option>
+            </md-select>
+        </md-input-container>
+      </div>    
+      <div layout="row">
+          <md-input-container flex="50" >
+            <label>Father Name</label>
+            <input name="parent_f" ng-model="emp.parent_f" />
+          </md-input-container>
+          <md-input-container flex="50" >
+            <label>Mother Name</label>
+            <input name="parent_m" ng-model="emp.parent_m" />
+          </md-input-container>
+      </div>      
+      <div layout="row">
+          <md-input-container flex="30" >
+            <label>Contact</label>
+            <input required name="contact" ng-model="emp.contact" />
+            <div ng-messages="thisForm.contact.$error">
+              <div ng-message="required">required.</div>
+              <div ng-message='minlength'>min length 10.</div>
+            </div>
+          </md-input-container>
+          <md-input-container flex="30" >
+            <label>Alternate</label>
+            <input name="alternate" ng-model="emp.alternate" />
+          </md-input-container>
+          <md-input-container flex="40" >
+            <label>Aadhaar</label>
+            <input required name="aadhaar" ng-model="emp.aadhaar" />
+            <div ng-messages="thisForm.aadhaar.$error">
+              <div ng-message="required">required.</div>
+            </div>
+          </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="40">
+          <label>Address</label>
+          <input required name="address" ng-model="emp.address" />
+          <div ng-messages="thisForm.address.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="30">
+          <label>Email</label>
+          <input required name="email" ng-model="emp.email" />
+          <div ng-messages="thisForm.email.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="30">
+          <label>Incentive</label>
+          <input required name="incentive" ng-model="emp.incentive" />
+          <div ng-messages="thisForm.incentive.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>  
+      <div layout="row">
+        <md-input-container flex="30">
+            <label>Blood</label>
+            <md-select required name="blood" ng-model="emp.blood">
+              <md-option ng-value="1">A</md-option>
+              <md-option ng-value="2">B</md-option>
+              <md-option ng-value="3">AB</md-option>
+              <md-option ng-value="4">O</md-option>
+            </md-select>
+            <div ng-messages="thisForm.blood.$error">
+              <div ng-message="required">required.</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label>Active</label>
+          <input required name="active" ng-model="emp.active" />
+          <div ng-messages="thisForm.active.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="50">
+          <label> Join Date(yyyy-mm-dd format)</label>
+          <input name="join_date" ng-model="emp.join" datetime-picker date-format="yyyy-MM-dd" date-only required onkeydown="return !(event.keyCode==13)" />	
+          <div ng-messages="thisForm.join_date.$error">
+            <div ng-message='required'>required.</div>
+            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <label> Leave Date(yyyy-mm-dd format)</label>
+          <input name="leave_date" ng-model="emp.leave" datetime-picker date-format="yyyy-MM-dd" date-only required onkeydown="return !(event.keyCode==13)" />
+          <div ng-messages="thisForm.leave_date.$error">
+            <div ng-message='required'>required.</div>
+            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+          </div>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions md-padding" layout="row">
+      <span flex></span>
+      <md-button class="md-warn" ng-click="hide()" >
+        CANCEL
+      </md-button>
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(emp)" style="margin-right:20px;" >
+        {{buttonText}}
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

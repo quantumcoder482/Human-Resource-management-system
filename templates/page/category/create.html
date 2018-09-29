@@ -1,0 +1,57 @@
+<md-dialog layout="column" flex="50" aria-label="dialog category">
+  <form role="form" name="thisForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>Title *</label>
+          <input required name="title" ng-model="category.title" maxlength="50" onkeydown="return !(event.keyCode==13)">
+          <div ng-messages="thisForm.title.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row">        
+         <md-input-container flex="45">
+          <label>Priority *</label>
+          <input type="number" min="1" ng-pattern="^[0-9]" required name="priority" ng-model="category.priority" maxlength="11" onkeydown="return !(event.keyCode==13)">
+          <div ng-messages="thisForm.priority.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>        
+        <md-input-container flex="10">
+        </md-input-container>         
+        <md-input-container flex="45">
+            <label>Category Status *</label>
+            <md-select required name="status" ng-model="category.status">
+              <md-option ng-value="1">Active</md-option>
+              <md-option ng-value="0">Inactive</md-option>
+            </md-select>
+            <div ng-messages="thisForm.status.$error">
+              <div ng-message="required">required.</div>
+            </div>
+        </md-input-container>         
+      </div>      
+    </md-dialog-content>    
+    <div class="md-actions md-padding" layout="row" ng-if="loader">
+        <img src="css/loading.gif" style="height:100px; width:100px; padding:10px"> 
+    </div>
+    <div class="md-actions md-padding" layout="row" ng-if="!loader">
+      <span flex></span>
+      <md-button class="md-warn" ng-click="hide()" >
+        CANCEL
+      </md-button>
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(category)" style="margin-right:20px;" >
+        {{buttonText}}
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

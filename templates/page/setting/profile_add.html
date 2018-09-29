@@ -1,0 +1,154 @@
+<md-card class="md-whiteframe-1dp md-padding">
+  <form role="form" name="thisForm">
+      <div layout="row">
+        <md-input-container flex="50">
+          <label>Profile Name</label>
+          <input required name="username" type="text" ng-model="emp.username" />
+          <div ng-messages="thisForm.username.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>    
+      <div layout="row">
+          <md-input-container flex="40" >
+            <label>Title</label>
+            <input name="title" type="text" ng-model="emp.title" />
+          </md-input-container>
+          <md-input-container flex="10">
+          </md-input-container>
+          <md-input-container flex="40" >
+            <label>Owner</label>
+            <input name="owner" type="text" ng-model="emp.owner" />
+          </md-input-container>
+      </div>
+      <div layout="row">
+          <md-input-container flex="40" >
+            <label>Contact</label>
+            <input required minlength="10" maxlength="11" type="number" name="contact" ng-model="emp.contact" />
+            <div ng-messages="thisForm.contact.$error">
+              <div ng-message="required">required.</div>
+              <div ng-message='minlength'>min length 10.</div>
+              <div ng-message='type'>this field should be number</div>
+            </div>
+          </md-input-container>
+          <md-input-container flex="10">
+          </md-input-container>
+        <md-input-container flex="40">
+          <label>Email</label>
+          <input required name="email" type="email" ng-model="emp.email" />
+          <div ng-messages="thisForm.email.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='type'>Enter Valid Email.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="100" >
+          <label>Address</label>
+          <input required name="address" type="number" ng-model="emp.address" />
+          <div ng-messages="thisForm.address.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='minlength'>min length 5</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="40" >
+          <label>Product Disclaimer</label>
+          <input required name="product_disclaimer" type="text" ng-model="emp.product_disclaimer" />
+          <div ng-messages="thisForm.product_disclaimer.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="10">
+        </md-input-container>
+        <md-input-container flex="40" >
+          <label>Product Disclaimer</label>
+          <input required name="product_disclaimer" type="text" ng-model="emp.product_disclaimer" />
+          <div ng-messages="thisForm.product_disclaimer.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      
+      
+      
+      <div layout="row">
+        <md-input-container flex="30">
+          <label>Salary</label>
+          <input required name="salary" type="number" ng-model="emp.salary" />
+          <div ng-messages="thisForm.salary.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='type'>this field should be number</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="10">
+        </md-input-container>
+        <md-input-container flex="15">
+          <label>Incentives</label>
+          <input name="incentives" type="number" ng-model="emp.incentives" />
+        </md-input-container>
+        <md-input-container flex="5">
+        </md-input-container>
+        <md-input-container flex="15">
+          <label>Advance</label>
+          <input name="advanced" type="text" ng-model="emp.advanced" />
+        </md-input-container>
+        <md-input-container flex="5">
+        </md-input-container>
+        <md-input-container flex="10">
+          <label>Active</label>
+          <md-select name="active" ng-model="emp.active" ng-change="">
+            <md-option ng-value="1" ng-selected="true">Active</md-option>
+            <md-option ng-value="0">Inactive</md-option>
+          </md-select>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="10">
+            <label>Blood</label>
+            <md-select name="blood" ng-model="emp.blood" ng-change="">
+              <md-option ng-value="1" ng-selected="true">A</md-option>
+              <md-option ng-value="2">B</md-option>
+              <md-option ng-value="3">AB</md-option>
+              <md-option ng-value="4">O</md-option>
+            </md-select>
+        </md-input-container>
+        <md-input-container flex="5">
+        </md-input-container>
+        <md-input-container flex="10">
+            <label>Position</label>
+            <md-select name="position" required ng-model="emp.position" ng-change="">
+              <md-option ng-value={{a.id}} ng-repeat="a in position">{{a.name}}</md-option>
+            </md-select>
+            <div ng-messages="thisForm.position.$error">
+              <div ng-message="required">required.</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex="5"></md-input-container>
+        <md-input-container flex="20">
+          <label> Join Date(yyyy-mm-dd format)</label>
+          <input name="joindate" type="text" ng-model="emp.joindate" datetime-picker date-format="yyyy-MM-dd" date-only required onkeydown="return !(event.keyCode==13)" />	
+          <div ng-messages="thisForm.join.$error">
+            <div ng-message='required'>required.</div>
+            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+          </div>
+        </md-input-container>        
+        <md-input-container flex="5"></md-input-container>
+        <md-input-container flex="35">
+          <label>Address</label>
+          <input required name="address" type="text" ng-model="emp.address"/>
+          <div ng-messages="thisForm.address.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+      <div layout="row" style="float: right;">
+        <md-input-container>
+          <md-button ng-disabled="thisForm.$invalid"  ng-click="submit(emp)"  class="md-raised md-accent" style="background:#00800070; color:white;">
+            ADD
+          </md-button>
+        </md-input-container>
+      </div>
+  </form>
+</md-card>

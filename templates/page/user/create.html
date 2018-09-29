@@ -1,0 +1,66 @@
+<md-dialog layout="column" flex="50" aria-label="dialog customer">
+  <form role="form" name="thisForm" id="thisForm" novalidate>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">      
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>User  Name</label>
+          <input required name="name" ng-model="cust.name">
+          <div ng-messages="thisForm.fname.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div> 
+      <div layout="row">
+        <md-input-container flex="30" >
+          <label>Contact</label>
+          <input type="number" maxlength="10" minlength="10" ng-pattern="^[0-9]" required name="contact" ng-model="cust.contact">
+          <div ng-messages="thisForm.contact.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='minlength'>min length 10.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="40">
+            <label>Email</label>
+            <input name="email" ng-model="cust.email">
+            <div ng-messages="thisForm.email.$error">
+              <div ng-message="required">required.</div>
+            </div>
+        </md-input-container>
+        <md-input-container flex="30">
+            <label>FCM</label>
+            <input name="fcm" ng-model="cust.fcm">
+            <div ng-messages="thisForm.fcm.$error">
+              <div ng-message="required">required.</div>
+            </div>
+        </md-input-container>
+      </div>      
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>Address</label>
+          <input required name="address" ng-model="cust.address">
+          <div ng-messages="thisForm.address.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions md-padding" layout="row">
+      <span flex></span>
+      <md-button class="md-warn" ng-click="hide()" >
+        CANCEL
+      </md-button>
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(cust)" style="margin-right:20px;" >
+        {{buttonText}}
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

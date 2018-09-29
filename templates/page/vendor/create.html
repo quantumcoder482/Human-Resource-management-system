@@ -1,0 +1,74 @@
+<md-dialog layout="column" flex="50" aria-label="dialog vendor">
+  <form role="form" name="thisForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">      
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>Vendor Name</label>
+          <input required name="name" ng-model="vendor.name" />
+          <div ng-messages="thisForm.name.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>    
+      <div layout="row">
+        <md-input-container flex="50" >
+          <label>Contact</label>
+          <input required name="contact" type="number" ng-model="vendor.contact" />
+          <div ng-messages="thisForm.contact.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='minlength'>min length 10.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50" >
+          <label>Alternate</label>
+          <input name="alternate" type="number" ng-model="vendor.alternate" />
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="100">
+          <label>Address</label>
+          <input required name="address" type="text" ng-model="vendor.address" />
+          <div ng-messages="thisForm.address.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>  
+      <div layout="row">
+        <!-- <md-input-container flex="50">
+          <label>Ingredient</label>
+          <input required name="worktype" ng-model="vendor.ingredients_id" />
+          <div ng-messages="thisForm.worktype.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container> -->
+        <md-input-container flex="50">
+          <label> Ingredient </label>
+          <md-select required name="ingredient" ng-model="vendor.ingredients_id">
+            <md-option ng-repeat="i in ingredients" ng-value="i.id" >{{ i.title }}</md-option>
+          </md-select>
+          <div ng-messages="thisForm.ingredient.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions md-padding" layout="row">
+      <span flex></span>
+      <md-button class="md-warn" ng-click="hide()" >
+        CANCEL
+      </md-button>
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(vendor)" style="margin-right:20px;" >
+        {{buttonText}}
+      </md-button>
+    </div>
+  </form>
+</md-dialog>

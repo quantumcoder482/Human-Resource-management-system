@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Human Resource Management</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel='stylesheet prefetch' href='css/angular-material.min.css'>
+  <!--<link rel='stylesheet prefetch' href='css/whiteframe.css'>-->
+
+  <link href="css/fonts/material.css" rel="stylesheet" />
+  <link rel='stylesheet prefetch' href='css/bootstrap.min.css'>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel='stylesheet prefetch' href='css/font-awesome.min.css'>
+  <link rel='stylesheet prefetch' href='css/angularjs-datetime-picker.css'>
+
+  <link rel="stylesheet" type="text/css" href="css/pre.css">
+  
+  <script src="templates/assets/angular.min.js"></script>
+  <script src="templates/assets/angular-route.min.js"></script>
+  <script src="templates/assets/angular-animate.min.js"></script>
+  <script src="templates/assets/angular-aria.min.js"></script>
+  <script src="templates/assets/angular-material.min.js"></script>
+  <script src="templates/assets/angular-messages.min.js"></script>
+  <script src="templates/assets/angular-cookies.min.js"></script>
+  <script src="templates/assets/angular-sanitize.min.js"></script>
+  <script src='templates/assets/textAngular.min.js'></script>
+  <script src='templates/assets/angularjs-datetime-picker.js'></script>
+  
+  <script src="app/app.js"></script>      <!-- Route controller -->
+  <script src="app/root.js"></script>     <!-- base controller -->
+  <script src="app/services.js"></script>  <!-- database -->
+
+  <script src="app/controllers/login.js"></script>
+  <script src="app/controllers/category.js"></script>
+  <script src="app/controllers/ingredients.js"></script>
+  <script src="app/controllers/subcategory.js"></script>
+  <script src="app/controllers/product.js"></script>
+  <script src="app/controllers/product_new.js"></script>
+  <script src="app/controllers/product_edit.js"></script>
+  <script src="app/controllers/setting.js"></script>
+  <script src="app/controllers/user.js"></script>
+  <script src="app/controllers/user_pay.js"></script>
+  <script src="app/controllers/home.js"></script>
+  <script src="app/controllers/pos.js"></script>
+  <script src="app/controllers/cal_ingredient.js"></script>
+  <script src="app/controllers/report.js"></script>
+  <script src="app/controllers/report_sale.js"></script>
+  <script src="app/controllers/myorder.js"></script>
+  <script src="app/controllers/consumption.js"></script>
+  <script src="app/controllers/stock.js"></script>
+  <script src="app/controllers/stockhistory.js"></script>
+  <script src="app/controllers/temporary.js"></script>
+  <script src="app/controllers/temp_pay.js"></script>
+  <script src="app/controllers/employee.js"></script>
+  <script src="app/controllers/employee_add.js"></script>
+  <script src="app/controllers/employee_attendance.js"></script>
+  <script src="app/controllers/employee_catagory.js"></script>
+  <script src="app/controllers/employee_salary.js"></script>
+  <script src="app/controllers/vendor.js"></script>
+  <script src="app/controllers/vendor_pay.js"></script>
+  <script src="app/controllers/sms_customer.js"></script>
+  <script src="app/controllers/sms_employee.js"></script>
+  <script src="app/controllers/menu.js"></script>
+  <script src="app/controllers/menulist.js"></script>
+  <script src="app/controllers/booking.js"></script>
+  <script src="app/controllers/booking_list.js"></script>
+  <script src="app/controllers/booking_report.js"></script>
+  <script src="app/controllers/profile_add.js"></script>
+  <script src="app/controllers/profile_list.js"></script>
+  
+  <script src="templates/assets/highcharts.js"></script>
+  <script src="templates/assets/highcharts-3d.js"></script>
+  
+</head>
+<body>
+    <!-- Pre-loader start -->
+    <div class="theme-loader">
+        <div class="ball-scale">
+            <div></div>
+        </div>
+    </div>
+    <!-- Pre-loader end -->
+  <div ng-app="App" ng-controller="RootCtrl" layout="row" layout-fill ng-cloak style="overflow:scroll">
+   <!-- Sliding Menu -->
+    <md-sidenav ng-hide="isLogin" class="md-sidenav-left md-whiteframe-z2" role="sidenav" md-component-id="left" md-is-locked-open="$mdMedia('gt-md')">
+      <!-- menu header -->
+      <md-toolbar class="nav-header md-hue-2" layout-align="end end">
+        <div class="md-toolbar-tools" layout layout-padding>
+          <md-icon class="material-icons md-36">{{data.user.icon}}</md-icon>  
+          <div layout="column" layout-padding>
+            <span class="md-body-2">{{ data.user.name }}</span>
+            <span class="md-caption">{{ data.user.email }}</span>
+          </div>
+          <span flex></span>
+          <md-menu md-position-mode="target-right target" >
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+              <md-icon>more_vert</md-icon>
+            </md-button>
+            <md-menu-content width=3>
+              <md-menu-item>
+                <md-button layout-fill md-ink-ripple ng-click="directHref('#setting')">Profile</md-button>
+              </md-menu-item>
+
+              <md-menu-item>
+                <md-button layout-fill md-ink-ripple ng-click="doLogout($event)">Logout</md-button>
+              </md-menu-item>
+              
+            </md-menu-content>
+          </md-menu>
+        </div>
+      </md-toolbar>
+      <!-- SIDE MENU -->
+      <md-button id="gomenu">{{sidenav.menuname}}</md-button>
+      <md-menu-bar>
+          <md-menu>
+            <md-menu-content>           
+              <md-menu-item ng-repeat="action in sidenav.actions">
+                <md-menu>
+                  <md-button ng-click="action.root? $mdOpenMenu():directHref(action.link)" class="menutext"><md-icon class="menuicon">{{action.icon}}</md-icon>{{action.name}}</md-button>
+                  <md-menu-content>
+                    <md-button class="submenutext"><md-icon class="submenuicon">{{action.icon}}</md-icon><md-icon class="submenuicon">expand_more</md-icon>{{action.name}}</md-button>
+                    <md-menu-item ng-repeat="subaction in action.item">                      
+                      <md-button  ng-click="directHref(subaction.link)" class="menusubtext">
+                        <md-icon class="menuicon">{{subaction.icon}}</md-icon> {{subaction.name}}
+                      </md-button>
+                    </md-menu-item>
+                  </md-menu-content>
+                </md-menu>
+              </md-menu-item>          
+            </md-menu-content>
+          </md-menu>   
+        </md-menu-bar> 
+    </md-sidenav>
+    <div tabindex="-1" layout="column" role="main" class="flex md-layout-column">
+      <md-toolbar ng-hide="isLogin" role="toolbar">
+        <div class="md-toolbar-tools">
+          <!-- toogle button -->
+          <md-button class="md-icon-button" ng-click="toggleSidenav('left')" hide-gt-md aria-label="Menu">
+            <md-icon>menu</md-icon>
+          </md-button>
+          <!-- toolbar title -->
+          <h4 class="md-title">{{pagetitle}}</h4> <span flex></span>
+          <!-- add button -->
+          <md-button ng-if="toolbar_menu != null" class="md-primary" ng-click="barAction($event)">{{toolbar_menu.title}}</md-button> 
+          <!-- more -->
+          <md-menu md-position-mode="target-right target" >
+            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+              <md-icon>more_vert</md-icon>
+            </md-button>
+            <md-menu-content width=3>
+              <md-menu-item>
+                <md-button layout-fill md-ink-ripple ng-click="directHref('#setting')">Profile</md-button>
+              </md-menu-item>
+              <md-menu-item>
+                <md-button layout-fill md-ink-ripple ng-click="doLogout($event)">Logout</md-button>
+              </md-menu-item>
+            </md-menu-content>  
+          </md-menu>
+        </div>
+      </md-toolbar>
+      <!-- CONTENT PAGE -->
+      <md-content layout ng-hide="isLogin" md-scroll-y flex class="md-padding" ng-style="{'background' : bgColor}">
+        <div ng-view layout-fill flex></div> 
+      </md-content>
+      <!-- CONTENT LOGIN -->
+      <md-content layout ng-hide="!isLogin" layout-align="center center" flex class="md-padding" ng-style="{'background' : bgColor}">
+        <div ng-view layout-fill flex></div> 
+      </md-content>
+    </div>
+  </div>
+  <script src="templates/assets/jquery-3.3.1.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.theme-loader').fadeOut(300);      
+      function count($this){
+          var current = parseInt($this.html(), 10);
+          if ($this.data('count') != 0) $this.html(++current);
+          if(current !== $this.data('count')){
+              setTimeout(function(){count($this)}, 10/$this.data('count')*100);
+          }
+      }
+      setTimeout(function(){ 
+        $("h1").each(function() {
+          if($(this).html() == 0) return;
+            $(this).data('count', parseInt($(this).html(), 10));
+            $(this).html('0');
+            count($(this));
+        });
+      }, 300);
+    });
+  </script>
+</body>
+</html>
