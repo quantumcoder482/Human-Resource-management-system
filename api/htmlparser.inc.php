@@ -253,7 +253,7 @@ class HtmlParser {
                 return $sb;
             } else {
                 $match = false;
-                for ($idx = 0; $idx < count($chars); $idx++) {
+                for ($idx = 0; $idx < @count($chars); $idx++) {
                     if ($ch == $chars[$idx]) {
                         $match = true;
                         break;
@@ -277,7 +277,7 @@ class HtmlParser {
                 return $sb;
             } else {
                 $match = false;
-                for ($idx = 0; $idx < count($chars); $idx++) {
+                for ($idx = 0; $idx < @count($chars); $idx++) {
                     if ($ch == $chars[$idx]) {
                         $match = true;
                         break;
@@ -298,7 +298,7 @@ class HtmlParser {
         while (($ch = $this->iCurrentChar) !== -1) {
             $match = $ch == ">";
             if (!$match) {
-                for ($idx = 0; $idx < count($chars); $idx++) {
+                for ($idx = 0; $idx < @count($chars); $idx++) {
                     if ($ch == $chars[$idx]) {
                         $match = true;
                         break;

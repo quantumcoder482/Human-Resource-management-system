@@ -1,18 +1,19 @@
 <?php
-include('Connection.php');
+require_once('Connection.php');
+// $mysqli=mysqli_connect('localhost', 'root', '', 'buzzbe6_dominee');
 
 class Data{
-
 	
-   public function profile_details()
+	public function profile_details()
 	{
 	
-	$query = "SELECT *FROM profile"; 
-      $result = mysql_query($query) or die("SQL Error 1: " . mysql_error());
-       $num_rows=mysql_num_rows($result);
+	$mysqli=mysqli_connect('localhost', 'root', '', 'buzzbe6_dominee');
+	$query = "SELECT * FROM profile"; 
+       $result = @mysqli_query($mysqli, $query) or die("SQL Error 1: " . mysqli_error());
+       $num_rows=mysqli_num_rows($result);
 	   if($num_rows>0)
 	   {
-	     while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
+	     while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
            {
               $query_result[] = array(
 			   'title' => $row['title'],
@@ -32,15 +33,17 @@ class Data{
    public function order_by_id()
    
 	{
-    	$query = "SELECT *FROM myorder order by id DESC limit 1"; 
-          $result = mysql_query($query) or die("SQL Error 1: " . mysql_error());
-           $num_rows=mysql_num_rows($result);
+		$mysqli=mysqli_connect('localhost', 'root', '', 'buzzbe6_dominee');
+    	$query = "SELECT * FROM myorder order by id DESC limit 1"; 
+          $result = @mysqli_query($mysqli, $query) or die("SQL Error 1: " . mysqli_error());
+           $num_rows=mysqli_num_rows($result);
 	        if($num_rows>0)
 	         {
-	            while ($row = mysql_fetch_array($result, MYSQL_ASSOC))
+	            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
                {
               $query_result = array(
-	           'id' => $row['id'],
+			   'id' => $row['id'],
+			//    'order_num' => $row['order_num'],
                'items' => $row['items'],
 			   'quantity' => $row['quantity'],
 			   'user_id' => $row['user_id'],
@@ -66,11 +69,11 @@ class Data{
 
     public function view_by_id($field,$table,$condition,$value)
 	{
-	
+	$mysqli=mysqli_connect('localhost', 'root', '', 'buzzbe6_dominee');
 	$query = "SELECT $field FROM $table where $condition='$value'"; 
-      $result = mysql_query($query) or die("SQL Error 1: " . mysql_error());
-       $num_rows=mysql_num_rows($result);
-	   $responce=mysql_fetch_array($result);
+      $result = @mysqli_query($mysqli,$query) or die("SQL Error 1: " . mysqli_error());
+       $num_rows=mysqli_num_rows($result);
+	   $responce=mysqli_fetch_array($result);
 	   if($num_rows>0)
 	   {
 	   

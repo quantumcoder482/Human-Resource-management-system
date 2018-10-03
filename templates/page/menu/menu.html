@@ -1,5 +1,5 @@
 <style>
-.gray {
+    .gray {
     background: #fff;
     color:#000;
     text-align:center;
@@ -11,7 +11,7 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
 </style>
 <div layout="row">
     <md-input-container flex="50">
-        <md-card class="md-whiteframe-1dp md-padding">     
+        <md-card class="md-whiteframe-1dp md-padding">
             <md-menu-item>
                 <md-button layout-fill md-ink-ripple ng-click="ShowMyCategory()">
                     <md-icon md-class="md-primary" md-menu-align-target>restore</md-icon>
@@ -20,8 +20,9 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
             </md-menu-item>
             <md-divider></md-divider>
             <div ng-hide="showCategory || showSubcate || showProduct"><img src="css/loading.gif" style="height:50px; width:50px; margin: auto;"></div>
-            <div ng-if="showCategory">        
-                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px" >
+            <div ng-if="showCategory">
+                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1"
+                    md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px">
                     <md-grid-tile class="gray" ng-click="ShowSubcategory(act.id)" ng-repeat="act in active_categories">
                         <md-icon>dns</md-icon>
                         <md-grid-tile-footer class="gray">
@@ -29,9 +30,10 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
-            </div>       
-            <div ng-if="showSubcate">        
-                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px" >
+            </div>
+            <div ng-if="showSubcate">
+                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1"
+                    md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px">
                     <md-grid-tile class="gray" ng-click="GetProductBySubcat(act.id)" ng-repeat="act in active_categories">
                         <md-icon>toc</md-icon>
                         <md-grid-tile-footer class="gray">
@@ -39,9 +41,10 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
-        </div>
-            <div ng-if="showProduct">        
-                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px" >
+            </div>
+            <div ng-if="showProduct">
+                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1"
+                    md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px">
                     <md-grid-tile class="gray" ng-click="AddProduct($event,act)" ng-repeat="act in active_categories">
                         <input type="hidden" ng-init="act.quantity=1" ng-model="act.quantity">
                         <md-icon>restaurant_menu</md-icon>
@@ -50,130 +53,103 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         </md-grid-tile-footer>
                     </md-grid-tile>
                 </md-grid-list>
-        </div>
-        </md-card> 
+            </div>
+        </md-card>
         <md-card class="md-whiteframe-1dp md-padding">
-            <md-input-container> 
+            <md-input-container>
                 <div class="table-responsive-vertical">
                     <form class="form-inline">
                         <md-input-container>
                             <label>Here you can search product.</label>
-                            <input  ng-model="search" maxlength="50" ng-change="GetProducts(search)">
+                            <input ng-model="search" maxlength="50" ng-change="GetProducts(search)">
                         </md-input-container>
                     </form>
-                    <table id="table" class="table table-hover"  style="max-height:50px" >
+                    <table id="table" class="table table-hover" style="max-height:50px">
                         <thead>
                             <tr>
                                 <th width="80%" ng-click="sort('title')">Product</th>
-                                <th width="15%" ng-click="sort('price')">Price </th>
-                                <th width="5%"> Add </th>
+                                <th width="20%"> Add </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr ng-repeat="p in products |orderBy:sortKey:reverse|filter:search">
                                 <td data-title="Name">{{p.title}}</td>
-                                <td data-title="Price">{{p.price}}</td>
                                 <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
                                     <md-button class="md-icon-button" ng-click="AddProduct($event, p)">
-                                    <md-icon>control_point</md-icon>
+                                        <md-icon>control_point</md-icon>
                                     </md-button>
                                 </td>
                             </tr>
-                            <tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
+                            <tr ng-if="loading">
+                                <td style="text-align:center;" colspan="10">Loading...</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>
-            </md-input-container> 
+            </md-input-container>
         </md-card>
-    </md-input-container> 
-    <md-input-container flex> 
-        <md-card class="md-whiteframe-1dp md-padding" >      
-            <md-input-container flex>  
+    </md-input-container>
+    <md-input-container flex>
+        <md-card class="md-whiteframe-1dp md-padding">
+            <md-input-container flex>
                 <div class="table-responsive-vertical">
                     <h4>Menu Items : </h4>
                     <table id="table" class="table table-hover">
                         <thead>
                             <tr>
-                            <th width="50%">Product</th>
-                            <th width="5%">Price</th>
-                            <th width="30%" style="text-align: center;">Quantity</th>
-                            <th width="2%">Remove</th>
-                        </tr>
+                                <th width="60%">Product</th>
+                                <th width="30%" style="text-align: left;">Quantity</th>
+                                <th width="10%">Remove</th>
+                            </tr>
                         </thead>
 
                         <tbody>
                             <tr ng-repeat="l in particulars">
                                 <td data-title="product" style="padding: 1em 0;">{{ l.title }}</td>
-                                <td data-title="pricascascasces" style="padding: 1em 0;">{{ menu.prices[$index] }}</td>
                                 <td data-title="quantity" style="padding: 0;">
-                                    <md-button class="md-icon-button" ng-click="menu.quantity[$index]!==1? RemoveProductcount($event, l) : null" style="margin: 0;">
+                                    <md-button class="md-icon-button" ng-click="menu.quantity[$index]!==1? RemoveProductcount($event, l) : null"
+                                        style="margin: 0;">
                                         <md-icon class="material-icons md-light md-8">remove_circle</md-icon>
                                     </md-button>
                                     {{ menu.quantity[$index] }}
                                     <md-button class="md-icon-button" ng-click="AddProduct($event, l)" style="margin: 0;">
                                         <md-icon class="material-icons md-light md-8">add_circle</md-icon>
                                     </md-button>
-                                </td>                            
+                                </td>
                                 <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
                                     <md-button class="md-icon-button" ng-click="RemoveProduct($event, l)">
                                         <md-icon>delete</md-icon>
                                     </md-button>
                                 </td>
-                            </tr>     
+                            </tr>
                         </tbody>
                     </table>
-                </div>   
-            </md-input-container> 
+                </div>
+            </md-input-container>
             <div class="table-responsive-vertical">
                 <form role="form" name="thisForm" class="md-padding">
                     <h4>Menu Name : </h4>
-                    <md-input-container flex="20" >
+                    <md-input-container flex="20">
                         <label>Please insert new menu name</label>
-                        <input required name="menuname" type="text" ng-model="menu.name"/>
+                        <input required name="menuname" type="text" ng-model="menu.name" />
                         <div ng-messages="thisForm.menuname.$error">
-                          <div ng-message="required">required.</div>
+                            <div ng-message="required">required.</div>
                         </div>
                     </md-input-container>
                     <md-input-container>
-                        <label>Menu Bill Amount</label>
-                        <input name="bill_amount"  ng-model="menu.bill_amount" readonly required />
-                        <div ng-messages="thisForm.bill_amount.$error">
+                        <label>Price</label>
+                        <input name="total_price" ng-model="menu.total_price" readonly required />
+                        <div ng-messages="thisForm.total_price.$error">
                             <div ng-message='required'>required.</div>
                         </div>
                     </md-input-container>
-                    <md-input-container>
-                        <label>Menu Total CGST</label>
-                        <input name="order_cgst"  ng-model="menu.order_cgst" readonly required />
-                        <div ng-messages="thisForm.order_cgst.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Menu Total SGST</label>
-                        <input name="order_sgst" ng-model="menu.order_sgst" readonly required />
-                        <div ng-messages="thisForm.order_sgst.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>
-                    <div layout="row">
-                        <md-input-container>
-                            <label>Menu Payable Amount</label>
-                            <input required name="payable_amount" readonly ng-model="menu.payable_amount" />
-                            <div ng-messages="thisForm.payable_amount.$error">
-                                <div ng-message='required'>required.</div>
-                            </div>
-                        </md-input-container>
-                        <md-input-container flex="5">                            
-                        </md-input-container>
-                    </div>
                     <div layout="row" layout-align="end center" flex="100">
                         <md-button ng-disabled="thisForm.$invalid || wait " ng-click="submit(menu)" class="md-raised md-accent">
                             Make Menu
                         </md-button>
                     </div>
-                </form>            
+                </form>
             </div>
         </md-card>
     </md-input-container>
- </div>   
-        
+</div>

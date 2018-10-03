@@ -262,7 +262,6 @@ angular.module('App').factory("services", function($http) {
     });
   };
 
-
   // Category Transaction
   
   obj.getCategories = function(){

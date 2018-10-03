@@ -13,14 +13,26 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
     <md-input-container flex="50">                
         <md-card class="md-whiteframe-1dp md-padding">
             <form role="form" name="thisForm" class="md-padding"> 
-                <md-input-container style="width:40%">
-                    <label>Please Add Number Guest</label>
-                    <input name="guestnumber" required type="number" min="1" ng-model="guestnumber" />
-                    <div ng-messages="thisForm.guestnumber.$error">
-                        <div ng-message='required'>required.</div>
-                        <div ng-message='type'>number only</div>
-                    </div>
-                </md-input-container>
+                <div layout="row">
+                    <md-input-container flex="45">
+                        <label>Please Add Number Guest</label>
+                        <input name="guestnumber" required type="number" min="1" ng-model="guestnumber" />
+                        <div ng-messages="thisForm.guestnumber.$error">
+                            <div ng-message='required'>required.</div>
+                            <div ng-message='type'>number only</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container flex="10">
+                    </md-input-container>
+                    <md-input-container flex="45">
+                        <label>Reduce(%)</label>
+                        <input name="reduce_percent" required type="number" min="0" ng-model="reduce_percent" />
+                        <div ng-messages="thisForm.reduce_percent.$error">
+                            <!-- <div ng-message='required'>required.</div> -->
+                            <div ng-message='type'>number only</div>
+                        </div>
+                    </md-input-container>
+                </div>
             </form>
             <md-menu-item>
                 <md-button layout-fill md-ink-ripple ng-click="ShowMyCategory()">
@@ -71,9 +83,9 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                     <table id="table" class="table table-hover"  style="max-height:50px" >
                         <thead>
                             <tr>
-                                <th width="20%" ng-click="sort('title')"></th>
-                                <th width="5%" ng-click="sort('price')"></th>
-                                <!--<th width="5%">CGST </th>
+                                <th width="20%" ng-click="sort('title')">Product name</th>
+                            <!--<th width="5%" ng-click="sort('price')"></th>
+                                <th width="5%">CGST </th>
                                 <th width="5%">SGST </th>
                                 <th width="5%">Quantity </th>
                                 <th width="2%"> Add </th>-->
@@ -82,8 +94,8 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         <tbody>
                             <tr ng-repeat="p in products |orderBy:sortKey:reverse|filter:search">
                                 <td data-title="Name" ng-click="AddProduct($event, p)">{{p.title}}</td>
-                                <td data-title="Price">price: {{p.price }}</td>
-                                <!--<td data-title="CGST">{{p.cgst }}</td>
+                            <!--<td data-title="Price">price: {{ product_price[p.id] }}</td>
+                                <td data-title="CGST">{{p.cgst }}</td>
                                 <td data-title="SGST">{{p.sgst }}</td>
                                 <td data-title="quantity"><input type="number" style="width:40px" ng-init="p.quantity=1" ng-model="p.quantity"></td>
                                 <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
@@ -108,8 +120,8 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                             <tr>
                                 <th width="20%">Product</th>
                                 <th width="5%">Price</th>
-                                <th width="5%">CGST </th>
-                                <th width="5%">SGST </th>
+                                <!-- <th width="5%">CGST </th>
+                                <th width="5%">SGST </th> -->
                                 <th width="15%" style="text-align: center;">Quantity</th>
                                 <th width="2%">Remove</th>
                             </tr>
@@ -118,8 +130,8 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                             <tr ng-repeat="l in particulars">
                                 <td data-title="product" style="padding: 1em 0;">{{ l.title }}</td>
                                 <td data-title="pricascascasces" style="padding: 1em 0;">{{ build.prices[$index] }}</td>
-                                <td data-title="cgst" style="padding: 1em 0;">{{ build.cgst[$index] }}</td>
-                                <td data-title="sgst" style="padding: 1em 0;">{{ build.sgst[$index] }}</td>
+                                <!-- <td data-title="cgst" style="padding: 1em 0;">{{ build.cgst[$index] }}</td>
+                                <td data-title="sgst" style="padding: 1em 0;">{{ build.sgst[$index] }}</td> -->
                                 <td data-title="quantity" style="padding: 0;">
                                     <md-button class="md-icon-button" ng-click="build.quantity[$index]!==1? RemoveProductcount($event, l) : null" style="margin: 0;">
                                         <md-icon class="material-icons md-light md-8">remove_circle</md-icon>

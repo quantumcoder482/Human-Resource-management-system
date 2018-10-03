@@ -5,15 +5,15 @@
 		public $data = "";
 		
 
-//		const DB_SERVER = "localhost";
-//		const DB_USER = "root";                
-//		const DB_PASSWORD = "";
-//		const DB = "hrmanagedb";
-
 		const DB_SERVER = "localhost";
-		const DB_USER = "m89caterersb_hrmanageuser";
-		const DB_PASSWORD = "buzzbee123";
+		const DB_USER = "root";                
+		const DB_PASSWORD = "";
 		const DB = "m89caterersb_hrmanagedb";
+
+		// const DB_SERVER = "localhost";
+		// const DB_USER = "m89caterersb_hrmanageuser";
+		// const DB_PASSWORD = "buzzbee123";
+		// const DB = "m89caterersb_hrmanagedb";
 
 		private $db = NULL;
 		private $mysqli = NULL;
@@ -339,7 +339,7 @@
 
 			$myorder['item_names']=mysqli_real_escape_string($this->mysqli, $myorder['item_names']);
 			
-			$column_names = array('name','items', 'quantity', 'prices','item_names', 'bill_amount','payable_amount','cgst','sgst','order_cgst','order_sgst');
+			$column_names = array('name','items', 'quantity', 'prices','item_names', 'total_price');
 			$table_name = 'menu';
 			$this->post_one($myorder, $column_names, $table_name);
 		}
@@ -556,7 +556,7 @@
 			}
 			
 			$product = $this->_request['product'];
-			$query="SELECT c.*,i.title,i.unit FROM consumption c, ingredients i where c.ingredient=i.id and c.product='$product'";
+			$query="SELECT c.*,i.title,i.unit,i.price FROM consumption c, ingredients i where c.ingredient=i.id and c.product='$product'";
 			$this->get_list($query);
 		} 
 		
@@ -800,7 +800,7 @@
 				$this->response('',406);
 			}
 			$key = $this->_request['key'];
-			$query="SELECT distinct r.id, r.title, r.price,r.cgst,r.sgst FROM product r WHERE r.title LIKE '%$key%'";
+			$query="SELECT distinct r.id, r.title, r.description FROM product r WHERE r.title LIKE '%$key%'";
 			$this->get_list($query);
 		}
 		
@@ -809,7 +809,7 @@
 				$this->response('',406);
 			}
 			$key = $this->_request['key'];
-			$query="SELECT distinct r.id, r.title, r.price,r.cgst,r.sgst,r.gst_price FROM product r WHERE r.status=1 and r.title LIKE '%$key%'";
+			$query="SELECT distinct r.id, r.title, r.description FROM product r WHERE r.status=1 and r.title LIKE '%$key%'";
 			$this->get_list($query);
 		}
 
@@ -848,7 +848,7 @@
 			$product = json_decode(file_get_contents("php://input"),true);
 			$product['title']=mysqli_real_escape_string($this->mysqli, $product['title']);
 			$product['quantity']=mysqli_real_escape_string($this->mysqli, $product['quantity']);
-			$column_names = array('category', 'subcat', 'title', 'quantity','price','status','cgst','sgst','gst_price', 'description');
+			$column_names = array('category', 'subcat', 'title', 'quantity','status','description');
 			$table_name = 'product';
 			$this->post_one($product, $column_names, $table_name);
 		}
@@ -861,7 +861,8 @@
 			$id = (int)$product['id'];
 			$product['product']['title']=mysqli_real_escape_string($this->mysqli, $product['product']['title']);
 			$product['product']['quantity']=mysqli_real_escape_string($this->mysqli, $product['product']['quantity']);
-		    $column_names = array('category', 'subcat', 'title', 'quantity','price','status','cgst','sgst','gst_price');
+			$product['product']['description']=mysqli_real_escape_string($this->mysqli, $product['product']['description']);
+		    $column_names = array('category', 'subcat', 'title', 'quantity','status','description');
 			$table_name = 'product';
 			$this->post_update($id, $product, $column_names, $table_name);
 		}

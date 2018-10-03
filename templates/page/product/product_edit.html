@@ -1,94 +1,78 @@
 <md-card class="md-whiteframe-1dp md-padding">
-  <form role="form" name="thisForm" id="thisForm" novalidate>      
-      <div layout="row">
-        <md-input-container flex="100">
-          <label>Product Name</label>
-          <input required name="title" ng-model="product.title" onkeydown="return !(event.keyCode==13)">
-          <div ng-messages="thisForm.title.$error">
-            <div ng-message="required">required.</div>
+  <form role="form" name="thisForm" id="thisForm" novalidate>
+    <div layout="row">
+      <md-input-container flex="100">
+        <label>Product Name</label>
+        <input required name="title" ng-model="product.title" onkeydown="return !(event.keyCode==13)">
+        <div ng-messages="thisForm.title.$error">
+          <div ng-message="required">required.</div>
+        </div>
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-input-container flex="100">
+        <label>Quantity or size</label>
+        <input required name="quantity" ng-model="product.quantity" onkeydown="return !(event.keyCode==13)">
+        <div ng-messages="thisForm.quantity.$error">
+          <div ng-message="required">required.</div>
+        </div>
+      </md-input-container>
+    </div>
+    <md-input-container>
+      <fieldset>
+        <legend>Category*<span style="color:orange">(Category with orange colour are inactive)</span></legend>
+        <div layout="row" layout-wrap flex>
+          <div flex="33" ng-repeat="item in items">
+            <md-checkbox ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected, selected1)"
+              ng-style="item.status === 1 ? { } : { color:'#d84315' }">
+              {{ item.title }}
+            </md-checkbox>
           </div>
-        </md-input-container>
-      </div>    
-      <div layout="row">
-         <md-input-container flex="100">
-          <label>Quantity or size</label>
-          <input required name="quantity" ng-model="product.quantity" onkeydown="return !(event.keyCode==13)">
-          <div ng-messages="thisForm.quantity.$error">
-            <div ng-message="required">required.</div>
+        </div>
+      </fieldset>
+    </md-input-container>
+    <md-input-container>
+      <fieldset>
+        <legend>Sub-Category <span style="color:orange">(Subcategory with orange colour are inactive)</span></legend>
+        <div layout="row" layout-wrap flex>
+          <div flex="33" ng-repeat="item1 in items1">
+            <md-checkbox ng-checked="exists(item1.id, selected1)" ng-click="toggle1(item1.id, selected1)" ng-style="item1.status === 1 ? { } : { color:'#d84315'}">
+              {{ item1.title }}
+            </md-checkbox>
           </div>
-        </md-input-container>        
-      </div>    
-      <md-input-container>
-       <fieldset>
-         <legend>Category*<span style="color:orange">(Category with orange colour are inactive)</span></legend>
-          <div layout="row" layout-wrap flex>
-            <div flex="33" ng-repeat="item in items">
-              <md-checkbox ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected, selected1)" ng-style="item.status === 1 ? { } : { color:'#d84315' }">
-                {{ item.title }} 
-              </md-checkbox>
-            </div>
-          </div>
-          </fieldset>
-      </md-input-container>      
-      <md-input-container>
-       <fieldset>
-         <legend>Sub-Category <span style="color:orange">(Subcategory with orange colour are inactive)</span></legend>
-          <div layout="row" layout-wrap flex>
-            <div flex="33" ng-repeat="item1 in items1">
-              <md-checkbox ng-checked="exists(item1.id, selected1)" ng-click="toggle1(item1.id, selected1)" ng-style="item1.status === 1 ? { } : { color:'#d84315'}">
-                {{ item1.title }} 
-              </md-checkbox>
-            </div>
-          </div>
-          </fieldset>
-      </md-input-container>      
-      <div layout="row">         
-       <md-input-container flex="45">
+        </div>
+      </fieldset>
+    </md-input-container>
+    <div layout="row">
+      <md-input-container flex="50">
         <label>Product Status</label>
         <md-select required name="status" ng-model="product.status">
-         <md-option ng-value="1">Active</md-option>
+          <md-option ng-value="1">Active</md-option>
           <md-option ng-value="0">Inactive</md-option>
         </md-select>
         <div ng-messages="thisForm.status.$error">
           <div ng-message="required">required.</div>
         </div>
-        </md-input-container>     
-        <md-input-container flex="10">
-        </md-input-container>           
-        <md-input-container flex="45">
-          <label>Selling Price</label>
-          <input type="number" min="1" ng-pattern="^[0-9]" required name="price" ng-model="product.price" max="{{ product.mrp }}" onkeydown="return !(event.keyCode==13)">
-          <div ng-messages="thisForm.price.$error">
-            <div ng-message="required">required.</div>
-             <div ng-message="max">Should less than MRP.</div>
-          </div>
-        </md-input-container>          
-      </div>  
-      <div layout="row">          
-          <md-input-container flex="45">
-          <label> Central GST</label>
-          <input type="number" min="0" ng-pattern="^[0-9]" required  name="cgst" ng-model="product.cgst" onkeydown="return !(event.keyCode==13)">
-          <div ng-messages="thisForm.cgst.$error">
-            <div ng-message="required">required.</div>
-          </div>
-      </md-input-container>          
+      </md-input-container>
       <md-input-container flex="10">
-      </md-input-container>          
-          <md-input-container flex="45">
-          <label> State GST</label>
-          <input type="number" min="0" ng-pattern="^[0-9]" required  name="sgst" ng-model="product.sgst" onkeydown="return !(event.keyCode==13)">
-          <div ng-messages="thisForm.sgst.$error">
-            <div ng-message="required">required.</div>
-          </div>
-      </md-input-container> 
-    </div>    
+      </md-input-container>
+    </div>
+    <div layout="row">
+      <md-input-container flex="80">
+        <label>Product Description </label>
+        <textarea type="text" ng-model="product.description" rows="3" md-maxlength="150" required></textarea>
+        <div ng-messages="thisForm.description.$error">
+          <div ng-message='required'>required.</div>
+        </div>
+      </md-input-container>
+    </div>
     <div class="md-actions md-padding" layout="row" ng-if="loader">
-      <img src="css/loading.gif" style="height:100px; width:100px; padding:10px"> 
+      <img src="css/loading.gif" style="height:100px; width:100px; padding:10px">
     </div>
     <div class="md-actions md-padding" layout="row" ng-if="!loader">
-       <span flex></span>
-       <md-button ng-disabled="isClean() || thisForm.$invalid ||invalid ||invalid1" ng-click="submit(product)" class="md-raised md-accent">
-          {{buttonText}}
+      <span flex></span>
+      <md-button ng-disabled="isClean() || thisForm.$invalid ||invalid ||invalid1" ng-click="submit(product)" class="md-raised md-accent">
+        {{buttonText}}
       </md-button>
     </div>
   </form>
