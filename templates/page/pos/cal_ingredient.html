@@ -16,7 +16,7 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                 <div layout="row">
                     <md-input-container flex="45">
                         <label>Please Add Number Guest</label>
-                        <input name="guestnumber" required type="number" min="1" ng-model="guestnumber" />
+                        <input name="guestnumber" required type="number" min="1" ng-model="guestnumber"/>
                         <div ng-messages="thisForm.guestnumber.$error">
                             <div ng-message='required'>required.</div>
                             <div ng-message='type'>number only</div>
@@ -164,7 +164,7 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
 									<th ng-click="sort('id')" width="1%">No</th>
 									<th ng-click="sort('title')" width="20%">Ingredient</th>
 									<th ng-click="sort('unit')" width="1%">Unit</th>
-									<th ng-click="sort('price')" width="30%" style="text-align:center;"><b style="background: #d9ecfc;">Needed Amount</b></th>
+									<th ng-click="sort('consumption')" width="30%" style="text-align:center;"><b style="background: #d9ecfc;">Needed Amount</b></th>
 									<th ng-click="sort('stock')" width="30%">Current Stock</th>
 								</tr>
 						</thead>
@@ -173,7 +173,7 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
 									<td data-title="No">{{$index+1}}</td>
 									<td data-title="Name">{{c.title}}</td>
 									<td data-title="Name">{{c.unit}}</td>
-									<td data-title="Needed" style="text-align:center;"><b style="background: #d9ecfc;">{{c.price}}</b></td> 
+                                    <td data-title="Needed" style="text-align:center;"><b ng-if="c.consumption" style="background: #d9ecfc;">{{c.consumption*guestnumber-c.consumption*guestnumber*reduce_percent/100}}</b></td>
 									<td data-title="Stock">{{c.stock}}</td>
                                 </tr>
 								<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>

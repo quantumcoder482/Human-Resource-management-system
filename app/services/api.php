@@ -451,7 +451,7 @@
 			$booking['order_comment']=mysqli_real_escape_string($this->mysqli, $booking['order_comment']);
 			$booking['item_names']=mysqli_real_escape_string($this->mysqli, $booking['item_names']);
 			
-			$column_names = array('items', 'quantity', 'prices','item_names','user_id','contact_name','contact_number','contact_address','bill_amount','payable_amount','order_comment','discount','cgst','sgst','order_cgst','order_sgst','type', 'customer_amount', 'totalpaid', 'dispute', 'booking_date','booking_date1', 'booking_date2', 'booking_date3', 'booking_date4');
+			$column_names = array('items', 'quantity', 'prices','item_names','user_id','contact_name','contact_number','contact_address','bill_amount','payable_amount','order_comment','discount','cgst','sgst','order_cgst','order_sgst','type', 'customer_amount', 'totalpaid', 'dispute', 'booking_date', 'booking_name', 'booking_date1', 'booking_date2', 'booking_date3', 'booking_date4');
 			$table_name = 'booking';
 			$this->post_one($booking, $column_names, $table_name);
 		}

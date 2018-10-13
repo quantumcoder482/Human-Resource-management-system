@@ -10,6 +10,7 @@ angular.module('App').controller('CalingredientController',
 		root.toolbar_menu = null;
 		var original;
 		self.guestnumber = 1;
+		self.reduce_percent=0;
 
 		$rootScope.pagetitle = 'Calculate Ingredient';
 
@@ -36,7 +37,7 @@ angular.module('App').controller('CalingredientController',
 		};
 		self.build = angular.copy(original);
 		self.product_price=[];
-		for(i=0;i<=10000;i++){self.product_price.push(0.00)}
+		
 
 		// Calculate products price
 		// services.getProducts().then(function (data) {
@@ -123,21 +124,13 @@ angular.module('App').controller('CalingredientController',
 			// console.log(self.product_price[8]);
 		};
 
-		//   self.SgstEmpty = function(){// myone
-
-		//   	if(self.build.order_sgst != 0){
-
-		//   		self.build.payable_amount = Number(self.build.payable_amount) - Number(self.build.order_sgst);
-		//   		self.build.discount = Number(self.build.order_sgst);
-		// 	  	self.build.order_sgst= 0;
-		// 	    $mdToast.show($mdToast.simple().content("Small pizza Cost is Free.").position('bottom right'));
-
-		//     }
-
-		//  };	
 
 		services.getIngredients().then(function (data) {
 			self.ingredients = data.data;
+			for(i=0;i<self.ingredients.length;i++){
+				self.ingredients[i].consumption=0;
+			}
+			console.log(self.ingredients);
 			self.loading = false;
 		});
 
@@ -173,14 +166,15 @@ angular.module('App').controller('CalingredientController',
 
 			});
 
+			// Calculate consumption
 			services.getconsumptionByproduct(p.id).then(function (data) {
 				if (data.data == '') alert("Not defined consumption of product");
 				var result = self.ingredients;
 				for (var i = 0; i < data.data.length; i++) {
 					var kid = find_array_id(result, 'id', data.data[i].ingredient);
 					if (kid > -1) {
-						result[kid].price = Number(result[kid].price);
-						result[kid].price += data.data[i].consumption * self.guestnumber;
+						result[kid].consumption = Number(result[kid].consumption);
+						result[kid].consumption += Number(data.data[i].consumption);
 					}
 				}
 				self.ingredients = result;
@@ -216,6 +210,19 @@ angular.module('App').controller('CalingredientController',
 
 				});
 
+				services.getconsumptionByproduct(p.id).then(function (data) {
+					if (data.data == '') alert("Not defined consumption of product");
+					var result = self.ingredients;
+					for (var i = 0; i < data.data.length; i++) {
+						var kid = find_array_id(result, 'id', data.data[i].ingredient);
+						if (kid > -1) {
+							result[kid].consumption = Number(result[kid].consumption);
+							result[kid].consumption -= Number(data.data[i].consumption);
+						}
+					}
+					self.ingredients = result;
+				});
+
 				$mdToast.show($mdToast.simple().content(p.title + " -" + 1 + " Unit" + " " + "removed").position('bottom right'));
 			}
 		};
@@ -244,6 +251,19 @@ angular.module('App').controller('CalingredientController',
 					self.particulars = data.data;
 				});
 			}
+
+			services.getconsumptionByproduct(p.id).then(function (data) {
+				if (data.data == '') alert("Not defined consumption of product");
+				var result = self.ingredients;
+				for (var i = 0; i < data.data.length; i++) {
+					var kid = find_array_id(result, 'id', data.data[i].ingredient);
+					if (kid > -1) {
+						result[kid].consumption = Number(result[kid].consumption);
+						result[kid].consumption -= Number(data.data[i].consumption) * self.qnt;
+					}
+				}
+				self.ingredients = result;
+			});
 
 			$mdToast.show($mdToast.simple().content(p.title + " -" + self.qnt + " Unit" + " " + "Removed").position('bottom right'));
 		};

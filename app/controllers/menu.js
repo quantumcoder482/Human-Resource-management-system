@@ -19,7 +19,7 @@ angular.module('App').controller('MenuController',
       payable_amount: 0,
     };
     self.menu = angular.copy(original);
-    self.menu.total_price=0.00;
+    self.menu.total_price = 0.00;
 
     self.showCategory = true;
     self.showSubcate = false;
@@ -95,11 +95,11 @@ angular.module('App').controller('MenuController',
         }
         self.menu.total_price = Number(self.menu.total_price) + Number(product_price);
         self.menu.total_price = self.menu.total_price.toFixed(2);
-        console.log(self.menu.total_price);
+        // console.log(self.menu.total_price);
 
       });
 
-      
+
       services.getOrderProduct(self.menu.items.join()).then(function (data) {
         self.particulars = data.data;
       });
@@ -119,7 +119,7 @@ angular.module('App').controller('MenuController',
           for (i of ingredients) {
             product_price += Number(i.price) * Number(i.consumption);
           }
-          self.menu.total_price = Number(self.menu.total_price)-Number(product_price);
+          self.menu.total_price = Number(self.menu.total_price) - Number(product_price);
           self.menu.total_price = self.menu.total_price.toFixed(2);
           console.log(self.menu.total_price);
 
@@ -151,7 +151,7 @@ angular.module('App').controller('MenuController',
         for (i of ingredients) {
           product_price += Number(i.price) * Number(i.consumption);
         }
-       self.menu.total_price = Number(self.menu.total_price) - Number(product_price) * self.qnt;
+        self.menu.total_price = Number(self.menu.total_price) - Number(product_price) * self.qnt;
         self.menu.total_price = self.menu.total_price.toFixed(2);
         console.log(self.menu.total_price);
 
@@ -175,7 +175,7 @@ angular.module('App').controller('MenuController',
       b.quantity = b.quantity.join() + ',';
       b.item_names = b.item_names.join(',%,%') + ',%,%';
 
-      services.insertMenu(b).then(function (resp) { 
+      services.insertMenu(b).then(function (resp) {
         //console.log(resp);
         if (resp.status == "success") {
           self.afterSubmit(resp);

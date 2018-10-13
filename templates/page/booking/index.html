@@ -55,6 +55,14 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         </md-input-container>
                     </div>
                     <md-input-container>
+                        <label>Booking Name</label>
+                        <input name="booking_name" ng-model="build.booking_name" required />
+                        <div ng-messages="thisForm.booking_name.$error">
+                            <div ng-message='required'>required.</div>
+                            <div ng-message='minlength'>min length 5.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
                         <label>Search User by name or phone  Here....</label>
                         <input  ng-model="ufilter" maxlength="50" >
                     </md-input-container>
