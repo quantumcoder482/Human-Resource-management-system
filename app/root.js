@@ -136,7 +136,15 @@ angular.module('App').controller('RootCtrl',
             name: 'INGREDIENTS',
             icon: 'dns',
             link: '#ingredient'
-            }/*, {
+            }, {
+            name: 'STOCK-VALUE',
+            icon: 'dns',
+            link: '#stock_value'
+            },{
+            name: 'STOCK ADD/DEDUCT',
+            icon: 'dns',
+            link: '#stock_add_deduct'
+            } /*, {
             name: 'STOCK HISTORY',
             icon: 'storage',
             link: '#stockhistory'
@@ -222,6 +230,10 @@ angular.module('App').controller('RootCtrl',
           name: 'ALL VENDER',
           icon: 'event',
           link: '#vendor'
+        },{
+          name: 'VENDER STOCK UPDT',
+          icon: 'dns',
+          link: '#vendor_stock'
         },/*{
           name: 'ADD VENDER',
           icon: 'control_point',

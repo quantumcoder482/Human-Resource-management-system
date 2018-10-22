@@ -2,11 +2,11 @@ var app=angular.module('App').controller('StockController',
 function($rootScope, $scope, $http, $mdToast, $cookies, $mdDialog, $route, services,$routeParams){
   if($cookies.session_uid == 'null' || $cookies.session_uid == null){ $scope.Expire_Session(); }
    
-    var self             = $scope;
+  var self             = $scope;
 	var root             = $rootScope;
-    self.loading         = true;
+  self.loading         = true;
 
-    $rootScope.pagetitle = 'Stock';
+  $rootScope.pagetitle = 'Stock';
 	
 	root.toolbar_menu = { title: 'Add Stock' }
 	root.barAction =  function(ev) {

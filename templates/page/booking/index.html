@@ -14,6 +14,34 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
         <md-card class="md-whiteframe-1dp md-padding">
             <div class="table-responsive-vertical">
                 <form role="form" name="thisForm" class="md-padding">
+                    <md-input-container>
+                        <label>Booking Name</label>
+                        <input name="booking_name" ng-model="build.booking_name" required />
+                        <div ng-messages="thisForm.booking_name.$error">
+                            <div ng-message='required'>required.</div>
+                            <div ng-message='minlength'>min length 5.</div>
+                        </div>
+                    </md-input-container>
+                    <div layout="row">
+                        <md-input-container flex="45">
+                            <label>Number of Guests</label>
+                            <input name="guest_num" type="number" min="1" ng-model="build.guest_num" required />
+                            <div ng-messages="thisForm.guest_num.$error">
+                                <div ng-message='required'>required.</div>
+                                <div ng-message='type'>number only</div>
+                            </div>
+                        </md-input-container>
+                        <md-input-container flex="10">
+                        </md-input-container>
+                        <md-input-container flex="45">
+                            <label>Reduce(%)</label>
+                            <input name="reduce" type="number" min="0" ng-model="build.reduce" required />
+                            <div ng-messages="thisForm.reduce.$error">
+                                <!-- <div ng-message='required'>required.</div> -->
+                                <div ng-message='type'>number only</div>
+                            </div>
+                        </md-input-container>
+                    </div>
                     <div layout="row">
                         <md-input-container flex="80">
                             <label>Booking Date</label>
@@ -54,14 +82,6 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                             <input name="booking_date_fifth" ng-model="build.booking_date4" maxlength="10" datetime-picker date-format="yyyy-MM-dd" date-only  onkeydown="return !(event.keyCode==13)"/>
                         </md-input-container>
                     </div>
-                    <md-input-container>
-                        <label>Booking Name</label>
-                        <input name="booking_name" ng-model="build.booking_name" required />
-                        <div ng-messages="thisForm.booking_name.$error">
-                            <div ng-message='required'>required.</div>
-                            <div ng-message='minlength'>min length 5.</div>
-                        </div>
-                    </md-input-container>
                     <md-input-container>
                         <label>Search User by name or phone  Here....</label>
                         <input  ng-model="ufilter" maxlength="50" >
@@ -113,41 +133,6 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         </div>
                     </md-input-container>
                     <md-input-container>
-                        <label>Bill Amount</label>
-                        <input name="bill_amount"  ng-model="build.bill_amount" readonly required />
-                        <div ng-messages="thisForm.bill_amount.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Total CGST</label>
-                        <input name="order_cgst"  ng-model="build.order_cgst" readonly required />
-                        <div ng-messages="thisForm.order_cgst.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Total SGST</label>
-                        <input name="order_sgst" ng-model="build.order_sgst" readonly required />
-                        <div ng-messages="thisForm.order_sgst.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Discount</label>
-                        <input name="discount"  ng-model="build.discount" ng-change="ChangeDiscount(build.discount)" />
-                        <div ng-messages="thisForm.discount.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container>
-                        <label>Payable Amount</label>
-                        <input required name="payable_amount" readonly ng-model="build.payable_amount" />
-                        <div ng-messages="thisForm.payable_amount.$error">
-                            <div ng-message='required'>required.</div>
-                        </div>
-                    </md-input-container>       
-                    <md-input-container>
                         <label>Order Comments</label>
                         <input name="order_comment" ng-model="build.order_comment" />
                         <div ng-messages="thisForm.order_comment.$error">
@@ -155,17 +140,8 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                             <div ng-message='minlength'>min length 5.</div>
                         </div>
                     </md-input-container> 
-                    <md-input-container>
-                        <label>Order Type </label>
-                        <md-select required name="type" ng-model="build.type">
-                            <md-option ng-repeat="o in ordertype" ng-value="o.id">{{o.name}}</md-option>
-                        </md-select>
-                        <div ng-messages="thisForm.type.$error">
-                            <div ng-message="required">required.</div>
-                        </div>
-                    </md-input-container>
                     <div layout="row" layout-align="end center" flex="100">
-                        <md-button ng-disabled="thisForm.$invalid || wait || build.payable_amount==0" ng-click="submit(build)" class="md-raised md-accent">
+                        <md-button ng-disabled="thisForm.$invalid || wait || product_status" ng-click="submit(build)" class="md-raised md-accent">
                             Build Booking
                         </md-button>
                     </div>
@@ -230,9 +206,6 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                                     <thead>
                                         <tr>
                                             <th width="20%" ng-click="sort('title')">Product</th>
-                                            <th width="5%" ng-click="sort('price')">Price </th>
-                                            <th width="5%">CGST </th>
-                                            <th width="5%">SGST </th>
                                             <th width="5%">Quantity </th>
                                             <th width="2%"> Add </th>
                                         </tr>
@@ -240,9 +213,6 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                                     <tbody>
                                         <tr ng-repeat="p in products |orderBy:sortKey:reverse|filter:search">
                                             <td data-title="Name">{{p.title}}</td>
-                                            <td data-title="Price">{{p.price }}</td>
-                                            <td data-title="CGST">{{p.cgst }}</td>
-                                            <td data-title="SGST">{{p.sgst }}</td>
                                             <td data-title="quantity"><input type="number" style="width:40px" ng-init="p.quantity=1" ng-model="p.quantity"></td>
                                             <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
                                                 <md-button class="md-icon-button" ng-click="AddProduct($event, p)">
@@ -260,49 +230,49 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                 <md-tab label="Menu">
                     <md-content class="md-padding">                                
                         <div class="table-responsive-vertical">
-                                <md-input-container flex>    
-                                    <label>Search Text Here....</label>
-                                    <input  ng-model="search_menu" maxlength="100">
-                                </md-input-container>             
-                                <md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
-                                    <md-icon>fast_rewind</md-icon>
-                                </md-button>                    
-                                {{ currentPage+1 }}/{{numberOfPages()}}             
-                                <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
-                                    <md-icon>fast_forward</md-icon> 
-                                </md-button>
-                                <table id="table" class="table table-hover">
-                                    <thead>
-                                            <tr >
-                                                <th width="2%" ng-click="sort_menu('id')">No</th>
-                                                <th width="8%" ng-click="sort_menu('name')"> Name</th>
-                                                <th width="60%" ng-click="sort_menu('info')">Info </th>
-                                                <th width="3%" ng-click="sort_menu('price')">Price </th>
-                                                <th width="1%"></th>
-                                            </tr>
-                                    </thead>
-                                    <tbody>
-                                            <tr ng-repeat="j in menulist | filter:search_menu |orderBy:sortKey:reverse | startFrom:currentPage*pageSize | limitTo:pageSize">
-                                                <td data-title="No">{{ $index+1 }}</td>                                            
-                                                <td data-title="Name">{{j.name}}</td>
-                                                <td data-title="Info">{{j.info }}</td>
-                                                <td data-title="Price">{{j.price }}</td>
-                                                <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
-                                                    <md-button class="md-icon-button" ng-click="AddMenuToBooking($event, j)">
-                                                        <md-icon>control_point</md-icon>
-                                                    </md-button>
-                                                </td> 
-                                            </tr>
-                                            <tr ng-if="loading"><td style="text-align:center;" colspan="10"><img src="css/loading.gif" style="height:5px; width:120px"></td></tr>
-                                        </tbody>
-                                </table>                    
-                                <md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
-                                    <md-icon>fast_rewind</md-icon>
-                                </md-button>
-                                {{ currentPage+1 }}/{{numberOfPages()}}
-                                <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
-                                    <md-icon>fast_forward</md-icon> 
-                                </md-button>
+                            <md-input-container flex>    
+                                <label>Search Text Here....</label>
+                                <input  ng-model="search_menu" maxlength="100">
+                            </md-input-container>             
+                            <md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
+                                <md-icon>fast_rewind</md-icon>
+                            </md-button>                    
+                            {{ currentPage+1 }}/{{numberOfPages()}}             
+                            <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
+                                <md-icon>fast_forward</md-icon> 
+                            </md-button>
+                            <table id="table" class="table table-hover">
+                                <thead>
+                                        <tr >
+                                            <th width="2%" ng-click="sort_menu('id')">No</th>
+                                            <th width="8%" ng-click="sort_menu('name')"> Name</th>
+                                            <th width="60%" ng-click="sort_menu('info')">Info </th>
+                                            <!-- <th width="3%" ng-click="sort_menu('price')">Price </th> -->
+                                            <th width="1%"></th>
+                                        </tr>
+                                </thead>
+                                <tbody>
+                                        <tr ng-repeat="j in menulist | filter:search_menu |orderBy:sortKey:reverse | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                            <td data-title="No">{{ $index+1 }}</td>                                            
+                                            <td data-title="Name">{{j.name}}</td>
+                                            <td data-title="Info">{{j.info }}</td>
+                                            <!-- <td data-title="Price">{{j.price }}</td> -->
+                                            <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+                                                <md-button class="md-icon-button" ng-click="AddMenuToBooking($event, j)">
+                                                    <md-icon>control_point</md-icon>
+                                                </md-button>
+                                            </td> 
+                                        </tr>
+                                        <tr ng-if="loading"><td style="text-align:center;" colspan="10"><img src="css/loading.gif" style="height:5px; width:120px"></td></tr>
+                                    </tbody>
+                            </table>                    
+                            <md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
+                                <md-icon>fast_rewind</md-icon>
+                            </md-button>
+                            {{ currentPage+1 }}/{{numberOfPages()}}
+                            <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
+                                <md-icon>fast_forward</md-icon> 
+                            </md-button>
                         </div>         
                     </md-content>
                   </md-tab>
@@ -316,22 +286,16 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                     <table id="table" class="table table-hover">
                         <thead>
                             <tr>
-                            <th width="20%">Product</th>
-                            <th width="5%">Price</th>
-                            <th width="5%">CGST </th>
-                            <th width="5%">SGST </th>
-                            <th width="15%" style="text-align: center;">Quantity</th>
-                            <th width="2%">Remove</th>
-                        </tr>
+                                <th width="20%">Product</th>
+                                <th width="10%">Quantity</th>
+                                <th width="2%">Remove</th>
+                            </tr>
                         </thead>
 
                         <tbody>
                             <tr ng-repeat="l in particulars">
-                                <td data-title="product" style="padding: 1em 0;">{{ l.title }}</td>
-                                <td data-title="pricascascasces" style="padding: 1em 0;">{{ build.prices[$index] }}</td>
-                                <td data-title="cgst" style="padding: 1em 0;">{{ build.cgst[$index] }}</td>
-                                <td data-title="sgst" style="padding: 1em 0;">{{ build.sgst[$index] }}</td>
-                                <td data-title="quantity" style="padding: 0;">
+                                <td data-title="product">{{ l.title }}</td>
+                                <td data-title="quantity">
                                     <md-button class="md-icon-button" ng-click="build.quantity[$index]!==1? RemoveProductcount($event, l) : null" style="margin: 0;">
                                         <md-icon class="material-icons md-light md-8">remove_circle</md-icon>
                                     </md-button>
@@ -340,7 +304,7 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                                         <md-icon class="material-icons md-light md-8">add_circle</md-icon>
                                     </md-button>
                                 </td>                            
-                                <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
+                                <td data-title="Banner">
                                     <md-button class="md-icon-button" ng-click="RemoveProduct($event, l)">
                                         <md-icon>delete</md-icon>
                                     </md-button>
@@ -348,7 +312,12 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                             </tr>		  
                         </tbody>
                     </table>
-                </div>   
+                </div>  
+                <!-- <div layout="row" layout-align="end center" flex="100">
+                    <md-button ng-disabled="thisForm.$invalid || wait || product_status" ng-click="print(build)" class="md-raised md-accent">
+                        Print Booking Receipt
+                    </md-button>
+                </div> -->
             </md-input-container> 
         </md-card>                
     </md-input-container>

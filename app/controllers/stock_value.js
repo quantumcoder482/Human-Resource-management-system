@@ -1,33 +1,45 @@
-var app = angular.module('App').controller('CategoryController',
+var app = angular.module('App').controller('StockValueController',
   function ($rootScope, $scope, $http, $mdToast, $cookies, $mdDialog, $route, services) {
     if ($cookies.session_uid == 'null' || $cookies.session_uid == null) {
       $scope.Expire_Session();
     }
 
-    $rootScope.pagetitle = 'Category';
+    $rootScope.pagetitle = 'Stock Values';
     var self = $scope;
     var root = $rootScope;
     self.loading = true;
+    root.toolbar_menu = null;
+    self.ingredients = [];
 
-    root.toolbar_menu = {
-      title: 'Add Category'
-    }
-    root.barAction = function (ev) {
-      self.addCategory(ev);
-    }
 
-    services.getCategories().then(function (data) {
-      self.categories = data.data;
+    services.getIngredients().then(function (data) {
+     
+      self.ingredients = data.data;
+      self.future_stocks = [];
+      self.variances = [];
+      for(i of self.ingredients){
+        services.BookingStockSumById(i.id).then(function(res){
+          if(res.data.ingredient){
+            self.future_stocks[res.data.ingredient] = res.data.total;
+            self.variances[res.data.ingredient] = i.stock - res.data.total;
+          }
+        });
+      }
       self.loading = false;
     });
 
     $scope.numberOfPages = function () {
-      return Math.ceil(self.categories.length / $scope.pageSize);
+      return Math.ceil(self.ingredients.length / $scope.pageSize);
     }
 
     $scope.sort = function (keyname) {
       $scope.sortKey = keyname; //set the sortKey to the param passed
       $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    }
+
+
+    self.ViewIngredientStockHistory = function (ev, id) {
+      window.location.href = '#stock/' + id;
     }
 
 
@@ -45,7 +57,7 @@ var app = angular.module('App').controller('CategoryController',
           c.status = 1;
         }
         $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
-        services.updateCategory(c.id, c).then(function (resp) {
+        services.updateIngredient(c.id, c).then(function (resp) {
           self.afterSubmit(resp);
         });
       }, function () {});
@@ -58,44 +70,44 @@ var app = angular.module('App').controller('CategoryController',
         .targetEvent(ev)
         .ok('OK').cancel('CANCEL');
       $mdDialog.show(confirm).then(function () {
-        /*  services.deleteCategory(c.id).then(function(res){
-          if(res.status == 'success'){
-            $mdToast.show($mdToast.simple().hideDelay(1000).content('Delete Category '+c.title+' Success!').position('bottom right'))
-            .then(function() {
-              window.location.reload();
-            });
-          }else{
-            $mdToast.show(
-              $mdToast.simple().hideDelay(6000).action('CLOSE').content('Opps , Failed delete category '+c.title).position('bottom right')
-            ).then(function(response){
+        /*services.deleteCategory(c.id).then(function(res){
+           if(res.status == 'success'){
+             $mdToast.show($mdToast.simple().hideDelay(1000).content('Delete Category '+c.title+' Success!').position('bottom right'))
+             .then(function() {
+               window.location.reload();
+             });
+           }else{
+             $mdToast.show(
+               $mdToast.simple().hideDelay(6000).action('CLOSE').content('Opps , Failed delete category '+c.title).position('bottom right')
+             ).then(function(response){
 
-            });
-          }
-         });*/
+             });
+           }
+          });*/
       }, function () {});
     };
 
 
 
-    self.addCategory = function (ev) {
+    self.addIngredient = function (ev) {
       $mdDialog.show({
-        controller: CategoryControllerDialog,
-        templateUrl: 'templates/page/category/create.html',
+        controller: IngredientControllerDialog,
+        templateUrl: 'templates/page/ingredients/create.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: false,
-        category: null
+        ingredient: null
       })
     };
 
-    self.editCategory = function (ev, c) {
+    self.editIngredient = function (ev, i) {
       $mdDialog.show({
-        controller: CategoryControllerDialog,
-        templateUrl: 'templates/page/category/create.html',
+        controller: IngredientControllerDialog,
+        templateUrl: 'templates/page/ingredients/create.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose: false,
-        category: c
+        ingredient: i
       })
     };
 
@@ -120,39 +132,34 @@ function CategoryViewBannerControllerDialog($scope, $mdDialog, $mdToast, categor
   self.category = category;
 }
 
-function CategoryControllerDialog($scope, $mdDialog, services, $mdToast, $route, category) {
+function IngredientControllerDialog($scope, $mdDialog, services, $mdToast, $route, ingredient) {
   var self = $scope;
-  var isNew = (category == null) ? true : false;
+  var isNew = (ingredient == null) ? true : false;
   var original;
   //self.dir    = "../../uploads/category/";
 
-  self.title = (isNew) ? 'Add Category' : 'Edit Category';
+  self.title = (isNew) ? 'Add Ingredient' : 'Edit Ingredient';
   self.buttonText = (isNew) ? 'SAVE' : 'UPDATE';
 
   if (isNew) {
     //self.bannerInvalid = true;
     original = {
       title: null,
-      priority: 1,
-      status: 1
+      unit: null,
+      status: 1,
+      stock: 0
     };
-    self.category = angular.copy(original);
-
-    services.GetLastPriority('category').then(function (resp) {
-      self.category.priority = resp.data[0].priority + 1;
-      alert(self.category.priority);
-    });
-
+    self.ingredient = angular.copy(original);
   } else {
     //self.bannerInvalid = false;
-    original = category;
-    self.category = angular.copy(original);
+    original = ingredient;
+    self.ingredient = angular.copy(original);
   }
 
 
 
   self.isClean = function () {
-    return angular.equals(original, self.category);
+    return angular.equals(original, self.ingredient);
   }
 
   self.hide = function () {
@@ -169,11 +176,11 @@ function CategoryControllerDialog($scope, $mdDialog, services, $mdToast, $route,
 
     $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
     if (isNew) {
-      services.insertCategory(c).then(function (resp) {
+      services.insertIngredient(c).then(function (resp) {
         self.afterSubmit(resp);
       });
     } else {
-      services.updateCategory(c.id, c).then(function (resp) {
+      services.updateIngredient(c.id, c).then(function (resp) {
         self.afterSubmit(resp);
       });
     }

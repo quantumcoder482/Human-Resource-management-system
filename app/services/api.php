@@ -126,7 +126,7 @@
 		 * COMMON TRANSACTION
 		 */
 		   
-	   private function Inline_Update(){	
+	    private function Inline_Update(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -152,7 +152,7 @@
 		}
 		
 		
-		 private function get_last_priority(){	
+		private function get_last_priority(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -162,7 +162,7 @@
 			$this->get_list($query);
 		}
 
-     	  private function GetCounter(){	
+     	private function GetCounter(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -172,9 +172,10 @@
 			(SELECT COUNT(*) FROM product) as table3Count, 
 			(SELECT COUNT(*) FROM user ) as table4Count"; 
 			$this->get_list($query);
-		   }
+		}
 		
-		/* get_ordertype */
+		
+		   /* get_ordertype */
 
 		private function get_ordertype(){
 			if($this->get_request_method() != "GET"){
@@ -184,12 +185,13 @@
 			$this->get_list($query);
 		}		
 		
+
 		/*
 		 * STOCK TRANSACTION
 		 */		
 		 
 		 
-		  private function get_Sales_Report(){	
+		private function get_Sales_Report(){	
 		
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
@@ -215,7 +217,7 @@
 			$this->get_list($query);
 		}		
 		
-		 private function get_ingredient_stock_history(){	
+		private function get_ingredient_stock_history(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -225,7 +227,7 @@
 			$this->get_list($query);
 		}		
 
-		 private function get_ingredient_myone_stock_history(){	
+		private function get_ingredient_myone_stock_history(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -234,7 +236,7 @@
 			$this->get_list($query);
 		}	
 
-		 private function get_ideal_stockhistory(){
+		private function get_ideal_stockhistory(){
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -243,7 +245,7 @@
 			$this->get_list($query);
 		}	
 
-		 private function get_consumption(){
+		private function get_consumption(){
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -266,8 +268,10 @@
 				$this->response('',406);
 			}
 			$stock = json_decode(file_get_contents("php://input"),true);
-			$stock['remarks']=mysqli_real_escape_string($this->mysqli, $stock['remarks']);
-			$column_names = array('ingredient', 'quantity', 'remarks','stock_previous','stock_actual');
+			if($stock['remarks']){
+				$stock['remarks']=mysqli_real_escape_string($this->mysqli, $stock['remarks']);
+			}
+			$column_names = array('ingredient', 'type', 'quantity', 'remarks', 'stock_previous', 'function', 'vendor_id', 'booking_id');
 			$table_name = 'stock';
 			$this->post_one($stock, $column_names, $table_name);
 		}
@@ -325,6 +329,26 @@
 		}
 		
 		
+		// Stock 
+		private function get_stockhistory(){
+			if($this->get_request_method() != "GET"){
+				$this->response('',406);
+			}
+			
+			// $query="SELECT a.items AS product_id, a.quantity FROM `myorder` a WHERE DATE >= CAST(CURRENT_TIMESTAMP AS DATE)";// today order list
+			$query="SELECT a.*, b.title, b.unit FROM `stock` a LEFT JOIN `ingredients` b ON a.ingredient = b.id WHERE a.status != '0' GROUP BY a.id ORDER BY a.id DESC ";
+			$this->get_list($query);
+		}
+
+		private function get_booking_sum_byid(){
+			if($this->get_request_method() != 'GET'){
+				$this->response('',406);
+			}
+			$id = $this->_request['id'];
+			$query = "SELECT SUM(quantity) as total, ingredient FROM stock WHERE ingredient = '$id' and booking_id != '0' and status = '0'";
+			$this->get_one($query);
+		}
+
 		
 	    /*
 		 * menu
@@ -367,7 +391,7 @@
 		 */		
 		 
 		  
-		   private function my_orders(){	
+		private function my_orders(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -396,7 +420,7 @@
 			$this->get_list($query);
 		}
 		
-			private function insert_order(){
+		private function insert_order(){
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
@@ -451,7 +475,7 @@
 			$booking['order_comment']=mysqli_real_escape_string($this->mysqli, $booking['order_comment']);
 			$booking['item_names']=mysqli_real_escape_string($this->mysqli, $booking['item_names']);
 			
-			$column_names = array('items', 'quantity', 'prices','item_names','user_id','contact_name','contact_number','contact_address','bill_amount','payable_amount','order_comment','discount','cgst','sgst','order_cgst','order_sgst','type', 'customer_amount', 'totalpaid', 'dispute', 'booking_date', 'booking_name', 'booking_date1', 'booking_date2', 'booking_date3', 'booking_date4');
+			$column_names = array('items', 'quantity', 'item_names', 'user_id', 'contact_name', 'contact_number', 'contact_address', 'order_comment', 'discount', 'type', 'customer_amount', 'totalpaid', 'dispute', 'booking_date', 'booking_name', 'guest_num', 'reduce', 'booking_date1', 'booking_date2', 'booking_date3', 'booking_date4');
 			$table_name = 'booking';
 			$this->post_one($booking, $column_names, $table_name);
 		}
@@ -516,7 +540,7 @@
 			}
 			$id = (int)$this->_request['id'];
 			
-			$query="SELECT * from ingredients where product='$id'";
+			$query="SELECT * from ingredients where id='$id'";
 			$this->get_list($query);
 		}
 		
@@ -550,7 +574,7 @@
 		 * INGREDIENTS CONSUMPTION TRANSACTION
 		 */		
 		 
-		 private function ingredient_consumption_by_product(){	
+		private function ingredient_consumption_by_product(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -600,7 +624,7 @@
 		 * CATEGORY TRANSACTION
 		 */		
 		 
-		 private function categories(){	
+		private function categories(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -609,7 +633,7 @@
 		} 
 		
 		
-		 private function category_title(){	
+		private function category_title(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -832,7 +856,7 @@
 		}
 		
 		
-	  private function Product_by_subcat(){	
+	    private function Product_by_subcat(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -883,19 +907,19 @@
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
-			$query="SELECT * FROM user  order by name ASC";
+			$query="SELECT * FROM user order by name ASC";
 			$this->get_list($query);
-		  }
+		}
 
-		  private function customer_orders(){	
+		private function customer_orders(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
 			$query="SELECT myorder.*, order_type.name as type_name FROM myorder LEFT JOIN order_type ON myorder.type = order_type.id  order by date desc";
 			$this->get_list($query);
-		  }
+		}
 		  
-		 private function customer_by_id(){	
+		private function customer_by_id(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -906,7 +930,7 @@
 		}
 
 	     
-		 	private function insertCustomer(){
+		private function insertCustomer(){
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
@@ -917,7 +941,7 @@
 		}
 		
 		
-		  private function updateCustomer(){
+		private function updateCustomer(){
 			if($this->get_request_method() != "POST"){
 				$this->response('',406);
 			}
@@ -930,7 +954,7 @@
 		}
 
 
-         private function deleteUser(){
+        private function deleteUser(){
 			if($this->get_request_method() != "DELETE"){
 				$this->response('',406);
 			}
@@ -1219,7 +1243,7 @@
 		/*
 		 * Vendor TRANSACTION
 		 */		
-		 private function get_vendors(){	
+		private function get_vendors(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -1272,7 +1296,7 @@
 		/*
 		 * Vendor Payment TRANSACTION
 		 */		
-		 private function get_vendor_pays(){	
+		private function get_vendor_pays(){	
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
@@ -1345,6 +1369,20 @@
 			$this->delete_one($id, $table_name);
 		}
 		
+
+		/* 
+		 * VENDOR STOCK UPDATE
+		 */
+		private function get_vendor_stock_history(){
+			if($this->get_request_method() != "GET"){
+				$this->response('',406);
+			}
+			
+			// $query="SELECT a.items AS product_id, a.quantity FROM `myorder` a WHERE DATE >= CAST(CURRENT_TIMESTAMP AS DATE)";// today order list
+			$query="SELECT a.*, b.title, b.unit, c.name FROM `stock` a LEFT JOIN `ingredients` b ON a.ingredient = b.id LEFT JOIN `vendor` c ON a.vendor_id = c.id WHERE a.vendor_id != '0' GROUP BY a.id ORDER BY a.id DESC ";
+			$this->get_list($query);
+		}
+
 		/*
 		 * FILE TRANSACTION
 		 */	

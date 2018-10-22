@@ -81,23 +81,30 @@ angular.module('App').config(['$routeProvider', function($routeProvider) {
         controller  : 'IngredientController'
       }).
 	  
-	   when('/subcategory', {
-        templateUrl : 'templates/page/subcategory/subcategory.html',
-        controller  : 'SubcategoryController'
+    when('/subcategory', {
+      templateUrl : 'templates/page/subcategory/subcategory.html',
+      controller  : 'SubcategoryController'
       }).
-	   when('/stock/:id', {
-        templateUrl : 'templates/page/stock/stock.html',
-        controller  : 'StockController'
+    when('/stock/:id', {
+      templateUrl : 'templates/page/stock/stock.html',
+      controller  : 'StockController'
       }).
-     when('/stockhistory', {
-        templateUrl : 'templates/page/stock/stockhistory.html',
-        controller  : 'StockhistoryController'
+    when('/stockhistory', {
+      templateUrl : 'templates/page/stock/stockhistory.html',
+      controller  : 'StockhistoryController'
       }).
-	   when('/subcategory/:cat', {
-        templateUrl : 'templates/page/subcategory/subcategory.html',
-        controller  : 'SubcategoryController'
+    when('/subcategory/:cat', {
+      templateUrl : 'templates/page/subcategory/subcategory.html',
+      controller  : 'SubcategoryController'
       }).
-	  
+	  when('/stock_value', {
+      templateUrl : 'templates/page/stock/stock_value.html',
+      controller : 'StockValueController'
+      }).
+    when('/stock_add_deduct',{
+      templateUrl : 'templates/page/stock/stock_add_deduct.html',
+      controller : 'StockAddDeductController'
+    }).
 	  when('/setting', {
         templateUrl : 'templates/page/setting/setting.html',
         controller  : 'SettingController'
@@ -170,7 +177,12 @@ angular.module('App').config(['$routeProvider', function($routeProvider) {
     when('/vendor', {
         templateUrl : 'templates/page/vendor/vendor.html',
         controller  : 'VendorController'
-      }).   
+      }).
+    
+    when('/vendor_stock', {
+        templateUrl : 'templates/page/vendor/vendor_stock.html',
+        controller : 'VendorStockController'
+    }).
 
     when('/vendor_pay', {
         templateUrl : 'templates/page/vendor/vendor_pay.html',

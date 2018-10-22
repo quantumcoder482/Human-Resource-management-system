@@ -10,7 +10,7 @@ angular.module('App').controller('CalingredientController',
 		root.toolbar_menu = null;
 		var original;
 		self.guestnumber = 1;
-		self.reduce_percent=0;
+		self.reduce_percent = 0;
 
 		$rootScope.pagetitle = 'Calculate Ingredient';
 
@@ -35,9 +35,10 @@ angular.module('App').controller('CalingredientController',
 			type: 0,
 			gst_price: []
 		};
-		self.build = angular.copy(original);
-		self.product_price=[];
 		
+		self.build = angular.copy(original);
+		self.product_price = [];
+
 
 		// Calculate products price
 		// services.getProducts().then(function (data) {
@@ -58,7 +59,7 @@ angular.module('App').controller('CalingredientController',
 		// 		});
 		// 	}
 		// });
-				
+
 		self.b1g1 = true;
 		self.showCategory = true;
 		self.showSubcate = false;
@@ -127,10 +128,10 @@ angular.module('App').controller('CalingredientController',
 
 		services.getIngredients().then(function (data) {
 			self.ingredients = data.data;
-			for(i=0;i<self.ingredients.length;i++){
-				self.ingredients[i].consumption=0;
+			for (i = 0; i < self.ingredients.length; i++) {
+				self.ingredients[i].consumption = 0;
 			}
-			console.log(self.ingredients);
+			// console.log(self.ingredients);
 			self.loading = false;
 		});
 
@@ -203,9 +204,9 @@ angular.module('App').controller('CalingredientController',
 							product_price = Number(product_price) + Number(i.price) * Number(i.consumption);
 						}
 						product_price = Number(product_price).toFixed(2);
-						
+
 						self.build.prices[pid] = self.build.prices[pid] - Number(product_price);
-						
+
 					});
 
 				});
