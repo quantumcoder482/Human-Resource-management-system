@@ -26,7 +26,7 @@ var app = angular.module('App').controller('BookingListController',
     }
 
     self.UpdateBookingInfo = function (ev, u) {
-      if (u.customer_amount >= u.payable_amount) u.totalpaid = 1;
+      if (u.customer_amount >= u.total_price) u.totalpaid = 1;
       services.Update_BookingInfo(u).then(function (data) {
         if (data.data.status == 'success')
           $mdToast.show($mdToast.simple().hideDelay(3000).content(data.data.msg).position('bottom right'));

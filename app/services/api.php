@@ -345,7 +345,7 @@
 				$this->response('',406);
 			}
 			$id = $this->_request['id'];
-			$query = "SELECT SUM(quantity) as total, ingredient FROM stock WHERE ingredient = '$id' and booking_id != '0' and status = '0'";
+			$query = "SELECT SUM(a.quantity) as total, a.ingredient, b.stock FROM `stock` a LEFT JOIN `ingredients` b ON a.ingredient = b.id WHERE a.ingredient = '$id' and a.booking_id != '0' and a.status = '0'";
 			$this->get_one($query);
 		}
 
@@ -475,7 +475,7 @@
 			$booking['order_comment']=mysqli_real_escape_string($this->mysqli, $booking['order_comment']);
 			$booking['item_names']=mysqli_real_escape_string($this->mysqli, $booking['item_names']);
 			
-			$column_names = array('items', 'quantity', 'item_names', 'user_id', 'contact_name', 'contact_number', 'contact_address', 'order_comment', 'discount', 'type', 'customer_amount', 'totalpaid', 'dispute', 'booking_date', 'booking_name', 'guest_num', 'reduce', 'booking_date1', 'booking_date2', 'booking_date3', 'booking_date4');
+			$column_names = array('items', 'quantity', 'item_names', 'user_id', 'contact_name', 'contact_number', 'contact_address', 'order_comment', 'discount', 'type', 'customer_amount', 'totalpaid', 'dispute', 'booking_date', 'booking_name', 'guest_num', 'reduce', 'total_price', 'booking_date1', 'booking_date2', 'booking_date3', 'booking_date4');
 			$table_name = 'booking';
 			$this->post_one($booking, $column_names, $table_name);
 		}

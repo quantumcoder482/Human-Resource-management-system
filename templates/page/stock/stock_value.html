@@ -29,7 +29,7 @@
 									<th ng-click="sort('current_stock')" width="15%">Current Stock</th>
 									<th ng-click="sort('future_stock')" width="15%">Future Stock</th>
 									<th ng-click="sort('variance')" width="15%">Variance</th>
-									<!-- <th width="1%">Action</th> -->
+									<!-- <th width="1%">a</th> -->
 								</tr>
 						</thead>
 						<tbody>
@@ -39,10 +39,11 @@
 									<td data-title="Unit">{{c.unit}}</td>
 									<td data-title="Currenct_Stock">{{c.stock}}</td>								
 									<td data-title="Future_Stock">{{future_stocks[c.id]}}</td>
-									<td data-title="Variance">{{c.stock-future_stocks[c.id]}}</td>
+									<td data-title="Variance">{{variances[c.id]}}</td>
+									<!-- <td data-title="Variance">{{c.stock-future_stocks[c.id]}}</td> -->
 									
 								</tr>
-								<!-- <tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr> -->
+								<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
 							</tbody>
 				</table>			
 				<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">

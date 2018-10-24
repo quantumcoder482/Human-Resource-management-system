@@ -13,18 +13,22 @@ var app = angular.module('App').controller('StockValueController',
 
 
     services.getIngredients().then(function (data) {
-     
+      self.loading = true;
       self.ingredients = data.data;
       self.future_stocks = [];
       self.variances = [];
+
       for(i of self.ingredients){
+        self.variances[i.id] = i.stock;
         services.BookingStockSumById(i.id).then(function(res){
           if(res.data.ingredient){
             self.future_stocks[res.data.ingredient] = res.data.total;
-            self.variances[res.data.ingredient] = i.stock - res.data.total;
+            self.variances[res.data.ingredient] = Number(res.data.stock - res.data.total);
+            self.variances[res.data.ingredient] = (self.variances[res.data.ingredient] - Math.floor(self.variances[res.data.ingredient]) != 0)?Number(self.variances[res.data.ingredient]).toFixed(2):self.variances[res.data.ingredient];
           }
         });
       }
+      // console.log(self.variances);
       self.loading = false;
     });
 

@@ -133,11 +133,20 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
                         </div>
                     </md-input-container>
                     <md-input-container>
+                        <label>Total Price</label>
+                        <input name="total_price" type="number" min="0" ng-model="build.total_price" required />
+                        <div ng-messages="thisForm.total_price.$error">
+                            <div ng-message='required'>required.</div>
+                            <div ng-message='minlength'>min length 5.</div>
+                        </div>
+                    </md-input-container>
+                    <md-input-container>
                         <label>Order Comments</label>
                         <input name="order_comment" ng-model="build.order_comment" />
                         <div ng-messages="thisForm.order_comment.$error">
                             <div ng-message='required'>required.</div>
-                            <div ng-message='minlength'>min length 5.</div>
+                            <div ng-message='type'>number only</div>
+                            <!-- <div ng-message='minlength'>min length 5.</div> -->
                         </div>
                     </md-input-container> 
                     <div layout="row" layout-align="end center" flex="100">

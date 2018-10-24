@@ -129,30 +129,30 @@ angular.module('App').config(['$routeProvider', function($routeProvider) {
         templateUrl : 'templates/page/login/login.html',
         controller  : 'LoginController'
       }).
-	    when('/myorder', {
-        templateUrl : 'templates/page/myorder/myorder.html',
-        controller  : 'RorderController'
-      }).
-	    when('/employee', {
-        templateUrl : 'templates/page/employee/employee.html',
-        controller  : 'EmployeeController'
-      }).
-	    when('/employee_add', {
-        templateUrl : 'templates/page/employee/employee_add.html',
-        controller  : 'EmployeeAddController'
-      }).
-	    when('/employee_attendance', {
-        templateUrl : 'templates/page/employee/employee_attendance.html',
-        controller  : 'EmployeeAttendanceController'
-      }).
-	    when('/employee_catagory', {
-        templateUrl : 'templates/page/employee/employee_catagory.html',
-        controller  : 'EmployeeCatagoryController'
-      }). 
-	    when('/employee_salary', {
-        templateUrl : 'templates/page/employee/employee_salary.html',
-        controller  : 'EmployeeSalaryController'
-      }). 
+    when('/myorder', {
+      templateUrl : 'templates/page/myorder/myorder.html',
+      controller  : 'RorderController'
+    }).
+    when('/employee', {
+      templateUrl : 'templates/page/employee/employee.html',
+      controller  : 'EmployeeController'
+    }).
+    when('/employee_add', {
+      templateUrl : 'templates/page/employee/employee_add.html',
+      controller  : 'EmployeeAddController'
+    }).
+    when('/employee_attendance', {
+      templateUrl : 'templates/page/employee/employee_attendance.html',
+      controller  : 'EmployeeAttendanceController'
+    }).
+    when('/employee_catagory', {
+      templateUrl : 'templates/page/employee/employee_catagory.html',
+      controller  : 'EmployeeCatagoryController'
+    }). 
+    when('/employee_salary', {
+      templateUrl : 'templates/page/employee/employee_salary.html',
+      controller  : 'EmployeeSalaryController'
+    }). 
 
     when('/temporary', {
         templateUrl : 'templates/page/temporary/temporary.html',
@@ -201,7 +201,7 @@ angular.module('App').config(['$routeProvider', function($routeProvider) {
 	 
 	  otherwise({
         redirectTo  : '/login'
-      });
+    });
 }]);
 
 angular.module('App').run(function($location, $rootScope) {

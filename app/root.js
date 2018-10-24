@@ -304,7 +304,7 @@ angular.module('App').controller('RootCtrl',
           link: '#profile_list'
           }]
       }); 
-    self.sidenav.menuname += ' (ADMIIN)';
+    self.sidenav.menuname += ' (ADMIN)';
     $scope.bgColor = '#d9d9d9';
   }
 });

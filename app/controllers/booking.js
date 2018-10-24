@@ -417,6 +417,7 @@ angular.module('App').controller('BookingController',
 
 						for(st of self.stocks){
 							st.booking_id = resp.insert_id;
+							st.function = self.build.booking_name;
 							services.insertStock(st).then(function(res){
 								console.log(res);
 							})

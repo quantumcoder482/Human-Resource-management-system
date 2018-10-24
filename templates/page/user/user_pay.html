@@ -1,63 +1,65 @@
 <md-card class="md-whiteframe-1dp md-padding">
- 		<form class="form-inline">
-				<md-input-container>
-						<label>Search Text Here....</label>
-						<input  ng-model="search" maxlength="50">
-				</md-input-container>
-		</form>
-<div class="table-responsive-vertical">
-  	<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-       <md-icon>fast_rewind</md-icon>
-    </md-button>
-    {{currentPage+1}}/{{numberOfPages()}}
-    <md-button ng-disabled="currentPage >= customerorder.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-       <md-icon>fast_forward</md-icon> 
-    </md-button>
+	<form class="form-inline">
+		<md-input-container>
+			<label>Search Text Here....</label>
+			<input ng-model="search" maxlength="50">
+		</md-input-container>
+	</form>
+	<div class="table-responsive-vertical">
+		<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			<md-icon>fast_rewind</md-icon>
+		</md-button>
+		{{currentPage+1}}/{{numberOfPages()}}
+		<md-button ng-disabled="currentPage >= customerorder.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			<md-icon>fast_forward</md-icon>
+		</md-button>
 		<table id="table" class="table table-hover">
-			<thead>					
-					<tr>
-						<th width="2%" ng-click="sort('id')">No</th>
-						<th width="15%" ng-click="sort('contact_name')">Name</th>
-						<th width="10%" ng-click="sort('contact_number')">Contact</th>
-						<th width="10%" ng-click="sort('type')">Order Type</th>
-						<th width="15%" ng-click="sort('date')">Order Time</th>
-						<th width="10%" ng-click="sort('payable_amount')">Payable</th>
-						<th width="10%" >Paid</th>
-						<th width="10%" ng-click="sort('customer_amount')">Left</th>
-						<th width="3%" >Total Paid</th>
-						<th width="3%" >Dispute</th>
-					</tr>					
+			<thead>
+				<tr>
+					<th width="2%" ng-click="sort('id')">No</th>
+					<th width="15%" ng-click="sort('contact_name')">Name</th>
+					<th width="10%" ng-click="sort('contact_number')">Contact</th>
+					<th width="10%" ng-click="sort('type')">Order Type</th>
+					<th width="15%" ng-click="sort('date')">Order Time</th>
+					<th width="10%" ng-click="sort('payable_amount')">Payable</th>
+					<th width="10%">Paid</th>
+					<th width="10%" ng-click="sort('customer_amount')">Left</th>
+					<th width="3%">Total Paid</th>
+					<th width="3%">Dispute</th>
+				</tr>
 			</thead>
 			<tbody>
-					<tr ng-repeat="u in customerorder |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
-						<td data-title="No">{{currentPage*pageSize+$index+1}}</td>
-						<td data-title="Name">{{u.contact_name}}</td>
-						<td data-title="Contact">{{u.contact_number}} </td>
-						<td data-title="Email">{{u.type_name}} </td>
-						<td data-title="FCM">{{u.date}} </td>
-						<td data-title="Address">{{u.payable_amount}} </td>
-						<td data-title="Last_Seen">{{u.customer_amount+u.payable_amount}} </td>
-						<td data-title="Customer_amount"><b style="background:red; color:white;"> {{u.customer_amount}} </b></td>
-						<td data-title="Total paid" style="padding: 0rem 0rem 0rem 1rem;">
-							<md-button class="md-icon-button" ng-click="Updatetotalpaid($event, u)">
-								<md-checkbox ng-checked="u.totalpaid" class="green"> </md-checkbox>
-							</md-button>
-						</td>							
-						<td data-title="Dispute" style="padding: 0rem 0rem 0rem 1rem;">
-							<md-button class="md-icon-button" ng-click="Updatedispute($event, u)">
-								<md-checkbox ng-checked="u.dispute"	class="blue"> </md-checkbox>
-							</md-button>
-						</td>
-					</tr>
-					<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-				</tbody>
-		</table>    
-    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-       <md-icon>fast_rewind</md-icon>
-    </md-button>
-    {{currentPage+1}}/{{numberOfPages()}}
-    <md-button ng-disabled="currentPage >= customerorder.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-       <md-icon>fast_forward</md-icon> 
-    </md-button>    
- 	</div>
+				<tr ng-repeat="u in customerorder |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+					<td data-title="No">{{currentPage*pageSize+$index+1}}</td>
+					<td data-title="Name">{{u.contact_name}}</td>
+					<td data-title="Contact">{{u.contact_number}} </td>
+					<td data-title="Email">{{u.type_name}} </td>
+					<td data-title="FCM">{{u.date}} </td>
+					<td data-title="Address">{{u.payable_amount}} </td>
+					<td data-title="Last_Seen">{{u.customer_amount+u.payable_amount}} </td>
+					<td data-title="Customer_amount"><b style="background:red; color:white;"> {{u.customer_amount}} </b></td>
+					<td data-title="Total paid" style="padding: 0rem 0rem 0rem 1rem;">
+						<md-button class="md-icon-button" ng-click="Updatetotalpaid($event, u)">
+							<md-checkbox ng-checked="u.totalpaid" class="green"> </md-checkbox>
+						</md-button>
+					</td>
+					<td data-title="Dispute" style="padding: 0rem 0rem 0rem 1rem;">
+						<md-button class="md-icon-button" ng-click="Updatedispute($event, u)">
+							<md-checkbox ng-checked="u.dispute" class="blue"> </md-checkbox>
+						</md-button>
+					</td>
+				</tr>
+				<tr ng-if="loading">
+					<td style="text-align:center;" colspan="10">Loading...</td>
+				</tr>
+			</tbody>
+		</table>
+		<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+			<md-icon>fast_rewind</md-icon>
+		</md-button>
+		{{currentPage+1}}/{{numberOfPages()}}
+		<md-button ng-disabled="currentPage >= customerorder.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+			<md-icon>fast_forward</md-icon>
+		</md-button>
+	</div>
 </md-card>
