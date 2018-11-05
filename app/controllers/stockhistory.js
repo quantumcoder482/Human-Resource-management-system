@@ -106,11 +106,8 @@ var app = angular.module('App').controller('StockhistoryController',
         $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
 
         services.insertStockhistory(b).then(function (resp) {
-
           self.afterSubmit(resp);
-
           services.generateInvoice(resp.data);
-
         });
       } else {
         $mdToast.show($mdToast.simple().content("Nothing updated.").position('bottom right'));
@@ -159,7 +156,6 @@ var app = angular.module('App').controller('StockhistoryController',
           });
       }
     };
-
   });
 
 function StockControllerDialog($scope, $mdDialog, services, $mdToast, $route, stock) {
@@ -171,7 +167,7 @@ function StockControllerDialog($scope, $mdDialog, services, $mdToast, $route, st
   self.buttonText = (isNew) ? 'SAVE' : '';
 
   if (isNew) {
-      original = {
+    original = {
       ingridient: null,
       quantity: 1,
       stock_previous: 0,
@@ -188,7 +184,6 @@ function StockControllerDialog($scope, $mdDialog, services, $mdToast, $route, st
     self.ingredients = data.data;
     //  alert(JSON.stringify(data, null, 4));
   });
-
 
   $scope.GetIngredientStock = function (id) {
     services.getIngredientsByID(id).then(function (data) {

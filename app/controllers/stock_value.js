@@ -18,13 +18,13 @@ var app = angular.module('App').controller('StockValueController',
       self.future_stocks = [];
       self.variances = [];
 
-      for(i of self.ingredients){
+      for (i of self.ingredients) {
         self.variances[i.id] = i.stock;
-        services.BookingStockSumById(i.id).then(function(res){
-          if(res.data.ingredient){
+        services.BookingStockSumById(i.id).then(function (res) {
+          if (res.data.ingredient) {
             self.future_stocks[res.data.ingredient] = res.data.total;
             self.variances[res.data.ingredient] = Number(res.data.stock - res.data.total);
-            self.variances[res.data.ingredient] = (self.variances[res.data.ingredient] - Math.floor(self.variances[res.data.ingredient]) != 0)?Number(self.variances[res.data.ingredient]).toFixed(2):self.variances[res.data.ingredient];
+            self.variances[res.data.ingredient] = (self.variances[res.data.ingredient] - Math.floor(self.variances[res.data.ingredient]) != 0) ? Number(self.variances[res.data.ingredient]).toFixed(2) : self.variances[res.data.ingredient];
           }
         });
       }
@@ -41,11 +41,9 @@ var app = angular.module('App').controller('StockValueController',
       $scope.reverse = !$scope.reverse; //if true make it false and vice versa
     }
 
-
     self.ViewIngredientStockHistory = function (ev, id) {
       window.location.href = '#stock/' + id;
     }
-
 
     self.UpdateStatus = function (ev, c) {
       var confirm = $mdDialog.confirm().title('Confirmation?')
@@ -66,7 +64,6 @@ var app = angular.module('App').controller('StockValueController',
         });
       }, function () {});
     };
-
 
     self.deleteCategory = function (ev, c) {
       var confirm = $mdDialog.confirm().title('Delete Confirmation')
@@ -90,8 +87,6 @@ var app = angular.module('App').controller('StockValueController',
           });*/
       }, function () {});
     };
-
-
 
     self.addIngredient = function (ev) {
       $mdDialog.show({

@@ -5,7 +5,7 @@
       </md-input-container>
       <md-input-container flex="50">
         <label>Profile Name</label>
-        <input required name="profile_name" type="text" ng-model="user.profile_name" />
+        <input required name="profile_name" type="text" ng-model="userdata.profile_name" />
         <div ng-messages="thisForm.profile_name.$error">
           <div ng-message="required">required.</div>
         </div>
@@ -16,7 +16,7 @@
       </md-input-container>
       <md-input-container flex="40">
         <label>User Name</label>
-        <input required name="username" type="text" ng-model="user.username" />
+        <input required name="username" type="text" ng-model="userdata.username" />
         <div ng-messages="thisForm.username.$error">
           <div ng-message="required">required.</div>
           <!-- <div ng-message="validationError">username is duplicated</div> -->
@@ -26,7 +26,7 @@
       </md-input-container>
       <md-input-container flex="40">
         <label>Password</label>
-        <input required name="password" type="password" ng-model="user.password" />
+        <input required name="password" type="password" ng-model="userdata.password" />
         <div ng-messages="thisForm.password.$error">
           <div ng-message="required">required.</div>
         </div>
@@ -37,7 +37,7 @@
       </md-input-container>
       <md-input-container flex="40">
         <label>Contact</label>
-        <input required minlength="10" maxlength="11" type="number" name="contact" ng-model="user.contact" />
+        <input required minlength="10" maxlength="11" type="number" name="contact" ng-model="userdata.contact" />
         <div ng-messages="thisForm.contact.$error">
           <div ng-message="required">required.</div>
           <div ng-message='minlength'>min length 10.</div>
@@ -48,7 +48,7 @@
       </md-input-container>
       <md-input-container flex="40">
         <label>Email</label>
-        <input required name="email" type="email" ng-model="user.email" />
+        <input required name="email" type="email" ng-model="userdata.email" />
         <div ng-messages="thisForm.email.$error">
           <div ng-message="required">required.</div>
           <div ng-message='type'>Enter Valid Email.</div>
@@ -60,7 +60,7 @@
       </md-input-container>
       <md-input-container flex="90">
         <label>Address</label>
-        <input required name="address" type="text" ng-model="user.address" />
+        <input required name="address" type="text" ng-model="userdata.address" />
         <div ng-messages="thisForm.address.$error">
           <div ng-message="required">required.</div>
           <div ng-message='minlength'>min length 5</div>
@@ -90,8 +90,8 @@
     </div>
     <div layout="row" style="float: right;">
       <md-input-container>
-        <md-button ng-disabled="thisForm.$invalid" ng-click="submit(user)" class="md-raised md-accent" style="background:#00800070; color:white;">
-          ADD
+        <md-button ng-disabled="thisForm.$invalid" ng-click="submit(userdata)" class="md-raised md-accent" style="background:#00800070; color:white;">
+          UPDATE
         </md-button>
       </md-input-container>
     </div>

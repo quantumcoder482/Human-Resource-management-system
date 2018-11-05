@@ -1,75 +1,77 @@
 <md-card class="md-whiteframe-1dp md-padding">
-		<div layout="row">
-					<form class="form-inline" flex="100">
-							<md-input-container>    
-								<label>Search Text Here....</label>
-								<input  ng-model="search" maxlength="100">
-							</md-input-container>    
-					</form>						
-		</div>			
-		<div class="table-responsive-vertical">					
-				<md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
-					<md-icon>fast_rewind</md-icon>
-				</md-button>					
-				{{ currentPage+1 }}/{{numberOfPages()}}				
-				<md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
-					<md-icon>fast_forward</md-icon> 
-				</md-button>				
-				<label>Goto Page:</label>
-				<input type="number" ng-model="currentPage" max=" {{ numberOfPages()-1 }}" min="0">
-				<table id="table" class="table table-hover">
-					<thead>
-							<tr >
-								<th width="2%" ng-click="sort('id')">ID</th>
-								<th width="8%" ng-click="sort('contact_name')"> Name</th>
-								<th width="5%" ng-click="sort('contact_number')">Number </th>
-								<th width="3%" ng-click="sort('contact_address')">Address </th>
-								<th width="3%" ng-click="sort('payable_amount')">Amount </th>
-								<th width="3%" ng-click="sort('date')"> Date </th>
-								<th width="1%">Action</th>
-							</tr>
-					</thead>
-					<tbody>
-							<tr ng-repeat="p in rorder | filter:search |orderBy:sortKey:reverse | startFrom:currentPage*pageSize | limitTo:pageSize">
-								<td ng-click="detailsProduct($event, p)" data-title="No">{{ p.id }}</td>											
-								<td data-title="Name">{{p.contact_name}}</td>
-								<td data-title="Quantity">{{p.contact_number }}</td>
-								<td data-title="MRP">{{p.contact_address }}</td>
-								<td data-title="Price">{{p.payable_amount }}</td>
-								<td data-title="Max Buy">{{p.id }}</td>
-								<td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
-										<md-menu md-position-mode="target-right target" >
-											<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
-												<md-icon>more_vert</md-icon>
-											</md-button>
-											<md-menu-content width=3>
-												<md-title class="md-padding">MENU - {{p.title}}</md-title>																
-												<md-menu-item>
-													<md-button layout-fill md-ink-ripple ng-click="ViewInvoice($event, p.id)">
-														<md-icon md-class="md-primary" md-menu-align-target>receipt</md-icon>
-														View Order List
-													</md-button>
-												</md-menu-item>																
-												<md-menu-item>
-													<md-button layout-fill md-ink-ripple ng-click="editOrder($event, p)">
-															<md-icon md-class="md-primary" md-menu-align-target>remove_red_eye</md-icon>
-															View
-													</md-button>
-												</md-menu-item>	
-											</md-menu-content>  
-										</md-menu>
-								</td> 
-							</tr>
-							<tr ng-if="loading"><td style="text-align:center;" colspan="10"><img src="css/loading.gif" style="height:5px; width:120px"></td></tr>
-						</tbody>
-				</table> 					
-				<md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
-					<md-icon>fast_rewind</md-icon>
-				</md-button>
-				{{ currentPage+1 }}/{{numberOfPages()}}
-				<md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
-					<md-icon>fast_forward</md-icon> 
-				</md-button>
-				<label>Goto Page:</label> <input type="number" ng-model="currentPage" max=" {{ numberOfPages()-1 }}" min="0">
-		</div>
+  <div layout="row">
+    <form class="form-inline" flex="100">
+      <md-input-container>
+        <label>Search Text Here....</label>
+        <input ng-model="search" maxlength="100">
+      </md-input-container>
+    </form>
+  </div>
+  <div class="table-responsive-vertical">
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+    <label>Goto Page:</label>
+    <input type="number" ng-model="currentPage" max=" {{numberOfPages()-1}}" min="0">
+    <table id="table" class="table table-hover">
+      <thead>
+        <tr>
+          <th width="2%" ng-click="sort('id')">ID</th>
+          <th width="8%" ng-click="sort('contact_name')">Name</th>
+          <th width="5%" ng-click="sort('contact_number')">Number</th>
+          <th width="3%" ng-click="sort('contact_address')">Address</th>
+          <th width="3%" ng-click="sort('payable_amount')">Amount</th>
+          <th width="3%" ng-click="sort('date')">Date</th>
+          <th width="1%">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="p in rorder | filter:search | orderBy:sortKey:reverse | startFrom:currentPage*pageSize | limitTo:pageSize">
+          <td ng-click="detailsProduct($event, p)" data-title="No">{{p.id}}</td>
+          <td data-title="Name">{{p.contact_name}}</td>
+          <td data-title="Quantity">{{p.contact_number}}</td>
+          <td data-title="MRP">{{p.contact_address}}</td>
+          <td data-title="Price">{{p.payable_amount}}</td>
+          <td data-title="Max Buy">{{p.id}}</td>
+          <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+            <md-menu md-position-mode="target-right target">
+              <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon>more_vert</md-icon>
+              </md-button>
+              <md-menu-content width=3>
+                <md-title class="md-padding">MENU - {{p.title}}</md-title>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="ViewInvoice($event, p.id)">
+                    <md-icon md-class="md-primary" md-menu-align-target>receipt</md-icon>
+                    View Order List
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="editOrder($event, p)">
+                    <md-icon md-class="md-primary" md-menu-align-target>remove_red_eye</md-icon>
+                    View
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </td>
+        </tr>
+        <tr ng-if="loading">
+          <td style="text-align:center;" colspan="10"><img src="css/loading.gif" style="height:5px; width:120px"></td>
+        </tr>
+      </tbody>
+    </table>
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+    <label>Goto Page:</label> <input type="number" ng-model="currentPage" max=" {{numberOfPages()-1}}" min="0">
+  </div>
 </md-card>

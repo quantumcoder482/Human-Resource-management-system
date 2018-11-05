@@ -14,7 +14,7 @@
           <md-input-container flex="50">
             <label> Vendor Name </label>
             <md-select required name="name" ng-model="vend_pay.vendor_id">
-              <md-option ng-repeat="i in venders" ng-value="i.id">{{ i.name }}</md-option>
+              <md-option ng-repeat="i in venders" ng-value="i.id">{{i.name}}</md-option>
             </md-select>
             <div ng-messages="thisForm.name.$error">
               <div ng-message="required">required.</div>
@@ -25,7 +25,7 @@
             <md-input-container flex="50">
               <label> Ingredient </label>
               <md-select required name="ingredient" ng-model="vend_pay.ingredient_id">
-                <md-option ng-repeat="i in ingredients" ng-value="i.id" >{{ i.title }}</md-option>
+                <md-option ng-repeat="i in ingredients" ng-value="i.id" >{{i.title}}</md-option>
               </md-select>
               <div ng-messages="thisForm.ingredient.$error">
                 <div ng-message="required">required.</div>

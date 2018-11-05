@@ -14,21 +14,20 @@
     self.vendorStockHistories = [];
     self.search_data = [];
 
-
     services.getIngredients().then(function (data) {
       self.ingredients = data.data;
       self.loading = false;
     });
 
-    services.getVendors().then(function(data){
+    services.getVendors().then(function (data) {
       self.vendors = data.data;
     });
 
-    services.getVendorStockHistory().then(function(data){
+    services.getVendorStockHistory().then(function (data) {
       self.vendorStockHistories = data.data;
       self.search_data = data.data;
     });
-    
+
     $scope.numberOfPages = function () {
       return Math.ceil(self.vendorStockHistories.length / $scope.pageSize);
     }
@@ -65,7 +64,6 @@
           services.updateIngredient(data.ingredient, current_ingredient[0]).then(function (resp) {
             self.afterSubmit(resp);
           });
-
         });
       });
 
@@ -83,4 +81,3 @@
       }
     };
   });
-

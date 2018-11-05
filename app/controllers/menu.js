@@ -52,7 +52,6 @@ angular.module('App').controller('MenuController',
       });
     };
 
-
     self.GetProductBySubcat = function (subcat) {
       self.showCategory = false;
       self.showSubcate = false;
@@ -64,7 +63,6 @@ angular.module('App').controller('MenuController',
       });
     };
 
-
     self.GetProducts = function (keyword) {
       if (keyword.length <= 0) {
         self.products = "";
@@ -74,7 +72,6 @@ angular.module('App').controller('MenuController',
         });
       }
     };
-
 
     self.AddProduct = function (ev, p) {
 
@@ -95,10 +92,7 @@ angular.module('App').controller('MenuController',
         }
         self.menu.total_price = Number(self.menu.total_price) + Number(product_price);
         self.menu.total_price = self.menu.total_price.toFixed(2);
-        // console.log(self.menu.total_price);
-
       });
-
 
       services.getOrderProduct(self.menu.items.join()).then(function (data) {
         self.particulars = data.data;
@@ -121,10 +115,7 @@ angular.module('App').controller('MenuController',
           }
           self.menu.total_price = Number(self.menu.total_price) - Number(product_price);
           self.menu.total_price = self.menu.total_price.toFixed(2);
-          console.log(self.menu.total_price);
-
         });
-
 
         services.getOrderProduct(self.menu.items.join()).then(function (data) {
           self.particulars = data.data;
@@ -180,20 +171,15 @@ angular.module('App').controller('MenuController',
         if (resp.status == "success") {
           self.afterSubmit(resp);
         }
-
         //services.generateInvoice(resp.data);
-
       });
-
     }
 
     self.afterSubmit = function (resp) {
       if (resp.status == "success") {
         $mdToast.show($mdToast.simple().hideDelay(1000).content(resp.msg).position('bottom right'))
           .then(function () {
-
             window.location.reload();
-
           });
       } else {
         $mdToast.show($mdToast.simple().hideDelay(3000).content(resp.msg).position('bottom right'))

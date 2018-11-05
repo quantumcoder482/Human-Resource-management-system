@@ -1,79 +1,75 @@
 <md-card class="md-whiteframe-1dp md-padding">
-    <form class="form-inline">
-        <md-input-container>
-            <label>Search Text Here....</label>
-            <input  ng-model="search" maxlength="50">
-        </md-input-container>
-    </form>
-    <div class="table-responsive-vertical">
-        <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-            <md-icon>fast_rewind</md-icon>
-        </md-button>
-        {{currentPage+1}}/{{numberOfPages()}}
-        <md-button ng-disabled="currentPage >= profile.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-          <md-icon>fast_forward</md-icon> 
-        </md-button>
-        <table id="table" class="table table-hover">
-            <thead>            
-                <tr>
-                    <th width="1%" ng-click="sort('id')">No</th>
-                    <th width="10%" ng-click="sort('username')">Name</th>
-                    <th width="10%" ng-click="sort('title')">Title</th>
-                    <th width="10%" ng-click="sort('owner')">Owner</th>
-                    <th width="10%" ng-click="sort('contact')">Contact</th>
-                    <th width="10%" ng-click="sort('address')">Address</th>
-                    <th width="10%" ng-click="sort('email')">Email</th>
-                    <th width="15%" ng-click="sort('product_disclaimer')">Product Disclaimer</th>
-                    <th width="15%" ng-click="sort('delivery_disclaimer')">Delivery Disclaimer</th>
-                    <th width="15%" ng-click="sort('permission')">Permission</th>
-                    <th width="2%"></th>
-                </tr>            
-            </thead>      
-            <tbody>
-                <tr ng-repeat="u in profile |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
-                    <td data-title="No">{{$index+1}}</td>
-                    <td data-title="Name">{{u.username}}</td>
-                    <td data-title="Title">{{u.title}}</td>
-                    <td data-title="Owner">{{u.owner}} </td>
-                    <td data-title="Contact">{{u.contact}} </td>
-                    <td data-title="Address">{{u.address}} </td>
-                    <td data-title="Email">{{u.email}} </td>
-                    <td data-title="Product Disclaimer">{{u.product_disclaimer}} </td>
-                    <td data-title="Delivery Disclaimer">{{u.delivery_disclaimer}} </td>
-                    <td data-title="Permission">{{u.permission}} </td>                  
-                    <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
-                        <md-menu md-position-mode="target-right target" >
-                            <md-button ng-hide="$index==0" class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                              <md-icon>more_vert</md-icon>
-                              <!--<md-icon ng-if="u.is_banned">clear</md-icon>-->
-                            </md-button>
-                            <md-menu-content width=3>
-                              <md-title class="md-padding">MENU - {{u.username}}</md-title>                              
-                              <md-menu-item>
-                                <md-button layout-fill md-ink-ripple ng-click="editProfile($event, u)">
-                                  <md-icon md-class="md-primary" md-menu-align-target>create</md-icon>
-                                  Edit
-                                </md-button>
-                              </md-menu-item>                                                        
-                              <md-menu-item>
-                                <md-button layout-fill md-ink-ripple ng-click="deleteProfile($event, u)">
-                                  <md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
-                                  Delete
-                                </md-button>
-                              </md-menu-item> 
-                            </md-menu-content>  
-                        </md-menu>
-                    </td> 
-                  </tr>
-                  <tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-              </tbody>
-        </table>          
-        <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-            <md-icon>fast_rewind</md-icon>
-        </md-button>
-        {{currentPage+1}}/{{numberOfPages()}}
-        <md-button ng-disabled="currentPage >= profile.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-            <md-icon>fast_forward</md-icon> 
-        </md-button>       
-    </div>
+  <form class="form-inline">
+    <md-input-container>
+      <label>Search Text Here....</label>
+      <input ng-model="search" maxlength="50">
+    </md-input-container>
+  </form>
+  <div class="table-responsive-vertical">
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= profile.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+    <table id="table" class="table table-hover">
+      <thead>
+        <tr>
+          <th width="1%" ng-click="sort('id')">No</th>
+          <th width="10%" ng-click="sort('username')">Name</th>
+          <th width="10%" ng-click="sort('profile_name')">Profile Name</th>
+          <th width="10%" ng-click="sort('contact')">Contact</th>
+          <th width="10%" ng-click="sort('address')">Address</th>
+          <th width="10%" ng-click="sort('email')">Email</th>
+          <th width="15%" ng-click="sort('permission')">Permission</th>
+          <th width="2%"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="u in profile |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+          <td data-title="No">{{$index+1}}</td>
+          <td data-title="Name">{{u.username}}</td>
+          <td data-title="Profile Name">{{u.profile_name}}</td>
+          <td data-title="Contact">{{u.contact}} </td>
+          <td data-title="Address">{{u.address}} </td>
+          <td data-title="Email">{{u.email}} </td>
+          <td data-title="Permission">{{u.permission}} </td>
+          <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+            <md-menu md-position-mode="target-right target">
+              <md-button ng-hide="$index==0" class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon>more_vert</md-icon>
+                <!--<md-icon ng-if="u.is_banned">clear</md-icon>-->
+              </md-button>
+              <md-menu-content width=3>
+                <md-title class="md-padding">MENU - {{u.username}}</md-title>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="editProfile($event, u)">
+                    <md-icon md-class="md-primary" md-menu-align-target>create</md-icon>
+                    Edit
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="deleteProfile($event, u)">
+                    <md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
+                    Delete
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </td>
+        </tr>
+        <tr ng-if="loading">
+          <td style="text-align:center;" colspan="10">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= profile.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+  </div>
 </md-card>

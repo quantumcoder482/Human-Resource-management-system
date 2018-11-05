@@ -11,8 +11,8 @@
     <md-input-container flex="30">
       <label>Choose Category to Filter</label>
       <md-select name="cat" ng-model="category" ng-change="filterProductByCategory(category)">
-        <md-option ng-value="0">{{ 'All Category' }}</md-option>
-        <md-option ng-value="cate.id" ng-repeat="cate in categories">{{ cate.title }}</md-option>
+        <md-option ng-value="0">{{'All Category'}}</md-option>
+        <md-option ng-value="cate.id" ng-repeat="cate in categories">{{cate.title}}</md-option>
       </md-select>
     </md-input-container>
     <md-input-container flex="5">
@@ -20,8 +20,8 @@
     <md-input-container flex="30">
       <label>Choose Subcategory to Filter</label>
       <md-select name="subcategory" ng-model="subcategory" ng-change="filterProductBySubcategory(subcategory)">
-        <!--<md-option ng-value="0">{{ 'All Subcategory' }}</md-option>-->
-        <md-option ng-value="sub.id" ng-repeat="sub in subcategories">{{ sub.title }}</md-option>
+        <!--<md-option ng-value="0">{{'All Subcategory'}}</md-option>-->
+        <md-option ng-value="sub.id" ng-repeat="sub in subcategories">{{sub.title}}</md-option>
       </md-select>
     </md-input-container>
   </div>
@@ -29,11 +29,11 @@
     <md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
       <md-icon>fast_rewind</md-icon>
     </md-button>
-    {{ currentPage+1 }}/{{numberOfPages()}}
+    {{currentPage+1}}/{{numberOfPages()}}
     <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
       <md-icon>fast_forward</md-icon>
     </md-button>
-    <label>Goto Page:</label> <input type="number" ng-model="currentPage" max=" {{ numberOfPages()-1 }}" min="0">
+    <label>Goto Page:</label> <input type="number" ng-model="currentPage" max=" {{numberOfPages()-1}}" min="0">
     <table id="table" class="table table-hover">
       <thead>
         <tr>
@@ -47,13 +47,13 @@
       </thead>
       <tbody>
         <tr ng-repeat="p in products | filter:search |orderBy:sortKey:reverse | startFrom:currentPage*pageSize | limitTo:pageSize">
-          <td ng-click="detailsProduct($event, p)" data-title="No">{{ p.id }}</td>
-          <td id="{{ p.id+'t' }}" contenteditable="true" ng-dblclick="saveToDatabase($event,'product','title', p.id , p.id+'t')"
+          <td ng-click="detailsProduct($event, p)" data-title="No">{{p.id}}</td>
+          <td id="{{p.id+'t'}}" contenteditable="true" ng-dblclick="saveToDatabase($event,'product','title', p.id , p.id+'t')"
             data-title="Name">{{p.title}}</td>
-          <td id="{{ p.id+'q' }}" contenteditable="true" ng-dblclick="saveToDatabase($event,'product','quantity', p.id , p.id+'q')"
-            data-title="Quantity">{{p.quantity }}</td>
-          <td id="{{ p.id+'d' }}" contenteditable="true" ng-dblclick="saveToDatabase($event,'product','description', p.id , p.id+'d')"
-            data-title="Description">{{p.description }}</td>
+          <td id="{{p.id+'q'}}" contenteditable="true" ng-dblclick="saveToDatabase($event,'product','quantity', p.id , p.id+'q')"
+            data-title="Quantity">{{p.quantity}}</td>
+          <td id="{{p.id+'d'}}" contenteditable="true" ng-dblclick="saveToDatabase($event,'product','description', p.id , p.id+'d')"
+            data-title="Description">{{p.description}}</td>
           <td data-title="Status" style="padding: 0rem 0rem 0rem 1rem;">
             <md-button class="md-icon-button" ng-click="UpdateStatus($event, p)">
               <md-checkbox ng-checked="p.status"></md-checkbox>
@@ -102,10 +102,10 @@
     <md-button ng-disabled="currentPage == 0" ng-click="GetPreviousPage(currentPage)">
       <md-icon>fast_rewind</md-icon>
     </md-button>
-    {{ currentPage+1 }}/{{numberOfPages()}}
+    {{currentPage+1}}/{{numberOfPages()}}
     <md-button ng-disabled="currentPage >= numberOfPages()-1" ng-click="GetNextPage(currentPage)">
       <md-icon>fast_forward</md-icon>
     </md-button>
-    <label>Goto Page:</label> <input type="number" ng-model="currentPage" max=" {{ numberOfPages()-1 }}" min="0">
+    <label>Goto Page:</label> <input type="number" ng-model="currentPage" max=" {{numberOfPages()-1}}" min="0">
   </div>
 </md-card>

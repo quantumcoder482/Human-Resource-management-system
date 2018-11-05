@@ -1,103 +1,105 @@
 <md-dialog layout="column" flex="50" aria-label="dialog vendor_pay">
-    <form role="form" name="thisForm">
-      <md-toolbar>
-        <div class="md-toolbar-tools">
-          <h2>{{title}}</h2>
-          <span flex></span>
-          <md-button class="md-icon-button" ng-click="cancel()">
-            <md-icon aria-label="Close dialog">clear</md-icon>
-          </md-button>
-        </div>
-      </md-toolbar>  
-      <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">        
-        <div layout="row">
-          <md-input-container flex="50">
-            <label> Vendor Name </label>
-            <md-select required name="name" ng-model="vend_pay.vendor_id">
-              <md-option ng-repeat="i in venders" ng-value="i.id">{{ i.name }}</md-option>
-            </md-select>
-            <div ng-messages="thisForm.name.$error">
-              <div ng-message="required">required.</div>
-            </div>
-          </md-input-container>
-        </div>
-        <div layout="row">
-            <md-input-container flex="50">
-              <label> Ingredient </label>
-              <md-select required name="ingredient" ng-model="vend_pay.ingredient_id">
-                <md-option ng-repeat="i in ingredients" ng-value="i.id" >{{ i.title }}</md-option>
-              </md-select>
-              <div ng-messages="thisForm.ingredient.$error">
-                <div ng-message="required">required.</div>
-              </div>
-            </md-input-container>
-            <md-input-container flex="10">
-            </md-input-container>
-            <md-input-container flex="30" >
-                <label>Amount</label>
-                <input required name="amount" type="number" ng-model="vend_pay.amount" />
-                <div ng-messages="thisForm.amount.$error">
-                  <div ng-message="required">required.</div>
-                  <div ng-message='type'>only number</div>
-                </div>
-            </md-input-container>
-
+  <form role="form" name="thisForm">
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>{{title}}</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <md-icon aria-label="Close dialog">clear</md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">
+      <div layout="row">
+        <md-input-container flex="50">
+          <label> Vendor Name </label>
+          <md-select required name="name" ng-model="vend_pay.vendor_id">
+            <md-option ng-repeat="i in venders" ng-value="i.id">{{i.name}}</md-option>
+          </md-select>
+          <div ng-messages="thisForm.name.$error">
+            <div ng-message="required">required.</div>
           </div>
-          <div layout="row">
-            <md-input-container flex="30" >
-                <label>Price (per unit)</label>
-                <input required name="price" type="number" ng-model="vend_pay.price" />
-                <div ng-messages="thisForm.price.$error">
-                  <div ng-message="required">required.</div>
-                  <div ng-message='type'>only number</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex="5">
-            </md-input-container>
-            <md-input-container flex="20" >
-                <label>Unit</label>
-                <input required name="unit" type="text" ng-model="vend_pay.unit"/>
-                <div ng-messages="thisForm.unit.$error">
-                  <div ng-message="required">required.</div>
-                </div>
-            </md-input-container>
-            <md-input-container flex="15">
-            </md-input-container>
-            <md-input-container flex="30" >
-                <label>Paid Amount</label>
-                <input required name="paid_amount" type="number" ng-model="vend_pay.paid_amount" />
-                <div ng-messages="thisForm.paid_amount.$error">
-                  <div ng-message="required">required.</div>
-                  <div ng-message='type'>only number</div>
-                </div>
-            </md-input-container>
+        </md-input-container>
+      </div>
+      <div layout="row">
+        <md-input-container flex="50">
+          <label> Ingredient </label>
+          <md-select required name="ingredient" ng-model="vend_pay.ingredient_id">
+            <md-option ng-repeat="i in ingredients" ng-value="i.id">{{i.title}}</md-option>
+          </md-select>
+          <div ng-messages="thisForm.ingredient.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="10">
+        </md-input-container>
+        <md-input-container flex="30">
+          <label>Amount</label>
+          <input required name="amount" type="number" ng-model="vend_pay.amount" />
+          <div ng-messages="thisForm.amount.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='type'>only number</div>
+          </div>
+        </md-input-container>
 
-          </div>    
-          <div layout="row">          
-            <md-input-container flex="45">
-              <label> InDate(yyyy-mm-dd format)</label>
-              <input name="indate" ng-model="vend_pay.in_date" datetime-picker date-format="yyyy-mm-dd" date-only required onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
-              <div ng-messages="thisForm.indate.$error">
-                <div ng-message='required'>required.</div>
-                <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
-              </div>
-            </md-input-container>
-            <md-input-container flex="10">
-            </md-input-container>
-            <md-input-container flex="45">
-              <label> PayDate(yyyy-mm-dd format)</label>
-              <input name="pay_date" ng-model="vend_pay.pay_date" datetime-picker date-format="yyyy-mm-dd" date-only onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
-            </md-input-container>
-          </div> 
-        </md-dialog-content>
-        <div class="md-actions md-padding" layout="row">
-          <span flex></span>
-          <md-button class="md-warn" ng-click="hide()" >
-              CANCEL
-          </md-button>
-          <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(vend_pay)" style="margin-right:20px;" >
-              {{buttonText}}
-          </md-button>
-        </div>
-    </form>
+      </div>
+      <div layout="row">
+        <md-input-container flex="30">
+          <label>Price (per unit)</label>
+          <input required name="price" type="number" ng-model="vend_pay.price" />
+          <div ng-messages="thisForm.price.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='type'>only number</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="5">
+        </md-input-container>
+        <md-input-container flex="20">
+          <label>Unit</label>
+          <input required name="unit" type="text" ng-model="vend_pay.unit" />
+          <div ng-messages="thisForm.unit.$error">
+            <div ng-message="required">required.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="15">
+        </md-input-container>
+        <md-input-container flex="30">
+          <label>Paid Amount</label>
+          <input required name="paid_amount" type="number" ng-model="vend_pay.paid_amount" />
+          <div ng-messages="thisForm.paid_amount.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='type'>only number</div>
+          </div>
+        </md-input-container>
+
+      </div>
+      <div layout="row">
+        <md-input-container flex="45">
+          <label> InDate(yyyy-mm-dd format)</label>
+          <input name="indate" ng-model="vend_pay.in_date" datetime-picker date-format="yyyy-mm-dd" date-only required
+            onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+          <div ng-messages="thisForm.indate.$error">
+            <div ng-message='required'>required.</div>
+            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="10">
+        </md-input-container>
+        <md-input-container flex="45">
+          <label> PayDate(yyyy-mm-dd format)</label>
+          <input name="pay_date" ng-model="vend_pay.pay_date" datetime-picker date-format="yyyy-mm-dd" date-only
+            onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+        </md-input-container>
+      </div>
+    </md-dialog-content>
+    <div class="md-actions md-padding" layout="row">
+      <span flex></span>
+      <md-button class="md-warn" ng-click="hide()">
+        CANCEL
+      </md-button>
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(vend_pay)" style="margin-right:20px;">
+        {{buttonText}}
+      </md-button>
+    </div>
+  </form>
 </md-dialog>

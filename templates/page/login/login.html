@@ -1,24 +1,24 @@
 <section layout="column" flex layout-align="center center" class="login">
-  <md-card class="md-whiteframe-0dp" style="min-width:350px;" >
-      <md-toolbar>
-         <div layout="column" layout-padding layout-align="center center" class="md-padding">
-            <h3> Welcome to HRM </h3>
-          </div>
-      </md-toolbar>
-      <md-card-content>
-          <form role="form" name="loginForm" class="md-padding">
-              <md-input-container>
-                <label>Username</label>
-                <input name="username" ng-model="userdata.username" required/>
-              </md-input-container>
-              <md-input-container>
-                <label>Password</label>
-                <input type="password" name="password" ng-model="userdata.password" required />
-              </md-input-container>
-              <div layout="row" layout-align="center center">
-                <md-button ng-disabled="loginForm.$invalid" ng-click="doLogin()" class="md-raised md-accent" flex="50">Login</md-button>
-              </div>              
-          </form>
-      </md-card-content>
+  <md-card class="md-whiteframe-0dp" style="min-width:350px;">
+    <md-toolbar>
+      <div layout="column" layout-padding layout-align="center center" class="md-padding">
+        <h3> Welcome to HRM </h3>
+      </div>
+    </md-toolbar>
+    <md-card-content>
+      <form role="form" name="loginForm" class="md-padding">
+        <md-input-container>
+          <label>Username</label>
+          <input name="username" ng-model="userdata.username" required />
+        </md-input-container>
+        <md-input-container>
+          <label>Password</label>
+          <input type="password" name="password" ng-model="userdata.password" required />
+        </md-input-container>
+        <div layout="row" layout-align="center center">
+          <md-button ng-disabled="loginForm.$invalid" ng-click="doLogin()" class="md-raised md-accent" flex="50">Login</md-button>
+        </div>
+      </form>
+    </md-card-content>
   </md-card>
-</section> 
+</section>

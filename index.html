@@ -69,6 +69,7 @@
   <script src="app/controllers/booking_list.js"></script>
   <script src="app/controllers/booking_report.js"></script>
   <script src="app/controllers/profile_add.js"></script>
+  <script src="app/controllers/profile_edit.js"></script>
   <script src="app/controllers/profile_list.js"></script>
   
   <script src="templates/assets/highcharts.js"></script>
@@ -91,8 +92,8 @@
         <div class="md-toolbar-tools" layout layout-padding>
           <md-icon class="material-icons md-36">{{data.user.icon}}</md-icon>  
           <div layout="column" layout-padding>
-            <span class="md-body-2">{{ data.user.name }}</span>
-            <span class="md-caption">{{ data.user.email }}</span>
+            <span class="md-body-2">{{data.user.name}}</span>
+            <span class="md-caption">{{data.user.email}}</span>
           </div>
           <span flex></span>
           <md-menu md-position-mode="target-right target" >

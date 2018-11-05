@@ -25,7 +25,7 @@
           <div flex="33" ng-repeat="item in items">
             <md-checkbox ng-checked="exists(item.id, selected)" ng-click="toggle(item.id, selected, selected1)"
               ng-style="item.status === 1 ? { } : { color:'#d84315' }">
-              {{ item.title }}
+              {{item.title}}
             </md-checkbox>
           </div>
         </div>
@@ -37,7 +37,7 @@
         <div layout="row" layout-wrap flex>
           <div flex="33" ng-repeat="item1 in items1">
             <md-checkbox ng-checked="exists(item1.id, selected1)" ng-click="toggle1(item1.id, selected1)" ng-style="item1.status === 1 ? { } : { color:'#d84315'}">
-              {{ item1.title }}
+              {{item1.title}}
             </md-checkbox>
           </div>
         </div>

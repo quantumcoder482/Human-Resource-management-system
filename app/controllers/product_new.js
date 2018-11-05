@@ -28,7 +28,6 @@ var app = angular.module('App').controller('ProductAddController',
     self.product = angular.copy(original);
     //self.dir    = "../../uploads/product/";
 
-
     self.isClean = function () {
       return angular.equals(original, self.product);
     }
@@ -38,9 +37,7 @@ var app = angular.module('App').controller('ProductAddController',
 
       cat = [];
       self.invalid = true;
-
       self.selected = cat;
-
       $scope.toggle = function (item, list, selected_subcategory) {
 
         var idx = list.indexOf(item);
@@ -74,18 +71,15 @@ var app = angular.module('App').controller('ProductAddController',
         } else {
           services.getSubcategory_by_cat_multiple(list.join()).then(function (data) {
             self.items1 = data.data;
-
             //alert(JSON.stringify(self.items1, null, 4));
           });
         }
-
       };
     });
 
     $scope.exists = function (item, list) {
       return list.indexOf(item) > -1;
     };
-
 
     $scope.items1 = '';
     sub = [];

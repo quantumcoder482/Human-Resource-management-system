@@ -1,57 +1,59 @@
 <md-card class="md-whiteframe-1dp md-padding">
-		<form class="form-inline">
-			<div layout="row">
-				<md-input-container flex="30">
-					<label> Select Ingredient </label>
-					<md-select required name="ingredient" ng-model="consumption.ingredient">
-						<md-option ng-repeat="i in ingredients" ng-value="i.id">{{ i.title }}{{ "-" }}{{ i.unit }}</md-option>
-					</md-select>
-					<div ng-messages="thisForm.ingredient.$error">
-						<div ng-message="required">required.</div>
-					</div>
-				</md-input-container>
-			</div>
-		</form>      
-		<div class="table-responsive-vertical"> 			
-				<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-					<md-icon>fast_rewind</md-icon>
-				</md-button>
-				{{currentPage+1}}/{{numberOfPages()}}
-				<md-button ng-disabled="currentPage >= ingredients.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-					<md-icon>fast_forward</md-icon>
-				</md-button>				
-				<table id="table" class="table table-hover">
-						<thead>
-								<tr>
-									<th ng-click="sort('id')" width="2%">No</th>
-									<th ng-click="sort('title')" width="25%">Ingredient</th>
-									<th ng-click="sort('unit')" width="10%">Unit</th>
-									<th ng-click="sort('current_stock')" width="15%">Current Stock</th>
-									<th ng-click="sort('future_stock')" width="15%">Future Stock</th>
-									<th ng-click="sort('variance')" width="15%">Variance</th>
-									<!-- <th width="1%">a</th> -->
-								</tr>
-						</thead>
-						<tbody>
-								<tr ng-repeat="c in ingredients |orderBy:sortKey:reverse|filter:consumption.ingredient | startFrom:currentPage*pageSize | limitTo:pageSize">
-									<td data-title="No">{{$index+1}}</td>
-									<td data-title="Name">{{c.title}}</td>
-									<td data-title="Unit">{{c.unit}}</td>
-									<td data-title="Currenct_Stock">{{c.stock}}</td>								
-									<td data-title="Future_Stock">{{future_stocks[c.id]}}</td>
-									<td data-title="Variance">{{variances[c.id]}}</td>
-									<!-- <td data-title="Variance">{{c.stock-future_stocks[c.id]}}</td> -->
-									
-								</tr>
-								<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-							</tbody>
-				</table>			
-				<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-					<md-icon>fast_rewind</md-icon>
-				</md-button>
-				{{currentPage+1}}/{{numberOfPages()}}
-				<md-button ng-disabled="currentPage >= ingredients.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-					<md-icon>fast_forward</md-icon> 
-				</md-button>
-		</div>
+  <form class="form-inline">
+    <div layout="row">
+      <md-input-container flex="30">
+        <label> Select Ingredient </label>
+        <md-select required name="ingredient" ng-model="consumption.ingredient">
+          <md-option ng-repeat="i in ingredients" ng-value="i.id">{{i.title}}{{"-"}}{{i.unit}}</md-option>
+        </md-select>
+        <div ng-messages="thisForm.ingredient.$error">
+          <div ng-message="required">required.</div>
+        </div>
+      </md-input-container>
+    </div>
+  </form>
+  <div class="table-responsive-vertical">
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= ingredients.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+    <table id="table" class="table table-hover">
+      <thead>
+        <tr>
+          <th ng-click="sort('id')" width="2%">No</th>
+          <th ng-click="sort('title')" width="25%">Ingredient</th>
+          <th ng-click="sort('unit')" width="10%">Unit</th>
+          <th ng-click="sort('current_stock')" width="15%">Current Stock</th>
+          <th ng-click="sort('future_stock')" width="15%">Future Stock</th>
+          <th ng-click="sort('variance')" width="15%">Variance</th>
+          <!-- <th width="1%">a</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="c in ingredients |orderBy:sortKey:reverse|filter:consumption.ingredient | startFrom:currentPage*pageSize | limitTo:pageSize">
+          <td data-title="No">{{currentPage*pageSize+$index+1}}</td>
+          <td data-title="Name">{{c.title}}</td>
+          <td data-title="Unit">{{c.unit}}</td>
+          <td data-title="Currenct_Stock">{{c.stock}}</td>
+          <td data-title="Future_Stock">{{future_stocks[c.id]}}</td>
+          <td data-title="Variance">{{variances[c.id]}}</td>
+          <!-- <td data-title="Variance">{{c.stock-future_stocks[c.id]}}</td> -->
+
+        </tr>
+        <tr ng-if="loading">
+          <td style="text-align:center;" colspan="10">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= ingredients.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+  </div>
 </md-card>

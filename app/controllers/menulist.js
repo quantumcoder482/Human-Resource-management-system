@@ -11,8 +11,6 @@ angular.module('App').controller('MenulistController',
     self.loading = true;
 
     $rootScope.pagetitle = 'All Menu';
-
-
     original = {
       name: '',
       info: '',
@@ -21,8 +19,6 @@ angular.module('App').controller('MenulistController',
     self.menulist = angular.copy(original);
 
     services.getMenulist().then(function (data) {
-      //console.log(data.data);
-
       var list = [];
       for (var i = 0; i < data.data.length; i++) {
         var item = data.data[i].item_names.split(",%,%");
@@ -40,16 +36,12 @@ angular.module('App').controller('MenulistController',
         info = '';
       }
 
-      //console.log(list);
       self.menulist = list;
       self.loading = false;
-
       $scope.numberOfPages = function () {
         return Math.ceil(self.menulist.length / $scope.pageSize);
       }
-
     });
-
 
     $scope.sort = function (keyname) {
       $scope.sortKey = keyname; //set the sortKey to the param passed

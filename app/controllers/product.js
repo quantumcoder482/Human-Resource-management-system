@@ -8,8 +8,8 @@ var app = angular.module('App').controller('ProductController',
     var self = $scope;
     var root = $rootScope;
     self.loading = true;
-    self.products=[];
-    
+    self.products = [];
+
     root.toolbar_menu = {
       title: 'Add Product'
     }
@@ -157,7 +157,7 @@ var app = angular.module('App').controller('ProductController',
       $mdDialog.show(confirm).then(function () {
         services.Inline_Update(table, column, value_to_update, id).then(function (resp) {
           $mdToast.show($mdToast.simple().content("Success.").position('bottom right'));
-          window.location.href = '#product/'+self.currentPage;
+          window.location.href = '#product/' + self.currentPage;
         });
       }, function () {});
     };

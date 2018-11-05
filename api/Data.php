@@ -35,8 +35,8 @@ class Data{
 	{
 		$mysqli=mysqli_connect('localhost', 'root', '', 'buzzbe6_dominee');
     	$query = "SELECT * FROM myorder order by id DESC limit 1"; 
-          $result = @mysqli_query($mysqli, $query) or die("SQL Error 1: " . mysqli_error());
-           $num_rows=mysqli_num_rows($result);
+            $result = @mysqli_query($mysqli, $query) or die("SQL Error 1: " . mysqli_error());
+            $num_rows=mysqli_num_rows($result);
 	        if($num_rows>0)
 	         {
 	            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC))
@@ -71,7 +71,7 @@ class Data{
 	{
 	$mysqli=mysqli_connect('localhost', 'root', '', 'buzzbe6_dominee');
 	$query = "SELECT $field FROM $table where $condition='$value'"; 
-      $result = @mysqli_query($mysqli,$query) or die("SQL Error 1: " . mysqli_error());
+       $result = @mysqli_query($mysqli,$query) or die("SQL Error 1: " . mysqli_error());
        $num_rows=mysqli_num_rows($result);
 	   $responce=mysqli_fetch_array($result);
 	   if($num_rows>0)

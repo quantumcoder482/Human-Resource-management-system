@@ -1,5 +1,5 @@
 <style>
-.gray {
+  .gray {
     background: #fff;
     color:#000;
     text-align:center;
@@ -10,180 +10,189 @@ md-input-container:not(.md-input-has-value) input:not(:focus), md-input-containe
 }
 </style>
 <div layout="row">
-    <md-input-container flex="50">                
-        <md-card class="md-whiteframe-1dp md-padding">
-            <form role="form" name="thisForm" class="md-padding"> 
-                <div layout="row">
-                    <md-input-container flex="45">
-                        <label>Please Add Number Guest</label>
-                        <input name="guestnumber" required type="number" min="1" ng-model="guestnumber"/>
-                        <div ng-messages="thisForm.guestnumber.$error">
-                            <div ng-message='required'>required.</div>
-                            <div ng-message='type'>number only</div>
-                        </div>
-                    </md-input-container>
-                    <md-input-container flex="10">
-                    </md-input-container>
-                    <md-input-container flex="45">
-                        <label>Reduce(%)</label>
-                        <input name="reduce_percent" required type="number" min="0" ng-model="reduce_percent" />
-                        <div ng-messages="thisForm.reduce_percent.$error">
-                            <!-- <div ng-message='required'>required.</div> -->
-                            <div ng-message='type'>number only</div>
-                        </div>
-                    </md-input-container>
-                </div>
-            </form>
-            <md-menu-item>
-                <md-button layout-fill md-ink-ripple ng-click="ShowMyCategory()">
-                    <md-icon md-class="md-primary" md-menu-align-target>restore</md-icon>
-                    Category
-                </md-button>
-            </md-menu-item>
-            <md-divider></md-divider> 
-            <div ng-if="showCategory">        
-                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px" >
-                    <md-grid-tile class="gray" ng-click="ShowSubcategory(act.id)" ng-repeat="act in active_categories">
-                        <md-icon>dns</md-icon>
-                        <md-grid-tile-footer class="gray">
-                            <h3> {{act.title}}</h3><br>
-                        </md-grid-tile-footer>
-                    </md-grid-tile>
-                </md-grid-list>
-            </div>       
-            <div ng-if="showSubcate">        
-                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px" >
-                    <md-grid-tile class="gray" ng-click="GetProductBySubcat(act.id)" ng-repeat="act in active_categories">
-                        <md-icon>toc</md-icon>
-                        <md-grid-tile-footer class="gray">
-                            <h3> {{act.title}}</h3><br>
-                        </md-grid-tile-footer>
-                    </md-grid-tile>
-                </md-grid-list>
+  <md-input-container flex="50">
+    <md-card class="md-whiteframe-1dp md-padding">
+      <form role="form" name="thisForm" class="md-padding">
+        <div layout="row">
+          <md-input-container flex="45">
+            <label>Please Add Number Guest</label>
+            <input name="guestnumber" required type="number" min="1" ng-model="guestnumber" />
+            <div ng-messages="thisForm.guestnumber.$error">
+              <div ng-message='required'>required.</div>
+              <div ng-message='type'>number only</div>
             </div>
-            <div ng-if="showProduct">        
-                <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1" md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px" >
-                    <md-grid-tile class="gray" ng-click="AddProduct($event,act)" ng-repeat="act in active_categories">
-                        <input type="hidden" ng-init="act.quantity=1" ng-model="act.quantity">
-                        <md-icon>restaurant_menu</md-icon>
-                        <md-grid-tile-footer class="gray">
-                            <h3> {{act.title}}</h3><br>
-                        </md-grid-tile-footer>
-                    </md-grid-tile>
-                </md-grid-list>
+          </md-input-container>
+          <md-input-container flex="10">
+          </md-input-container>
+          <md-input-container flex="45">
+            <label>Reduce(%)</label>
+            <input name="reduce_percent" required type="number" min="0" ng-model="reduce_percent" />
+            <div ng-messages="thisForm.reduce_percent.$error">
+              <!-- <div ng-message='required'>required.</div> -->
+              <div ng-message='type'>number only</div>
             </div>
-            <md-input-container> 
-                <div class="table-responsive-vertical">
-                    <form name="searchform" class="form-inline">
-                        <md-input-container>
-                            <label>Search Product Here....</label>
-                            <input  ng-model="search" maxlength="50" ng-change="GetProducts(search)">
-                        </md-input-container>
-                    </form>
-                    <table id="table" class="table table-hover"  style="max-height:50px" >
-                        <thead>
-                            <tr>
-                                <th width="20%" ng-click="sort('title')">Product name</th>
-                            <!--<th width="5%" ng-click="sort('price')"></th>
+          </md-input-container>
+        </div>
+      </form>
+      <md-menu-item>
+        <md-button layout-fill md-ink-ripple ng-click="ShowMyCategory()">
+          <md-icon md-class="md-primary" md-menu-align-target>restore</md-icon>
+          Category
+        </md-button>
+      </md-menu-item>
+      <md-divider></md-divider>
+      <div ng-if="showCategory">
+        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1"
+          md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px">
+          <md-grid-tile class="gray" ng-click="ShowSubcategory(act.id)" ng-repeat="act in active_categories">
+            <md-icon>dns</md-icon>
+            <md-grid-tile-footer class="gray">
+              <h3> {{act.title}}</h3><br>
+            </md-grid-tile-footer>
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+      <div ng-if="showSubcate">
+        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1"
+          md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px">
+          <md-grid-tile class="gray" ng-click="GetProductBySubcat(act.id)" ng-repeat="act in active_categories">
+            <md-icon>toc</md-icon>
+            <md-grid-tile-footer class="gray">
+              <h3> {{act.title}}</h3><br>
+            </md-grid-tile-footer>
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+      <div ng-if="showProduct">
+        <md-grid-list md-cols="1" md-cols-sm="2" md-cols-md="3" md-cols-gt-md="4" md-row-height-gt-md="1:1"
+          md-row-height="3:4" md-gutter="8px" md-gutter-gt-sm="4px">
+          <md-grid-tile class="gray" ng-click="AddProduct($event,act)" ng-repeat="act in active_categories">
+            <input type="hidden" ng-init="act.quantity=1" ng-model="act.quantity">
+            <md-icon>restaurant_menu</md-icon>
+            <md-grid-tile-footer class="gray">
+              <h3> {{act.title}}</h3><br>
+            </md-grid-tile-footer>
+          </md-grid-tile>
+        </md-grid-list>
+      </div>
+      <md-input-container>
+        <div class="table-responsive-vertical">
+          <form name="searchform" class="form-inline">
+            <md-input-container>
+              <label>Search Product Here....</label>
+              <input ng-model="search" maxlength="50" ng-change="GetProducts(search)">
+            </md-input-container>
+          </form>
+          <table id="table" class="table table-hover" style="max-height:50px">
+            <thead>
+              <tr>
+                <th width="20%" ng-click="sort('title')">Product name</th>
+                <!--<th width="5%" ng-click="sort('price')"></th>
                                 <th width="5%">CGST </th>
                                 <th width="5%">SGST </th>
                                 <th width="5%">Quantity </th>
                                 <th width="2%"> Add </th>-->
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="p in products |orderBy:sortKey:reverse|filter:search">
-                                <td data-title="Name" ng-click="AddProduct($event, p)">{{p.title}}</td>
-                            <!--<td data-title="Price">price: {{ product_price[p.id] }}</td>
-                                <td data-title="CGST">{{p.cgst }}</td>
-                                <td data-title="SGST">{{p.sgst }}</td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="p in products |orderBy:sortKey:reverse|filter:search">
+                <td data-title="Name" ng-click="AddProduct($event, p)">{{p.title}}</td>
+                <!--<td data-title="Price">price: {{product_price[p.id]}}</td>
+                                <td data-title="CGST">{{p.cgst}}</td>
+                                <td data-title="SGST">{{p.sgst}}</td>
                                 <td data-title="quantity"><input type="number" style="width:40px" ng-init="p.quantity=1" ng-model="p.quantity"></td>
                                 <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
                                     <md-button class="md-icon-button" ng-click="AddProduct($event, p)">
                                     <md-icon>add_shopping_cart</md-icon>
                                     </md-button>
                                 </td>-->
-                            </tr>
-                            <tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </md-input-container> 
-        </md-card>
-    </md-input-container> 
-    <md-input-container flex> 
-        <md-card class="md-whiteframe-1dp md-padding" >      
-            <md-input-container flex>  
-                <div class="table-responsive-vertical">
-                    <table id="table" class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th width="20%">Product</th>
-                                <th width="5%">Price</th>
-                                <!-- <th width="5%">CGST </th>
+              </tr>
+              <tr ng-if="loading">
+                <td style="text-align:center;" colspan="10">Loading...</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </md-input-container>
+    </md-card>
+  </md-input-container>
+  <md-input-container flex>
+    <md-card class="md-whiteframe-1dp md-padding">
+      <md-input-container flex>
+        <div class="table-responsive-vertical">
+          <table id="table" class="table table-hover">
+            <thead>
+              <tr>
+                <th width="20%">Product</th>
+                <th width="5%">Price</th>
+                <!-- <th width="5%">CGST </th>
                                 <th width="5%">SGST </th> -->
-                                <th width="15%" style="text-align: center;">Quantity</th>
-                                <th width="2%">Remove</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat="l in particulars">
-                                <td data-title="product" style="padding: 1em 0;">{{ l.title }}</td>
-                                <td data-title="pricascascasces" style="padding: 1em 0;">{{ build.prices[$index] }}</td>
-                                <!-- <td data-title="cgst" style="padding: 1em 0;">{{ build.cgst[$index] }}</td>
-                                <td data-title="sgst" style="padding: 1em 0;">{{ build.sgst[$index] }}</td> -->
-                                <td data-title="quantity" style="padding: 0;">
-                                    <md-button class="md-icon-button" ng-click="build.quantity[$index]!==1? RemoveProductcount($event, l) : null" style="margin: 0;">
-                                        <md-icon class="material-icons md-light md-8">remove_circle</md-icon>
-                                    </md-button>
-                                    {{ build.quantity[$index] }}
-                                    <md-button class="md-icon-button" ng-click="AddProduct($event, l)" style="margin: 0;">
-                                        <md-icon class="material-icons md-light md-8">add_circle</md-icon>
-                                    </md-button>
-                                </td>                            
-                                <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
-                                    <md-button class="md-icon-button" ng-click="RemoveProduct($event, l)">
-                                        <md-icon>delete</md-icon>
-                                    </md-button>
-                                </td>
-                            </tr>		  
-                        </tbody>
-                    </table>
-                    <!--<md-button ng-disabled="b1g1" class="md-raised md-accent" style="width:20%; float:right; text-align:center; background-color: rgb(145, 205, 184);" ng-click="Caculateguestingredient(build)">
+                <th width="15%" style="text-align: center;">Quantity</th>
+                <th width="2%">Remove</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="l in particulars">
+                <td data-title="product" style="padding: 1em 0;">{{l.title}}</td>
+                <td data-title="pricascascasces" style="padding: 1em 0;">{{build.prices[$index]}}</td>
+                <!-- <td data-title="cgst" style="padding: 1em 0;">{{build.cgst[$index]}}</td>
+                                <td data-title="sgst" style="padding: 1em 0;">{{build.sgst[$index]}}</td> -->
+                <td data-title="quantity" style="padding: 0;">
+                  <md-button class="md-icon-button" ng-click="build.quantity[$index]!==1? RemoveProductcount($event, l) : null"
+                    style="margin: 0;">
+                    <md-icon class="material-icons md-light md-8">remove_circle</md-icon>
+                  </md-button>
+                  {{build.quantity[$index]}}
+                  <md-button class="md-icon-button" ng-click="AddProduct($event, l)" style="margin: 0;">
+                    <md-icon class="material-icons md-light md-8">add_circle</md-icon>
+                  </md-button>
+                </td>
+                <td data-title="Banner" style="padding: 0rem 0rem 0rem 1rem;">
+                  <md-button class="md-icon-button" ng-click="RemoveProduct($event, l)">
+                    <md-icon>delete</md-icon>
+                  </md-button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <!--<md-button ng-disabled="b1g1" class="md-raised md-accent" style="width:20%; float:right; text-align:center; background-color: rgb(145, 205, 184);" ng-click="Caculateguestingredient(build)">
                         Calculate
                     </md-button>-->
-                </div>   
-            </md-input-container> 
-        </md-card>                
-        <md-card class="md-whiteframe-1dp md-padding">
-            <h4>Ingredients Quantity Needed</h4>
-		    <div class="table-responsive-vertical">				
-				<table id="table" class="table table-hover">
-						<thead>
-								<tr>
-									<th ng-click="sort('id')" width="1%">No</th>
-									<th ng-click="sort('title')" width="20%">Ingredient</th>
-									<th ng-click="sort('unit')" width="1%">Unit</th>
-									<th ng-click="sort('consumption')" width="30%" style="text-align:center;"><b style="background: #d9ecfc;">Needed Amount</b></th>
-									<th ng-click="sort('stock')" width="30%">Current Stock</th>
-								</tr>
-						</thead>
-						<tbody>
-								<tr ng-repeat="c in ingredients |orderBy:sortKey:reverse | filter:myfilter">
-									<td data-title="No">{{$index+1}}</td>
-									<td data-title="Name">{{c.title}}</td>
-									<td data-title="Name">{{c.unit}}</td>
-                                    <td data-title="Needed" style="text-align:center;"><b ng-if="c.consumption" style="background: #d9ecfc;">{{c.consumption*guestnumber-c.consumption*guestnumber*reduce_percent/100}}</b></td>
-									<td data-title="Stock">{{c.stock}}</td>
-                                </tr>
-								<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-						</tbody>
-				</table>
-                <md-button class="md-raised md-accent" style="width:20%; float:right; text-align:center; background-color: rgb(145, 205, 184);" ng-click="refresh()">
-                    New calculate
-                </md-button>
-            </div>
-        </md-card>
-    </md-input-container>
- </div>   
-        
+        </div>
+      </md-input-container>
+    </md-card>
+    <md-card class="md-whiteframe-1dp md-padding">
+      <h4>Ingredients Quantity Needed</h4>
+      <div class="table-responsive-vertical">
+        <table id="table" class="table table-hover">
+          <thead>
+            <tr>
+              <th ng-click="sort('id')" width="1%">No</th>
+              <th ng-click="sort('title')" width="20%">Ingredient</th>
+              <th ng-click="sort('unit')" width="1%">Unit</th>
+              <th ng-click="sort('consumption')" width="30%" style="text-align:center;"><b style="background: #d9ecfc;">Needed
+                  Amount</b></th>
+              <th ng-click="sort('stock')" width="30%">Current Stock</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="c in ingredients |orderBy:sortKey:reverse | filter:myfilter">
+              <td data-title="No">{{$index+1}}</td>
+              <td data-title="Ingredient">{{c.title}}</td>
+              <td data-title="Unit">{{c.unit}}</td>
+              <td data-title="Needed" style="text-align:center;"><b ng-if="c.consumption" style="background: #d9ecfc;">{{c.consumption*guestnumber-c.consumption*guestnumber*reduce_percent/100}}</b></td>
+              <td data-title="Stock">{{c.stock}}</td>
+            </tr>
+            <tr ng-if="loading">
+              <td style="text-align:center;" colspan="10">Loading...</td>
+            </tr>
+          </tbody>
+        </table>
+        <md-button class="md-raised md-accent" style="width:20%; float:right; text-align:center; background-color: rgb(145, 205, 184);"
+          ng-click="refresh()">
+          New calculate
+        </md-button>
+      </div>
+    </md-card>
+  </md-input-container>
+</div>

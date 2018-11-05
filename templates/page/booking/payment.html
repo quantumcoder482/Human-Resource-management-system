@@ -1,101 +1,116 @@
 <md-card class="md-whiteframe-1dp md-padding">
-    <form class="form-inline">
-        <md-input-container>
-            <label>Search Text Here....</label>
-            <input  ng-model="search" maxlength="50">
-        </md-input-container>
-    </form>
-    <div class="table-responsive-vertical">
-        <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-            <md-icon>fast_rewind</md-icon>
-        </md-button>
-        {{currentPage+1}}/{{numberOfPages()}}
-        <md-button ng-disabled="currentPage >= bookingdata.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-            <md-icon>fast_forward</md-icon> 
-        </md-button>
-        <table id="table" class="table table-hover">
-            <thead>            
-                <tr>
-                    <th width="2%" ng-click="sort('id')">No</th>
-                    <th width="10%" ng-click="sort('contact_name')">Customer Name</th>
-                    <th width="10%" ng-click="sort('contact_number')">Contact</th>
-                    <th width="10%" ng-click="sort('contact_address')">Address</th>
-                    <th width="10%" ng-click="sort('booking_date')">Booking</th>
-                    <th width="10%" ng-click="sort('total_price')">Total price</th>
-                    <th width="1%"></th>
-                    <th width="10%" ng-click="sort('customer_amount')" style="text-align: center; color:#fa8c00;">Inital Paid</th>
-                    <th width="1%" ng-click="sort('discount')" style="text-align: center; color:#fa8c00;">Inital PayDate</th>
-                    <th width="1%" ng-click="sort('dispute')" style="text-align: center; color:#fa8c00;">Reminder Date</th>
-                    <th width="1%" ng-click="sort('dispute_1')" style="text-align: center; color:#fa8c00;">Reminder Date 2</th>
-                    <th width="1%" style="text-align: center;"></th>
-                    <th width="1%">Action</th>
-                </tr>            
-            </thead>
-            <tbody>
-                <tr ng-repeat="u in bookingdata |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
-                    <td data-title="No">{{$index+1}}</td>
-                    <td data-title="contact_name">{{u.contact_name}}</td>
-                    <td data-title="contact_number">{{u.contact_number}}</td>
-                    <td data-title="contact_address">{{u.contact_address}}</td>
-                    <td data-title="booking_date">{{u.booking_date}} </td>
-                    <td data-title="total_price">{{u.total_price}} </td>
-                    <td data-title="payable_add">
-                        <md-icon md-class="md-primary" ng-click="second_pay=true">add_circle</md-icon>
-                    </td>
-                    <td data-title="paid_amount">             
-                        <input type="number" name="customer_amount" ng-model="u.customer_amount"  style="width:120px;"/><!--ng-readonly="u.totalpaid==1"-->
-                        <input type="number" name="customer_amount_1" ng-model="u.customer_amount_1" ng-show="u.customer_amount_1>0 || second_pay" style="width:120px;margin-top:2px;"/>
-                    </td>
-                    <td data-title="inital paid date">                        
-                        <input name="discount" ng-model="u.discount" maxlength="10" ng-show="u.discount=='0000-00-00'" datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;"/>
-                        <input type="text" ng-model="u.discount" ng-readonly="true" ng-hide="u.discount=='0000-00-00'" style="width:120px;"/>
-                        <input name="discount_1" ng-model="u.discount_1" maxlength="10" ng-show="u.customer_amount_1>0 || second_pay" datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;margin-top:2px;"/>
-                        <!--<input type="text" ng-model="u.discount_1" ng-readonly="true" ng-hide="!(second_pay && (u.discount_1=='0000-00-00' || u.discount_1==null))" style="width:120px;"/>-->
-                    </td>
-                    <td data-title="SMS reminder">                        
-                        <input name="dispute" ng-model="u.dispute" maxlength="10" ng-show="u.dispute=='0000-00-00'" datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;"/>
-                        <input type="text" ng-model="u.dispute" ng-readonly="true" ng-hide="u.dispute=='0000-00-00'" style="width:120px;"/>
-                    </td>
-                    <td data-title="SMS reminder">                        
-                        <input name="dispute_1" ng-model="u.dispute_1" maxlength="10" ng-show="u.dispute_1=='0000-00-00'" datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;"/>
-                        <input type="text" ng-model="u.dispute_1" ng-readonly="true" ng-hide="u.dispute_1=='0000-00-00'" style="width:120px;"/>
-                    </td>
-                    <td data-title="Confirm" style="padding: 0rem 0rem 0rem 1rem;">
-                        <md-button class="md-raised md-accent" ng-disabled="!(u.customer_amount!=0 && u.discount!='0000-00-00') && u.dispute=='0000-00-00'" ng-click="UpdateBookingInfo($event, u)" style="width: 30px;"><md-icon>save</md-icon> save</md-button>
-                    </td>                
-                    <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
-                        <md-menu md-position-mode="target-right target" >
-                            <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
-                                <md-icon>more_vert</md-icon>
-                                <!--<md-icon ng-if="u.is_banned">clear</md-icon>-->
-                            </md-button>
-                            <md-menu-content width=3>
-                                <md-title class="md-padding">{{u.contact_name}}'s Booking</md-title>                            
-                                <md-menu-item>
-                                    <md-button layout-fill md-ink-ripple ng-click="viewBookingDetail($event, u)">
-                                        <md-icon md-class="md-primary" md-menu-align-target>details</md-icon>
-                                        Detail View
-                                    </md-button>
-                                </md-menu-item>                                                        
-                                <md-menu-item>
-                                    <md-button layout-fill md-ink-ripple ng-click="deleteBooking($event, u)">
-                                        <md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
-                                        Delete
-                                    </md-button>
-                                </md-menu-item> 
-                            </md-menu-content>  
-                        </md-menu>
-                    </td> 
-                </tr>
-                <tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-            </tbody>
-        </table>         
-        <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-            <md-icon>fast_rewind</md-icon>
-        </md-button>
-        {{currentPage+1}}/{{numberOfPages()}}
-        <md-button ng-disabled="currentPage >= bookingdata.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-            <md-icon>fast_forward</md-icon> 
-        </md-button>
-    </div>
+  <form class="form-inline">
+    <md-input-container>
+      <label>Search Text Here....</label>
+      <input ng-model="search" maxlength="50">
+    </md-input-container>
+  </form>
+  <div class="table-responsive-vertical">
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= bookingdata.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+    <table id="table" class="table table-hover">
+      <thead>
+        <tr>
+          <th width="2%" ng-click="sort('id')">No</th>
+          <th width="10%" ng-click="sort('contact_name')">Customer Name</th>
+          <th width="10%" ng-click="sort('contact_number')">Contact</th>
+          <th width="10%" ng-click="sort('contact_address')">Address</th>
+          <th width="10%" ng-click="sort('booking_name')">Booking Name</th>
+          <th width="10%" ng-click="sort('booking_date')">Booking</th>
+          <th width="10%" ng-click="sort('total_price')">Total price</th>
+          <th width="10%" ng-click="sort('remain')">Remaining Balance</th>
+          <th width="1%"></th>
+          <th width="10%" ng-click="sort('customer_amount')" style="text-align: center; color:#fa8c00;">Inital Paid</th>
+          <th width="1%" ng-click="sort('discount')" style="text-align: center; color:#fa8c00;">Inital PayDate</th>
+          <th width="1%" ng-click="sort('dispute')" style="text-align: center; color:#fa8c00;">Reminder Date</th>
+          <th width="1%" ng-click="sort('dispute_1')" style="text-align: center; color:#fa8c00;">Reminder Date 2</th>
+          <th width="1%" style="text-align: center;"></th>
+          <th width="1%">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="u in bookingdata | orderBy:sortKey:reverse | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+          <td data-title="No">{{currentPage*pageSize+$index+1}}</td>
+          <td data-title="Customer Name">{{u.contact_name}}</td>
+          <td data-title="Contact">{{u.contact_number}}</td>
+          <td data-title="Address">{{u.contact_address}}</td>
+          <td data-title="Booking Name">{{u.booking_name}}</td>
+          <td data-title="Booking">{{u.booking_date}} </td>
+          <td data-title="Total Price">{{u.total_price}} </td>
+          <td data-title="Remaining Balance">{{u.total_price - u.customer_amount - u.customer_amount_1}}</td>
+          <td data-title="payable_add">
+            <md-icon md-class="md-primary" ng-click="second_pay=true">add_circle</md-icon>
+          </td>
+          <td data-title="Inital Paid">
+            <input type="number" name="customer_amount" ng-model="u.customer_amount" style="width:120px;" />
+            <!--ng-readonly="u.totalpaid==1"-->
+            <input type="number" name="customer_amount_1" ng-model="u.customer_amount_1" ng-show="u.customer_amount_1>0 || second_pay"
+              style="width:120px;margin-top:2px;" />
+          </td>
+          <td data-title="Inital PayDate">
+            <input name="discount" ng-model="u.discount" maxlength="10" ng-show="u.discount=='0000-00-00'"
+              datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;" />
+            <input type="text" ng-model="u.discount" ng-readonly="true" ng-hide="u.discount=='0000-00-00'" style="width:120px;" />
+            <input name="discount_1" ng-model="u.discount_1" maxlength="10" ng-show="u.customer_amount_1>0 || second_pay"
+              datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;margin-top:2px;" />
+            <!--<input type="text" ng-model="u.discount_1" ng-readonly="true" ng-hide="!(second_pay && (u.discount_1=='0000-00-00' || u.discount_1==null))" style="width:120px;"/>-->
+          </td>
+          <td data-title="Reminder Date">
+            <input name="dispute" ng-model="u.dispute" maxlength="10" ng-show="u.dispute=='0000-00-00'" datetime-picker
+              date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;" />
+            <input type="text" ng-model="u.dispute" ng-readonly="true" ng-hide="u.dispute=='0000-00-00'" style="width:120px;" />
+          </td>
+          <td data-title="Reminder Date 2">
+            <input name="dispute_1" ng-model="u.dispute_1" maxlength="10" ng-show="u.dispute_1=='0000-00-00'"
+              datetime-picker date-format="yyyy-MM-dd" date-only onkeydown="return !(event.keyCode==13)" style="width:120px;" />
+            <input type="text" ng-model="u.dispute_1" ng-readonly="true" ng-hide="u.dispute_1=='0000-00-00'" style="width:120px;" />
+          </td>
+          <td data-title="Confirm" style="padding: 0rem 0rem 0rem 1rem;">
+            <md-button class="md-raised md-accent" ng-disabled="!(u.customer_amount!=0 && u.discount!='0000-00-00') && u.dispute=='0000-00-00'"
+              ng-click="UpdateBookingInfo($event, u)" style="width: 30px;">
+              <md-icon>save</md-icon> save
+            </md-button>
+          </td>
+          <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+            <md-menu md-position-mode="target-right target">
+              <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon>more_vert</md-icon>
+                <!--<md-icon ng-if="u.is_banned">clear</md-icon>-->
+              </md-button>
+              <md-menu-content width=3>
+                <md-title class="md-padding">{{u.contact_name}}'s Booking</md-title>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="viewBookingDetail($event, u)">
+                    <md-icon md-class="md-primary" md-menu-align-target>details</md-icon>
+                    Detail View
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="deleteBooking($event, u)">
+                    <md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
+                    Delete
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </td>
+        </tr>
+        <tr ng-if="loading">
+          <td style="text-align:center;" colspan="10">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= bookingdata.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+  </div>
 </md-card>

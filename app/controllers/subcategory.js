@@ -7,7 +7,7 @@ var app = angular.module('App').controller('SubcategoryController',
     var self = $scope;
     var root = $rootScope;
     self.loading = true;
-
+    self.subcat = [];
     self.cat = $routeParams.cat;
     $rootScope.pagetitle = 'Subcategory';
 

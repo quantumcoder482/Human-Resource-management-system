@@ -1,70 +1,71 @@
 <md-card class="md-whiteframe-1dp md-padding">
- 		<form class="form-inline">
-				<md-input-container>
-						<label>Search Text Here....</label>
-						<input  ng-model="search" maxlength="50">
-				</md-input-container>
-		</form>      
-		<div class="table-responsive-vertical">   
-				<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-					<md-icon>fast_rewind</md-icon>
-				</md-button>
-				{{currentPage+1}}/{{numberOfPages()}}
-				<md-button ng-disabled="currentPage >= categories.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-						<md-icon>fast_forward</md-icon> 
-				</md-button>
+  <form class="form-inline">
+    <md-input-container>
+      <label>Search Text Here....</label>
+      <input ng-model="search" maxlength="50">
+    </md-input-container>
+  </form>
+  <div class="table-responsive-vertical">
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= categories.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
 
-			<table id="table" class="table table-hover">
-				<thead>
-				<tr >
-						<th ng-click="sort('id')" width="2%">No</th>
-						<th ng-click="sort('title')" width="20%">Category</th>
-						<th ng-click="sort('status')" width="5%">Status</th>
-						<th width="1%">Action</th>
-				</tr>
-				</thead>
-				<tbody>
-						<tr ng-repeat="c in categories |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
-								<td data-title="No">{{$index+1}}</td>
-								<td data-title="Name">{{c.title}}</td>
-							
-								<td data-title="Status" style="padding: 0rem 0rem 0rem 1rem;">
-										<md-button class="md-icon-button" ng-click="UpdateStatus($event, c)">
-												<md-checkbox ng-checked="c.status"> </md-checkbox>
-										</md-button>
-								</td>			     
-								<td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
-											<md-menu md-position-mode="target-right target" >
-												<md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
-													<md-icon>more_vert</md-icon>
-												</md-button>
-												<md-menu-content width=3>
-													<md-title class="md-padding">MENU - {{c.title}}</md-title>
-													<md-menu-item>
-														<md-button layout-fill md-ink-ripple ng-click="editCategory($event, c)">
-															<md-icon md-class="md-primary" md-menu-align-target>create</md-icon>
-															Edit
-														</md-button>
-													</md-menu-item>
-													<md-menu-item>
-														<md-button layout-fill md-ink-ripple ng-click="deleteCategory($event, c)">
-															<md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
-															Delete
-														</md-button>
-													</md-menu-item>																	
-												</md-menu-content>  
-											</md-menu>
-								</td> 
-						</tr>
-						<tr ng-if="loading"><td style="text-align:center;" colspan="10">Loading...</td></tr>
-				</tbody>
-			</table>			
-			<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-					<md-icon>fast_rewind</md-icon>
-			</md-button>
-			{{currentPage+1}}/{{numberOfPages()}}
-			<md-button ng-disabled="currentPage >= categories.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-					<md-icon>fast_forward</md-icon> 
-			</md-button>
-		</div>
+    <table id="table" class="table table-hover">
+      <thead>
+        <tr>
+          <th ng-click="sort('id')" width="2%">No</th>
+          <th ng-click="sort('title')" width="20%">Category</th>
+          <th ng-click="sort('status')" width="5%">Status</th>
+          <th width="1%">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr ng-repeat="c in categories | orderBy:sortKey:reverse | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+          <td data-title="No">{{currentPage*pageSize+$index+1}}</td>
+          <td data-title="Name">{{c.title}}</td>
+          <td data-title="Status" style="padding: 0rem 0rem 0rem 1rem;">
+            <md-button class="md-icon-button" ng-click="UpdateStatus($event, c)">
+              <md-checkbox ng-checked="c.status"> </md-checkbox>
+            </md-button>
+          </td>
+          <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
+            <md-menu md-position-mode="target-right target">
+              <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">
+                <md-icon>more_vert</md-icon>
+              </md-button>
+              <md-menu-content width=3>
+                <md-title class="md-padding">MENU - {{c.title}}</md-title>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="editCategory($event, c)">
+                    <md-icon md-class="md-primary" md-menu-align-target>create</md-icon>
+                    Edit
+                  </md-button>
+                </md-menu-item>
+                <md-menu-item>
+                  <md-button layout-fill md-ink-ripple ng-click="deleteCategory($event, c)">
+                    <md-icon md-class="md-primary" md-menu-align-target>delete</md-icon>
+                    Delete
+                  </md-button>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+          </td>
+        </tr>
+        <tr ng-if="loading">
+          <td style="text-align:center;" colspan="10">Loading...</td>
+        </tr>
+      </tbody>
+    </table>
+    <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+      <md-icon>fast_rewind</md-icon>
+    </md-button>
+    {{currentPage+1}}/{{numberOfPages()}}
+    <md-button ng-disabled="currentPage >= categories.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+      <md-icon>fast_forward</md-icon>
+    </md-button>
+  </div>
 </md-card>

@@ -53,7 +53,7 @@
         <md-input-container flex="50">
           <label> Ingredient </label>
           <md-select required name="ingredient" ng-model="vendor.ingredients_id">
-            <md-option ng-repeat="i in ingredients" ng-value="i.id" >{{ i.title }}</md-option>
+            <md-option ng-repeat="i in ingredients" ng-value="i.id" >{{i.title}}</md-option>
           </md-select>
           <div ng-messages="thisForm.ingredient.$error">
             <div ng-message="required">required.</div>

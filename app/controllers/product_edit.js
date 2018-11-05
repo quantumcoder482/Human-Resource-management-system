@@ -18,7 +18,6 @@ var app = angular.module('App').controller('ProductEditController',
       original = data.data[0];
       self.product = angular.copy(original);
 
-
       self.isClean = function () {
         return angular.equals(original, self.product);
       }
@@ -38,9 +37,7 @@ var app = angular.module('App').controller('ProductEditController',
 
           var idx = list.indexOf(item);
           if (idx > -1) {
-
             list.splice(idx, 1);
-
             services.getSubcategory_by_cat_multiple(item).then(function (data) {
               rmv_subcat = data.data;
               for (k = 0; k < rmv_subcat.length; k++) {
@@ -67,11 +64,8 @@ var app = angular.module('App').controller('ProductEditController',
           } else {
             services.getSubcategory_by_cat_multiple(list.join()).then(function (data) {
               self.items1 = data.data;
-
-              //alert(JSON.stringify(self.items1, null, 4));
             });
           }
-
         };
       });
 
@@ -79,10 +73,8 @@ var app = angular.module('App').controller('ProductEditController',
         return list.indexOf(item) > -1;
       };
 
-
       services.getSubcategory_by_cat_multiple(self.product.category.replace(/,\s*$/, "")).then(function (data) {
         $scope.items1 = data.data;
-
         sub1 = self.product.subcat.split(',');
         sub = [];
         for (j = 0; j < sub1.length - 1; j++) {
@@ -90,7 +82,6 @@ var app = angular.module('App').controller('ProductEditController',
         }
         self.selected1 = sub;
       });
-
 
       $scope.toggle1 = function (item, list) {
         var idx = list.indexOf(item);
@@ -118,11 +109,10 @@ var app = angular.module('App').controller('ProductEditController',
 
     })
 
-
     self.submit = function (p) {
       self.loader = true;
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
-      
+
       services.updateProduct(p.id, p).then(function (resp) {
         if (resp.status == 'success') {
           self.afterSubmit(resp);

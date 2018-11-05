@@ -14,10 +14,10 @@ angular.module('App').factory("services", function ($http) {
     return $http.get(serviceBase + 'users?id=' + id);
   }
 
-  obj.updateUsers = function (id, profile) {
+  obj.updateUsers = function (id, user) {
     return $http.post(serviceBase + 'updateUsers', {
       id: id,
-      profile: profile
+      user: user
     }).then(function (status) {
       return status.data;
     });
@@ -25,9 +25,27 @@ angular.module('App').factory("services", function ($http) {
 
   // profiles
 
+  obj.insertUser = function(user){
+    // console.log(user);
+     return $http.post(serviceBase + 'insert_user', user).then(function (status) {
+       return status;
+     });
+  }
+  obj.deleteProfile = function(user_id){
+    return $http.delete(serviceBase + 'delete_profile?id=' + user_id).then(function (status){
+      return status;
+    });
+  }
+
   obj.getAllProfile = function () {
     return $http.get(serviceBase + 'get_all_profile');
   }
+
+  obj.getAllPages = function () {
+    return $http.get(serviceBase + 'get_all_pages');
+  }
+
+
   // SMS //
 
   obj.sendSMS = function (to, text) {
@@ -150,7 +168,7 @@ angular.module('App').factory("services", function ($http) {
   }
 
   obj.BookingStockSumById = function (id) {
-    return $http.get(serviceBase + 'get_booking_sum_byid?id='+id);
+    return $http.get(serviceBase + 'get_booking_sum_byid?id=' + id);
   }
 
 
@@ -231,7 +249,7 @@ angular.module('App').factory("services", function ($http) {
     });
   };
 
-  
+
   // Ingredient Transaction
 
   obj.getIngredients = function () {
@@ -460,8 +478,8 @@ angular.module('App').factory("services", function ($http) {
     });
   };
 
-  obj.deleteUser = function (id) {
-    return $http.delete(serviceBase + 'deleteUser?id=' + id).then(function (status) {
+  obj.deleteCustomer = function (id) {
+    return $http.delete(serviceBase + 'deleteCustomer?id=' + id).then(function (status) {
       return status.data;
     });
   };

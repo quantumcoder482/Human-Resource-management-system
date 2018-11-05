@@ -8,10 +8,7 @@ var app = angular.module('App').controller('ConsumptionController',
     var self = $scope;
     var root = $rootScope;
     self.loading = true;
-
     self.product = $routeParams.id;
-
-
 
     root.toolbar_menu = {
       title: 'Add Consumption'
@@ -23,10 +20,7 @@ var app = angular.module('App').controller('ConsumptionController',
     services.ProductIngredientConsumption(self.product).then(function (data) {
       self.consumptions = data.data;
       self.loading = false;
-      // alert(JSON.stringify(self.consumptions, null, 4));
     });
-
-
 
     services.ProductTitleById(self.product).then(function (data) {
       self.thisproduct = data.data;

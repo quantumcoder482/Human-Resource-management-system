@@ -8,7 +8,7 @@ var app = angular.module('App').controller('CategoryController',
     var self = $scope;
     var root = $rootScope;
     self.loading = true;
-
+    self.categories = [];
     root.toolbar_menu = {
       title: 'Add Category'
     }

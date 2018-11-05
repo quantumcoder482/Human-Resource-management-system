@@ -30,9 +30,9 @@
               </tr>          
           </thead>   
           <tbody>
-              <tr ng-repeat="u in emp |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
-                  <td data-title="No">{{$index+1}}</td>
-                  <td data-title="Name_Emp">{{u.name}}</td>
+              <tr ng-repeat="u in emp | orderBy:sortKey:reverse | filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+                  <td data-title="No">{{currentPage*pageSize+$index+1}}</td>
+                  <td data-title="Name">{{u.name}}</td>
                   <td data-title="Contact">{{u.contact}} </td>
                   <td data-title="Alternate">{{u.alternate}} </td>
                   <td data-title="aadhaar">{{u.aadhaar}} </td>

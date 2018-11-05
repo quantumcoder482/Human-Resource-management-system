@@ -9,7 +9,7 @@
         </md-button>
       </div>
     </md-toolbar>
-    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">      
+    <md-dialog-content class="autoScroll" style="max-width:800px;max-height:810px;">
       <div layout="row">
         <md-input-container flex="100">
           <label>Temporary Employee Name</label>
@@ -18,9 +18,9 @@
             <div ng-message="required">required.</div>
           </div>
         </md-input-container>
-      </div>    
+      </div>
       <div layout="row">
-        <md-input-container flex="30" >
+        <md-input-container flex="30">
           <label>Payment Amount</label>
           <input required name="pay_amount" ng-model="emp_pay.pay_amount" />
           <div ng-messages="thisForm.pay_amount.$error">
@@ -30,13 +30,14 @@
         </md-input-container>
         <md-input-container flex="40">
           <label> Payment Date(yyyy-mm-dd format)</label>
-          <input name="paydate" ng-model="emp_pay.date" datetime-picker date-format="yyyy-mm-dd" date-only required onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+          <input name="paydate" ng-model="emp_pay.date" datetime-picker date-format="yyyy-mm-dd" date-only required
+            onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
           <div ng-messages="thisForm.paydate.$error">
             <div ng-message='required'>required.</div>
             <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
           </div>
         </md-input-container>
-        <md-input-container flex="30" >
+        <md-input-container flex="30">
           <label>State</label>
           <input required name="state" ng-model="emp_pay.state" />
           <div ng-messages="thisForm.state.$error">
@@ -48,10 +49,10 @@
     </md-dialog-content>
     <div class="md-actions md-padding" layout="row">
       <span flex></span>
-      <md-button class="md-warn" ng-click="hide()" >
+      <md-button class="md-warn" ng-click="hide()">
         CANCEL
       </md-button>
-      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(emp_pay)" style="margin-right:20px;" >
+      <md-button ng-disabled="isClean() || thisForm.$invalid" ng-click="submit(emp_pay)" style="margin-right:20px;">
         {{buttonText}}
       </md-button>
     </div>

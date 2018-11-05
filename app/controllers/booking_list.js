@@ -11,18 +11,23 @@ var app = angular.module('App').controller('BookingListController',
     root.toolbar_menu = null;
     self.second_pay = false;
 
+    // Default Sort 
+    self.sortKey = 'id';
+    self.reverse = true;
+
+
     services.getBookings().then(function (data) {
       console.log(data.data);
       self.bookingdata = data.data;
-      $scope.numberOfPages = function () {
-        return Math.ceil(self.bookingdata.length / $scope.pageSize);
+      self.numberOfPages = function () {
+        return Math.ceil(self.bookingdata.length / self.pageSize);
       }
       self.loading = false;
     });
 
-    $scope.sort = function (keyname) {
-      $scope.sortKey = keyname; //set the sortKey to the param passed
-      $scope.reverse = !$scope.reverse; //if true make it false and vice versa
+    self.sort = function (keyname) {
+      self.sortKey = keyname; //set the sortKey to the param passed
+      self.reverse = !self.reverse; //if true make it false and vice versa
     }
 
     self.UpdateBookingInfo = function (ev, u) {

@@ -57,7 +57,7 @@
 			$username = $vendor["username"];
 			$password = $vendor["password"];
 			if(!empty($username) and !empty($password)){ // empty checker
-				$query="SELECT * FROM profile WHERE username = '$username' AND password = '".md5($password)."' LIMIT 1";
+				$query="SELECT * FROM user WHERE username = '$username' AND password = '".md5($password)."' LIMIT 1";
 				$r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);
 				if($r->num_rows > 0) {
 					$result = $r->fetch_assoc();
@@ -75,7 +75,7 @@
 				$this->response('',406);
 			}
 			$id = (int)$this->_request['id'];
-			$query="SELECT * FROM profile WHERE id=$id";
+			$query="SELECT * FROM user WHERE id=$id";
 			$this->get_one($query);
 		}
 
@@ -86,18 +86,20 @@
 			$users = json_decode(file_get_contents("php://input"),true);
 		
 			$id = (int)$users['id'];
-			$password = $users['profile']['password'];
-			$users['profile']['title']=mysqli_real_escape_string($this->mysqli, $users['profile']['title']);
-			$users['profile']['delivery_disclaimer']=mysqli_real_escape_string($this->mysqli, $users['profile']['delivery_disclaimer']);
-			$users['profile']['product_disclaimer']=mysqli_real_escape_string($this->mysqli, $users['profile']['product_disclaimer']);
+			
+			// $user = $users['profile'];
+			$password = $users['user']['password'];
+			$users['user']['username']=mysqli_real_escape_string($this->mysqli, $users['user']['username']);
+			$users['user']['profile_name']=mysqli_real_escape_string($this->mysqli, $users['user']['profile_name']);
+			$users['user']['address']=mysqli_real_escape_string($this->mysqli, $users['user']['address']);
 			
 			if($password == '*****'){
-				$column_names = array('id', 'title','owner','contact','email','address','product_disclaimer','delivery_disclaimer');
+				$column_names = array('id','username','profile_name','contact','email','address','permission');
 			}else{
-				$users['profile']['password'] = md5($password);
-				$column_names = array('id', 'title','owner','contact','email','address','product_disclaimer','delivery_disclaimer','password');
+				$users['user']['password'] = md5($password);
+				$column_names = array('id','username','profile_name','contact','email','address','permission','password');
 			}
-			$table_name = 'profile';
+			$table_name = 'user';
 			$this->post_update($id, $users, $column_names, $table_name);
 		} 
 		
@@ -109,7 +111,7 @@
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}			
-			$query="SELECT * FROM profile";
+			$query="SELECT * FROM user";
 			$this->get_list($query);
 		}
 		
@@ -118,10 +120,40 @@
 				$this->response('',406);
 			}
 			$id = (int)$this->_request['id'];
-			$table_name = 'profile';
+			$table_name = 'user';
 			$this->delete_one($id, $table_name);
 		}
 		
+		private function get_all_pages(){
+			if($this->get_request_method() != "GET"){
+				$this->response('',406);
+			}
+			$query = "SELECT * from pages ORDER BY id ASC";
+			$this->get_list($query);
+		}
+
+		private function insert_user(){
+			if($this->get_request_method() != 'POST'){
+				$this->response('',406);
+			}
+			$user = json_decode(file_get_contents("php://input"),true);
+			// print_r($user);
+			$password = $user['password'];
+			$user['username']=mysqli_real_escape_string($this->mysqli, $user['username']);
+			$user['profile_name']=mysqli_real_escape_string($this->mysqli, $user['profile_name']);
+			$user['address']=mysqli_real_escape_string($this->mysqli, $user['address']);
+			
+			if($password == ''){
+				$column_names = array('id', 'username','profile_name','contact','email','address','permission');
+			}else{
+				$user['password'] = md5($password);
+				$column_names = array('id', 'username','profile_name','contact','email','address','permission','password');
+			}
+			$table_name = 'user';
+			$this->post_one($user, $column_names, $table_name);
+		}
+
+
 		/*
 		 * COMMON TRANSACTION
 		 */
@@ -170,7 +202,7 @@
 			$query=" SELECT (SELECT COUNT(*) FROM category ) as table1Count, 
 			(SELECT COUNT(*) FROM subcategory) as table2Count, 
 			(SELECT COUNT(*) FROM product) as table3Count, 
-			(SELECT COUNT(*) FROM user ) as table4Count"; 
+			(SELECT COUNT(*) FROM customer ) as table4Count"; 
 			$this->get_list($query);
 		}
 		
@@ -468,7 +500,7 @@
 			}
 			
 			$booking = json_decode(file_get_contents("php://input"),true);
-			//print_r($booking);
+			// print_r($booking);
 			$booking['user_id'] = intval($booking['user_id']);
 			$booking['contact_name']=mysqli_real_escape_string($this->mysqli, $booking['contact_name']);
 			$booking['contact_address']=mysqli_real_escape_string($this->mysqli, $booking['contact_address']);
@@ -907,7 +939,7 @@
 			if($this->get_request_method() != "GET"){
 				$this->response('',406);
 			}
-			$query="SELECT * FROM user order by name ASC";
+			$query="SELECT * FROM customer order by name ASC";
 			$this->get_list($query);
 		}
 
@@ -924,7 +956,7 @@
 				$this->response('',406);
 			}
 			$id = (int)$this->_request['id'];
-			$query="SELECT distinct u.id, u.name, u.contact,  u.address FROM user u where u.id='$id'";
+			$query="SELECT distinct u.id, u.name, u.contact,  u.address FROM customer u where u.id='$id'";
 			
 			$this->get_list($query);
 		}
@@ -936,7 +968,7 @@
 			}
 			$cust = json_decode(file_get_contents("php://input"),true);
 			$column_names = array('name', 'contact', 'email','address');
-			$table_name = 'user';
+			$table_name = 'customer';
 			$this->post_one($cust, $column_names, $table_name);
 		}
 		
@@ -949,17 +981,17 @@
 			$cust = json_decode(file_get_contents("php://input"),true);
 			$id = (int)$cust['id'];
 			$column_names = array('name', 'contact', 'email','address');
-		    $table_name = 'user';
+		    $table_name = 'customer';
 			$this->post_update($id, $cust, $column_names, $table_name);
 		}
 
 
-        private function deleteUser(){
+        private function deleteCustomer(){
 			if($this->get_request_method() != "DELETE"){
 				$this->response('',406);
 			}
 			$id = (int)$this->_request['id'];
-			$table_name = 'user';
+			$table_name = 'customer';
 			$this->delete_one($id, $table_name);
 		}
 
@@ -1523,15 +1555,14 @@
 			$columns = '';
 			$values = '';
 			foreach($column_names as $desired_key){ // Check the recipe received. If key does not exist, insert blank into the array.
-			  if(!in_array($desired_key, $keys)) {
-			   	$$desired_key = '';
+			  	if(!in_array($desired_key, $keys)) {
+			   		$$desired_key = '';
 				}else{
 					$$desired_key = $obj[$table_name][$desired_key];
 				}
 				$columns = $columns.$desired_key."='".$$desired_key."',";
 			}
 			$query = "UPDATE ".$table_name." SET ".trim($columns,',')." WHERE id=$id";
-			
 			
 			if(!empty($obj)){
 				// $r = $this->mysqli->query($query) or die($this->mysqli->error.__LINE__);

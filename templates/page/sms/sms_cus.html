@@ -1,105 +1,108 @@
-
 <!--<a style="color:#82b7dd" href="https://www.proovl.com/sms-api" target="blank">Proovl Api</a>-->
 <md-card class="md-whiteframe-1dp md-padding" style=" width: 65%;  float: left;">
-   <div class="row">             
-        <div class="col-lg-12 col-md-12">
-			<form class="form-inline">
-				<md-input-container>
-					<label>Search Customer....</label>
-					<input  ng-model="search" maxlength="50">
-				</md-input-container>
-			</form>
-			<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-				<md-icon>fast_rewind</md-icon>
-				</md-button>
-				{{currentPage+1}}/{{numberOfPages()}}
-				<md-button ng-disabled="currentPage >= cust.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-				<md-icon>fast_forward</md-icon> 
-				</md-button>
-			<table id="table" class="table table-hover">
-				<thead>
-					<tr>
-						<th width="2%" ng-click="sort('id')">No</th>
-						<th width="30%" ng-click="sort('name')">Name</th>
-						<th width="10%" ng-click="sort('contact')">Contact</th>
-						<th width="10%" ng-click="sort('email')">Email</th>
-						<th ng-hide="true"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="u in customer |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
-						<td data-title="No" ng-click="selectCus(u)">{{$index+1}}</td>
-						<td data-title="Name" ng-click="selectCus(u)">{{u.name}}</td>
-						<td data-title="Contact" ng-click="selectCus(u)">{{u.contact}} </td>
-						<td data-title="Email" ng-click="selectCus(u)">{{u.email}} </td>
-						<td data-title="Address" ng-hide="true">{{u.address}} </td>
-					</tr>
-					<tr ng-if="loading">
-						<td style="text-align:center;" colspan="10">
-							<div class="preloader3 loader-block">
-								<div class="circ1 loader-success"></div>
-								<div class="circ2 loader-success"></div>
-								<div class="circ3 loader-success"></div>
-								<div class="circ4 loader-success"></div>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>			
-			<md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
-				<md-icon>fast_rewind</md-icon>
-			</md-button>
-			{{currentPage+1}}/{{numberOfPages()}}
-			<md-button ng-disabled="currentPage >= cust.length/pageSize - 1" ng-click="currentPage=currentPage+1">
-				<md-icon>fast_forward</md-icon> 
-			</md-button>
-        </div>
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <form class="form-inline">
+        <md-input-container>
+          <label>Search Customer....</label>
+          <input ng-model="search" maxlength="50">
+        </md-input-container>
+      </form>
+      <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        <md-icon>fast_rewind</md-icon>
+      </md-button>
+      {{currentPage+1}}/{{numberOfPages()}}
+      <md-button ng-disabled="currentPage >= cust.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+        <md-icon>fast_forward</md-icon>
+      </md-button>
+      <table id="table" class="table table-hover">
+        <thead>
+          <tr>
+            <th width="2%" ng-click="sort('id')">No</th>
+            <th width="30%" ng-click="sort('name')">Name</th>
+            <th width="10%" ng-click="sort('contact')">Contact</th>
+            <th width="10%" ng-click="sort('email')">Email</th>
+            <th ng-hide="true"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr ng-repeat="u in customer |orderBy:sortKey:reverse|filter:search | startFrom:currentPage*pageSize | limitTo:pageSize">
+            <td data-title="No" ng-click="selectCus(u)">{{currentPage*pageSize+$index+1}}</td>
+            <td data-title="Name" ng-click="selectCus(u)">{{u.name}}</td>
+            <td data-title="Contact" ng-click="selectCus(u)">{{u.contact}} </td>
+            <td data-title="Email" ng-click="selectCus(u)">{{u.email}} </td>
+            <td data-title="Address" ng-hide="true">{{u.address}} </td>
+          </tr>
+          <tr ng-if="loading">
+            <td style="text-align:center;" colspan="10">
+              <div class="preloader3 loader-block">
+                <div class="circ1 loader-success"></div>
+                <div class="circ2 loader-success"></div>
+                <div class="circ3 loader-success"></div>
+                <div class="circ4 loader-success"></div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <md-button ng-disabled="currentPage == 0" ng-click="currentPage=currentPage-1">
+        <md-icon>fast_rewind</md-icon>
+      </md-button>
+      {{currentPage+1}}/{{numberOfPages()}}
+      <md-button ng-disabled="currentPage >= cust.length/pageSize - 1" ng-click="currentPage=currentPage+1">
+        <md-icon>fast_forward</md-icon>
+      </md-button>
     </div>
+  </div>
 </md-card>
 <md-card class="md-whiteframe-1dp md-padding" style=" width: 30%;  float: left;">
-   <div class="row">             
-        <div class="col-lg-12 col-md-12">
-			<form role="form" name="thisForm">
-				<md-content role="navigation">
-					<md-list-item>
-						<md-icon>sms</md-icon>
-						<p class="md-body-2" style="float:left;">SMS</p><md-checkbox style="float:left;" ng-click="allbool = !allbool; allcustomerSMS(this);">All</md-checkbox>
-					</md-list-item>
-					<md-list-item>
-						<md-icon>assignment_ind</md-icon>
-						<p class="md-body-2">{{name}}</p>
-					</md-list-item>
-					<md-list-item>
-						<md-icon>person_pin_circle</md-icon>
-						<p class="md-body-2">{{address}}</p>
-					</md-list-item>
-				</md-content>			
-				<md-input-container flex="50" style="margin-top:30px;">
-					<md-icon>phone_iphone</md-icon>
-					<input type="text" minlength="10" maxlength="11" name="smscon" placeholder="xxx xxxxxxxx" ng-model="sms.to" required />
-					<div ng-messages="thisForm.smscon.$error">
-						<div ng-message="required">required.</div>
-						<div ng-message="number">Number only</div>
-						<div ng-message='minlength'>min length 10.</div>
-						<div ng-message='maxlength'>max length 11.</div>
-					</div>
-				</md-input-container>
-				<md-input-container flex="50">
-					<md-icon>insert_comment</md-icon>
-					<textarea matInput minlength="5" maxlength="160" required placeholder="Please Write SMS" name="smstext" ng-model="sms.text" rows="3"></textarea><!--or Select beside Shortword-->
-					<div ng-messages="thisForm.smstext.$error">
-						<div ng-message="required">required.</div>
-						<div ng-message='minlength'>min length 5.</div>
-						<div ng-message='maxlength'>max length 160.</div>
-					</div>
-				</md-input-container>
-				<div class="md-actions md-padding" layout="row">
-					<span flex></span>
-					<md-button ng-disabled="thisForm.$invalid"  ng-click="sms_send(sms)" style="margin-right:20px;" class="md-raised md-accent">
-						SEND <md-icon>send</md-icon>
-					</md-button>
-				</div>
-			</form>				
+  <div class="row">
+    <div class="col-lg-12 col-md-12">
+      <form role="form" name="thisForm">
+        <md-content role="navigation">
+          <md-list-item>
+            <md-icon>sms</md-icon>
+            <p class="md-body-2" style="float:left;">SMS</p>
+            <md-checkbox style="float:left;" ng-click="allbool = !allbool; allcustomerSMS(this);">All</md-checkbox>
+          </md-list-item>
+          <md-list-item>
+            <md-icon>assignment_ind</md-icon>
+            <p class="md-body-2">{{name}}</p>
+          </md-list-item>
+          <md-list-item>
+            <md-icon>person_pin_circle</md-icon>
+            <p class="md-body-2">{{address}}</p>
+          </md-list-item>
+        </md-content>
+        <md-input-container flex="50" style="margin-top:30px;">
+          <md-icon>phone_iphone</md-icon>
+          <input type="text" minlength="10" maxlength="11" name="smscon" placeholder="xxx xxxxxxxx" ng-model="sms.to"
+            required />
+          <div ng-messages="thisForm.smscon.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message="number">Number only</div>
+            <div ng-message='minlength'>min length 10.</div>
+            <div ng-message='maxlength'>max length 11.</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="50">
+          <md-icon>insert_comment</md-icon>
+          <textarea matInput minlength="5" maxlength="160" required placeholder="Please Write SMS" name="smstext"
+            ng-model="sms.text" rows="3"></textarea>
+          <!--or Select beside Shortword-->
+          <div ng-messages="thisForm.smstext.$error">
+            <div ng-message="required">required.</div>
+            <div ng-message='minlength'>min length 5.</div>
+            <div ng-message='maxlength'>max length 160.</div>
+          </div>
+        </md-input-container>
+        <div class="md-actions md-padding" layout="row">
+          <span flex></span>
+          <md-button ng-disabled="thisForm.$invalid" ng-click="sms_send(sms)" style="margin-right:20px;" class="md-raised md-accent">
+            SEND <md-icon>send</md-icon>
+          </md-button>
         </div>
+      </form>
     </div>
+  </div>
 </md-card>
