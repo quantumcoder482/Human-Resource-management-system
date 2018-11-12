@@ -75,18 +75,18 @@
           </div>    
           <div layout="row">          
             <md-input-container flex="45">
-              <label> InDate(yyyy-mm-dd format)</label>
-              <input name="indate" ng-model="vend_pay.in_date" datetime-picker date-format="yyyy-mm-dd" date-only required onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+              <label> InDate(dd-mm-yyyy format)</label>
+              <input name="indate" ng-model="vend_pay.in_date" datetime-picker date-format="dd-mm-yyyy" date-only required autocomplete="off" onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
               <div ng-messages="thisForm.indate.$error">
                 <div ng-message='required'>required.</div>
-                <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+                <div ng-message='pattern'>Enter a Valid Date. (dd-mm-yyyy format)</div>
               </div>
             </md-input-container>
             <md-input-container flex="10">
             </md-input-container>
             <md-input-container flex="45">
-              <label> PayDate(yyyy-mm-dd format)</label>
-              <input name="pay_date" ng-model="vend_pay.pay_date" datetime-picker date-format="yyyy-mm-dd" date-only onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
+              <label> PayDate(dd-mm-yyyy format)</label>
+              <input name="pay_date" ng-model="vend_pay.pay_date" datetime-picker date-format="dd-mm-yyyy" date-only onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
             </md-input-container>
           </div> 
         </md-dialog-content>

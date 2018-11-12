@@ -29,7 +29,7 @@
           <td data-title="No">{{currentPage*pageSize+$index+1}}</td>
           <td data-title="Name">{{u.name}}</td>
           <td data-title="Payment Amount">{{u.pay_amount}} </td>
-          <td data-title="Date">{{u.date}} </td>
+          <td data-title="Date">{{u.date | date:'dd-MM-yyyy'}} </td>
           <td data-title="State" style="padding: 0rem 0rem 0rem 1rem;">
             <label class="checkbox-inline">
               <md-checkbox ng-model="u.first" ng-change="u.second = false; u.third = false;" aria-label="tmpFullPay?"

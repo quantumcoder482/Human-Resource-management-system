@@ -39,6 +39,9 @@
 
     self.getSearchResult = function (data) {
       // self.loader = true;
+      data.start_date = data.start_date.split('-').reverse().join('-');
+      data.end_date = data.end_date.split('-').reverse().join('-');
+
       var start_date = data.start_date ? new Date(data.start_date).getTime() - 43200000 : new Date('1970-01-01').getTime();
       var end_date = data.end_date ? new Date(data.end_date).getTime() + 43200000 : new Date('2900-01-01').getTime();
       // console.log(start_date);
@@ -49,12 +52,15 @@
         }
       });
 
+      data.start_date = data.start_date.split('-').reverse().join('-');
+      data.end_date = data.end_date.split('-').reverse().join('-');
+
     }
     self.Update = function (data) {
       self.loader = true;
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
       data.type = "Addition";
-
+   
       services.insertStock(data).then(function (resp) {
         console.log(resp);
         // ingredient add
@@ -79,5 +85,17 @@
       } else {
         $mdToast.show($mdToast.simple().hideDelay(3000).content(resp.msg).position('bottom right'))
       }
+    };
+  });
+
+  app.filter('mysqlToJS', function () {
+    return function (mysqlStr) {
+      var t, result = null;
+      if (typeof mysqlStr === 'string') {
+        t = mysqlStr.split(/[- :]/);
+        //when t[3], t[4] and t[5] are missing they defaults to zero
+        result = new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
+      }
+      return result;
     };
   });

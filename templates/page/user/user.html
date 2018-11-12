@@ -34,7 +34,7 @@
           <td data-title="Email">{{u.email}} </td>
           <td data-title="FCM">{{u.fcm}} </td>
           <td data-title="Address">{{u.address}} </td>
-          <td data-title="Last_Seen">{{u.last_seen}} </td>
+          <td data-title="Last_Seen">{{u.last_seen | mysqlToJS:u.last_seen | date:'dd-MM-yyyy HH:mm' }} </td>
           <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
             <md-menu md-position-mode="target-right target">
               <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">

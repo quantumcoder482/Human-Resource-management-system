@@ -9,10 +9,10 @@ var app = angular.module('App').controller('ReportSaleController',
     var root = $rootScope;
     self.loading = true;
     var to_report = {
-      start_date: toISOLocal(new Date()).split("T")[0],
-      end_date: toISOLocal(new Date()).split("T")[0],
-      date: toISOLocal(new Date()).split("T")[0],
-      month: toISOLocal(new Date()).split("T")[0].slice(0, 7),
+      start_date: toISOLocal(new Date()).split("T")[0].split('-').reverse().join('-'),
+      end_date: toISOLocal(new Date()).split("T")[0].split('-').reverse().join('-'),
+      date: toISOLocal(new Date()).split("T")[0].split('-').reverse().join('-'),
+      month: toISOLocal(new Date()).split("T")[0].slice(0, 7).split('-').reverse().join('-'),
       year: toISOLocal(new Date()).split("T")[0].slice(0, 4),
       type: 5
     };
@@ -95,6 +95,7 @@ var app = angular.module('App').controller('ReportSaleController',
       self.daytable = false;
       switch (dates.kind) {
         case 1:
+          dates.date = dates.date.split('-').reverse().join('-');
           services.getSalesReport(dates.date, dates.date, dates.type).then(function (data) {
             if (data.data[0].total > 0) {
               if (!data.data[0].hasOwnProperty('type')) {
@@ -142,8 +143,10 @@ var app = angular.module('App').controller('ReportSaleController',
               });
             } else self.report = '';
           });
+          dates.date = dates.date.split('-').reverse().join('-');
           break;
         case 2:
+          dates.month = dates.month.split('-').reverse().join('-');
           services.getSalesReport(dates.month + '-01', dates.month + '-31', dates.type).then(function (data) {
             if (data.data[0].total > 0) {
               if (!data.data[0].hasOwnProperty('type')) {
@@ -157,8 +160,10 @@ var app = angular.module('App').controller('ReportSaleController',
               self.report = data.data;
             } else self.report = '';
           });
+          dates.month = dates.month.split('-').reverse().join('-');
           break;
         case 3:
+          
           services.getSalesReport(dates.year + '-01-01', dates.year + '-12-31', dates.type).then(function (data) {
             if (data.data[0].total > 0) {
               if (!data.data[0].hasOwnProperty('type')) {
@@ -174,6 +179,8 @@ var app = angular.module('App').controller('ReportSaleController',
           });
           break;
         case 4:
+          dates.start_date = dates.start_date.split('-').reverse().join('-');
+          dates.end_date = dates.end_date.split('-').reverse().join('-');
           services.getSalesReport(dates.start_date, dates.end_date, dates.type).then(function (data) {
             if (data.data[0].total > 0) {
               if (!data.data[0].hasOwnProperty('type')) {
@@ -223,6 +230,8 @@ var app = angular.module('App').controller('ReportSaleController',
               }
             } else self.report = '';
           });
+          dates.start_date = dates.start_date.split('-').reverse().join('-');
+          dates.end_date = dates.end_date.split('-').reverse().join('-');
           break;
       }
     }

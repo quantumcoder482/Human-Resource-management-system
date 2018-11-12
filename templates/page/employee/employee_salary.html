@@ -2,12 +2,12 @@
   <form class="form-inline" name="thisForm">
     <div layout="row">
       <md-input-container flex="30">
-        <label> Salary Month(yyyy-mm format)</label>
-        <input name="today" ng-model="month" maxlength="7" required datetime-picker date-format="yyyy-MM" date-only
-          onkeydown="return !(event.keyCode==13)" date-set={{"2016/05/07"}} />
+        <label> Salary Month(mm-yyyy format)</label>
+        <input name="today" ng-model="month" maxlength="7" required datetime-picker date-format="MM-yyyy" date-only
+          autocomplete="off" onkeydown="return !(event.keyCode==13)" date-set={{"2016/05/07"}} />
         <div ng-messages="thisForm.guestnumber.$error">
           <div ng-message='required'>required.</div>
-          <div ng-message='maxlength'>Only yyyy-mm format.</div>
+          <div ng-message='maxlength'>Only mm-yyyy format.</div>
         </div>
       </md-input-container>
       <md-input-container flex="10" style="padding-top: 30px;">

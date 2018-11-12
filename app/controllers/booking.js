@@ -15,7 +15,7 @@ angular.module('App').controller('BookingController',
 
     original = {
       items: [],
-      booking_date: toISOLocal(new Date()).split("T")[0],
+      booking_date: toISOLocal(new Date()).split("T")[0].split('-').reverse().join('-'),
       guest_num: 1,
       reduce: 0,
       quantity: [],
@@ -32,6 +32,9 @@ angular.module('App').controller('BookingController',
     self.product_status = true;
     self.ingredients = [];
     self.stocks = [];
+    self.booking_id = 0;
+    self.disable_print = 1;
+
 
     self.b1g1 = true;
     self.showCategory = true;
@@ -172,22 +175,29 @@ angular.module('App').controller('BookingController',
     };
 
 
-    self.AddProduct = function (ev, p) {
-
+    self.AddProduct = function (ev, p, add_count) {
       self.product_status = false;
+      
       if (self.build.items.indexOf(p.id) >= 0) {
         pid = self.build.items.indexOf(p.id);
-        self.build.quantity[pid] = self.build.quantity[pid] + 1; //myone
+        if(p.quantity > 1 && add_count != 1){
+          self.build.quantity[pid] = self.build.quantity[pid] + Number(p.quantity); //myone
+        } else {
+          self.build.quantity[pid] = self.build.quantity[pid] + 1; //myone
+        }
       } else {
         self.build.items.push(p.id);
-        self.build.quantity.push(1); //myone
+        if(add_count == 1){
+          self.build.quantity.push(1); //myone
+        } else {
+          self.build.quantity.push(p.quantity); //myone
+        }
         self.build.item_names.push(p.title);
       }
 
 
       services.getOrderProduct(self.build.items.join()).then(function (data) {
         self.particulars = data.data;
-
       });
 
       $mdToast.show($mdToast.simple().content(p.title + " -" + 1 + " Unit" + " " + "added").position('bottom right'));
@@ -238,7 +248,6 @@ angular.module('App').controller('BookingController',
       //console.log(JSON.stringify(self.cust));
     });
 
-
     self.getUserDetails = function (id) {
       services.getCustomer_by_id(id).then(function (data) {
         cust = data.data;
@@ -250,7 +259,6 @@ angular.module('App').controller('BookingController',
       });
 
     };
-
 
     services.getIngredients().then(function (data) {
       self.ingredients = data.data;
@@ -265,14 +273,48 @@ angular.module('App').controller('BookingController',
         }
         self.stocks.push(tmp);
       }
-      // console.log(self.stocks);
       self.loading = false;
     });
 
+    self.printBooking = function(){
+      var id = self.booking_id;
+      if(id == 0){
+        var msg = "Please Create Booking!"
+        $mdToast.show($mdToast.simple().hideDelay(1000).content(msg).position('bottom right'))
+          .then(function () {
+            console.log("booking print failed");
+          });
+      } else {
+          services.printBooking(id).then(function (data) {
+            console.log("booking print successed");
+            newPopup(self.booking_id);
+            window.location.reload();
+
+          });
+      }
+    }
+
     self.submit = function (b) {
-      self.wait = true;
+      // self.wait = true;
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
 
+
+      // Date time format  dd-mm-yyyy
+
+      b.booking_date = b.booking_date.split('-').reverse().join('-');
+
+      if(b.booking_date1){
+        b.booking_date1 = b.booking_date1.split('-').reverse().join('-');
+      }
+      if(b.booking_date2) {
+        b.booking_date2 = b.booking_date2.split('-').reverse().join('-');
+      }
+      if(b.booking_date3) {
+        b.booking_date3 = b.booking_date3.split('-').reverse().join('-');
+      }
+      if(b.booking_date4) {
+        b.booking_date4 = b.booking_date4.split('-').reverse().join('-');
+      }
       // ingredients calculation
 
       if (b.items) {
@@ -307,6 +349,11 @@ angular.module('App').controller('BookingController',
 
       }
 
+      // Initial Paydate
+
+      if (b.customer_amount) {
+        b.discount = b.booking_date;
+      }
 
       if (b.user_id == 0) {
 
@@ -323,9 +370,9 @@ angular.module('App').controller('BookingController',
           b.quantity = b.quantity.join() + ',';
           b.item_names = b.item_names.join(',%,%') + ',%,%';
 
+
           services.insertBooking(b).then(function (resp) {
             if (resp.status == "success") {
-              console.log("success:" + resp);
               self.stocks = self.stocks.filter((item) => {
                 return item.quantity;
               });
@@ -334,31 +381,48 @@ angular.module('App').controller('BookingController',
                 st.booking_id = resp.insert_id;
                 st.function = self.build.booking_name;
                 services.insertStock(st).then(function (res) {
-                  console.log(res);
+                  // console.log(res);
                 })
               }
+
+              self.booking_id = resp.insert_id;
+              self.disable_print = 0;
+
               //services.getBookingProduct(resp.data.items.replace(/,\s*$/, "")).then(function(data){
               //products = data.data;
               //alert(products.length);
               //});  
 
+              // Date_time format  yyyy-mm-dd reverse
 
+              b.booking_date = b.booking_date.split('-').reverse().join('-');
+              if (b.booking_date1) {
+                b.booking_date1 = b.booking_date1.split('-').reverse().join('-');
+              }
+              if (b.booking_date2) {
+                b.booking_date2 = b.booking_date2.split('-').reverse().join('-');
+              }
+              if (b.booking_date3) {
+                b.booking_date3 = b.booking_date3.split('-').reverse().join('-');
+              }
+              if (b.booking_date4) {
+                b.booking_date4 = b.booking_date4.split('-').reverse().join('-');
+              }
+
+              
               self.afterSubmit(resp);
             }
-
-            //services.generateInvoice(resp.data);
 
           });
         });
       } else {
-        console.log(b);
         b.items = b.items.join() + ',';
         b.quantity = b.quantity.join() + ',';
         b.item_names = b.item_names.join(',%,%') + ',%,%';
-
+        console.log(b);
         services.insertBooking(b).then(function (resp) {
           if (resp.status == "success") {
-            // console.log(resp);
+            console.log(resp);
             self.stocks = self.stocks.filter((item) => {
               return item.quantity;
             });
@@ -367,10 +431,12 @@ angular.module('App').controller('BookingController',
               st.booking_id = resp.insert_id;
               st.function = self.build.booking_name;
               services.insertStock(st).then(function (res) {
-                console.log(res);
+                // console.log(res);
               })
             }
 
+            self.booking_id = resp.insert_id;
+            self.disable_print = 0;
             //services.getBookingProduct(resp.data.items.replace(/,\s*$/, "")).then(function(data){
             //    products = data.data;
             //    console.log(products);
@@ -385,29 +451,49 @@ angular.module('App').controller('BookingController',
             // });
 
 
+
+             // Date_time format  yyyy-mm-dd reverse
+
+             b.booking_date = b.booking_date.split('-').reverse().join('-');
+             if (b.booking_date1) {
+               b.booking_date1 = b.booking_date1.split('-').reverse().join('-');
+             }
+             if (b.booking_date2) {
+               b.booking_date2 = b.booking_date2.split('-').reverse().join('-');
+             }
+             if (b.booking_date3) {
+               b.booking_date3 = b.booking_date3.split('-').reverse().join('-');
+             }
+             if (b.booking_date4) {
+               b.booking_date4 = b.booking_date4.split('-').reverse().join('-');
+             }
+
             self.afterSubmit(resp);
 
           }
-
-          //services.generateInvoice(resp.data);
-
         });
       }
+     
     }
-
 
     self.afterSubmit = function (resp) {
       if (resp.status == "success") {
         $mdToast.show($mdToast.simple().hideDelay(1000).content(resp.msg).position('bottom right'))
           .then(function () {
-
-            window.location.reload();
-
+            console.log(resp.status);
           });
       } else {
         $mdToast.show($mdToast.simple().hideDelay(3000).content(resp.msg).position('bottom right'))
       }
     };
+
+    function newPopup(url) {
+      popupWindow = window.open(
+        '../booking/' + url + '.pdf',
+        'popUpWindow',
+        'height=800,width=600,right=5,top=5,resizable=yes,scrollbars=yes,toolbar=yes,menubar=no,location=no,directories=no,status=yes')
+    }
+
   });
 
 function BookingControllerDialog($scope, $mdDialog, services, $mdToast, $route, vendor) {

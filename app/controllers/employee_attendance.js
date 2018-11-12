@@ -7,7 +7,9 @@ var app = angular.module('App').controller('EmployeeAttendanceController',
     var self = $scope;
     var root = $rootScope;
     self.loading = true;
-    self.value = toISOLocal(new Date()).split("T")[0]; //new Date().toISOString().split("T")[0]
+    self.value = toISOLocal(new Date()).split("T")[0]; 
+    self.value = self.value.split('-').reverse().join('-'); //new Date().toISOString().split("T")[0]
+
     self.add = $routeParams.add;
     $rootScope.pagetitle = 'Employee Attendance';
     self.allAtt = false;
@@ -226,6 +228,7 @@ var app = angular.module('App').controller('EmployeeAttendanceController',
     self.loadnewdate = function (s) {
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
       self.loader = true;
+      s = s.split('-').reverse().join('-');
 
       services.getEmployee_active_withAtt().then(function (data) {
         //console.log(data.data);

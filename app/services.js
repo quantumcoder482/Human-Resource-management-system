@@ -74,7 +74,6 @@ angular.module('App').factory("services", function ($http) {
 
   obj.generateInvoice = function (build) {
     return $http.post('api/build_order.php', build).then(function (status) {
-
       return status.data;
     });
   };
@@ -230,7 +229,7 @@ angular.module('App').factory("services", function ($http) {
   }
 
   obj.Update_BookingInfo = function (u) {
-    return $http.get(serviceBase + 'Update_BookingInfo?discount=' + u.discount + '&customer_amount=' + u.customer_amount + '&customer_amount_1=' + u.customer_amount_1 + '&discount_1=' + u.discount_1 + '&dispute=' + u.dispute + '&dispute_1=' + u.dispute_1 + '&id=' + u.id + '&totalpaid=' + u.totalpaid);
+    return $http.get(serviceBase + 'Update_BookingInfo?discount=' + u.discount + '&customer_amount=' + u.customer_amount + '&customer_amount_1=' + u.customer_amount_1 + '&customer_amount_2=' + u.customer_amount_2 + '&customer_amount_3=' + u.customer_amount_3 + '&discount_1=' + u.discount_1 + '&discount_2=' + u.discount_2 + '&discount_3=' + u.discount_3 + '&dispute=' + u.dispute + '&dispute_1=' + u.dispute_1 + '&id=' + u.id + '&totalpaid=' + u.totalpaid);
   }
 
   obj.getSalesReportBooking = function (sdate, edate, type) {
@@ -247,8 +246,19 @@ angular.module('App').factory("services", function ($http) {
     return $http.delete(serviceBase + 'delete_Booking?id=' + id).then(function (status) {
       return status.data;
     });
-  };
+  }
 
+  obj.printBooking = function(id){
+     return $http.post('api/build_booking.php', id).then(function (status) {
+       return status.data;
+     });
+  }
+
+  obj.printBooking1 = function (id) {
+    return $http.post('api/build_booking1.php', id).then(function (status) {
+      return status.data;
+    });
+  }
 
   // Ingredient Transaction
 

@@ -20,7 +20,7 @@ var app = angular.module('App').controller('EmployeeAddController',
     self.submit = function (s) {
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
       self.loader = true;
-
+      s.joindate = s.joindate.split("-").reverse().join("-");
       //alert(JSON.stringify(s, null, 4));
       services.insertEmployee(s).then(function (resp) {
         self.afterSubmit(resp);

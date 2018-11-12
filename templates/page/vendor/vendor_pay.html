@@ -38,7 +38,7 @@
           <td data-title="Quantity">{{u.amount}} </td>
           <td data-title="Unit">{{u.unit}} </td>
           <td data-title="Total Price">{{u.amount * u.price}} </td>
-          <td data-title="InDate">{{u.in_date}} </td>
+          <td data-title="InDate">{{u.in_date | date:'dd-MM-yyyy'}} </td>
           <td data-title="State" style="padding: 0rem 0rem 0rem 1rem;">
             <label class="checkbox-inline">
               <md-checkbox ng-model="u.first" ng-change="u.second = false; u.third = false;" aria-label="tmpFullPay?"
@@ -57,7 +57,7 @@
                 class="payment md-primary" ng-click="UpdateVendPayState($event, u, 'third')"> </md-checkbox>
             </label>
           </td>
-          <td data-title="PayDate">{{u.pay_date}} </td>
+          <td data-title="PayDate">{{u.pay_date | date:'dd-MM-yyyy'}} </td>
           <td data-title="Action" style="padding: 0rem 0rem 0rem 1rem;">
             <md-menu md-position-mode="target-right target">
               <md-button class="md-icon-button" ng-click="$mdOpenMenu($event)">

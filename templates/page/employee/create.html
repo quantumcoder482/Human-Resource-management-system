@@ -103,21 +103,21 @@
       </div>
       <div layout="row">
         <md-input-container flex="50">
-          <label> Join Date(yyyy-mm-dd format)</label>
-          <input name="join_date" ng-model="employee.join" datetime-picker date-format="yyyy-MM-dd" date-only required
-            onkeydown="return !(event.keyCode==13)" />
+          <label> Join Date(dd-mm-yyyy format)</label>
+          <input name="join_date" ng-model="employee.joindate" datetime-picker date-format="dd-MM-yyyy" date-only required
+            autocomplete="off" onkeydown="return !(event.keyCode==13)" />
           <div ng-messages="thisForm.join_date.$error">
             <div ng-message='required'>required.</div>
-            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+            <div ng-message='pattern'>Enter a Valid Date. (dd-mm-yyyy format)</div>
           </div>
         </md-input-container>
         <md-input-container flex="50">
-          <label> Leave Date(yyyy-mm-dd format)</label>
-          <input name="leave_date" ng-model="employee.leave" datetime-picker date-format="yyyy-MM-dd" date-only required
-            onkeydown="return !(event.keyCode==13)" />
+          <label> Leave Date(dd-mm-yyyy format)</label>
+          <input name="leave_date" ng-model="employee.leavedate" datetime-picker date-format="dd-MM-yyyy" date-only required
+            autocomplete="off" onkeydown="return !(event.keyCode==13)" />
           <div ng-messages="thisForm.leave_date.$error">
             <div ng-message='required'>required.</div>
-            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+            <div ng-message='pattern'>Enter a Valid Date. (dd-mm-yyyy format)</div>
           </div>
         </md-input-container>
       </div>

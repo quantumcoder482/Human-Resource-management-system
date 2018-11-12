@@ -74,11 +74,9 @@ class Data{
        $result = @mysqli_query($mysqli,$query) or die("SQL Error 1: " . mysqli_error());
        $num_rows=mysqli_num_rows($result);
 	   $responce=mysqli_fetch_array($result);
-	   if($num_rows>0)
-	   {
-	   
-		return $responce;
-	}
+	   if($num_rows>0){
+	   		return $responce;
+	   }
    }
         
   

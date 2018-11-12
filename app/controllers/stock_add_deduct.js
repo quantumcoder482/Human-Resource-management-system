@@ -47,6 +47,8 @@ var app = angular.module('App').controller('StockAddDeductController',
 
     self.getSearchResult = function (data) {
       // self.loader = true;
+      data.start_date = data.start_date.split('-').reverse().join('-');
+      data.end_date = data.end_date.split('-').reverse().join('-');
       var type = data.type == 'Addition' ? 'Addition' : (data.type == 'Subtraction' ? 'Subtraction' : null);
       var start_date = data.start_date ? new Date(data.start_date).getTime() - 43200000 : new Date('1970-01-01').getTime();
       var end_date = data.end_date ? new Date(data.end_date).getTime() + 43200000 : new Date('2900-01-01').getTime();
@@ -61,7 +63,8 @@ var app = angular.module('App').controller('StockAddDeductController',
           return true;
         }
       });
-
+      data.start_date = data.start_date.split('-').reverse().join('-');
+      data.end_date = data.end_date.split('-').reverse().join('-');
     }
 
     $scope.sort = function (keyname) {
@@ -73,7 +76,7 @@ var app = angular.module('App').controller('StockAddDeductController',
       self.loader = true;
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
       data.type = "Addition";
-
+      data.date = data.date.split('-').reverse().join('-');
       services.insertStock(data).then(function (resp) {
         // ingredient add
         services.getIngredientsByID(data.ingredient).then(function (resp) {
@@ -85,12 +88,13 @@ var app = angular.module('App').controller('StockAddDeductController',
 
         });
       });
-
+      data.date = data.date.split('-').reverse().join('-');
     }
     self.Subtraction = function (data) {
       self.loader = true;
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
       data.type = "Subtraction";
+      data.date = data.date.split('-').reverse().join('-');
       services.insertStock(data).then(function (resp) {
         // ingredient reduce
         services.getIngredientsByID(data.ingredient).then(function (resp) {
@@ -101,6 +105,7 @@ var app = angular.module('App').controller('StockAddDeductController',
           });
         });
       });
+      data.date = data.date.split('-').reverse().join('-');
     }
 
     self.submit = function (c) {
@@ -128,5 +133,17 @@ var app = angular.module('App').controller('StockAddDeductController',
       } else {
         $mdToast.show($mdToast.simple().hideDelay(3000).content(resp.msg).position('bottom right'))
       }
+    };
+  });
+
+  app.filter('mysqlToJS', function () {
+    return function (mysqlStr) {
+      var t, result = null;
+      if (typeof mysqlStr === 'string') {
+        t = mysqlStr.split(/[- :]/);
+        //when t[3], t[4] and t[5] are missing they defaults to zero
+        result = new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
+      }
+      return result;
     };
   });

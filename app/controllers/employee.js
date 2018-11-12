@@ -90,6 +90,12 @@ var app = angular.module('App').controller('EmployeeController',
     };
 
     self.editEmployee = function (ev, s) {
+      if(s.joindate){
+        s.joindate = s.joindate.split("-").reverse().join("-");
+      }
+      if(s.leavedate){
+        s.leavedate = s.leavedate.split("-").reverse().join("-");
+      }
       $mdDialog.show({
         controller: EmployeeControllerDialog,
         templateUrl: 'templates/page/employee/create.html',
@@ -131,7 +137,8 @@ function EmployeeControllerDialog($scope, $mdDialog, services, $mdToast, $route,
       parent_f: '',
       parent_m: '',
       position: '',
-      join: '',
+      joindate: '',
+      leavedate:'',
       salary: '',
       incentives: '',
       blood: '',
@@ -145,6 +152,7 @@ function EmployeeControllerDialog($scope, $mdDialog, services, $mdToast, $route,
     });
 
   } else {
+   
     original = employee;
     self.employee = angular.copy(original);
 
@@ -169,9 +177,10 @@ function EmployeeControllerDialog($scope, $mdDialog, services, $mdToast, $route,
   self.submit = function (s) {
     $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
     self.loader = true;
-
+    s.joindate = s.joindate.split("-").reverse().join("-");
+    s.leavedate = s.leavedate.split("-").reverse().join("-");
     if (isNew) {
-      alert(JSON.stringify(s, null, 4));
+      // alert(JSON.stringify(s, null, 4));
       services.insertEmployee(s).then(function (resp) {
         self.afterSubmit(resp);
       });

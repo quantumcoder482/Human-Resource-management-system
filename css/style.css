@@ -46,10 +46,10 @@ md-whiteframe {
   color: #828282;
 }
 .md-table th {
-  padding: 10px;
+  padding: 5px;
 }
 .md-table tr td {
-  padding: 0px 0px 0px 10px;
+  padding: 0px 0px 0px 5px;
   height:40px;
   min-height:40px;
 }
@@ -76,7 +76,7 @@ md-whiteframe {
 }
 .table > thead > tr > th {
   text-align: left;
-  padding: 15px 10px 15px 20px;
+  padding: 10px 5px 5px 10px;
   vertical-align: middle;
   border-top: 0;
   -webkit-transition: all 0.3s ease;
@@ -89,7 +89,7 @@ md-whiteframe {
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
   text-align: left;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 5px 5px 10px;
   vertical-align: center;
   border-top: 0;
   -webkit-transition: all 0.3s ease;

@@ -47,7 +47,7 @@
                 </tr>
                 <tr>
                   <th>Order Date :</td>
-                  <td>{{rorder.date}}</td>
+                  <td>{{rorder.date | mysqlToJS:rorder.date | date:'dd-MM-yyyy HH:mm:ss'}}</td>
                 </tr>
               </tbody>
             </table>

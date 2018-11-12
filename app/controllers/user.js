@@ -18,6 +18,13 @@ var app = angular.module('App').controller('UserController',
 
     services.getCustomers().then(function (data) {
       self.cust = data.data;
+      // if(self.cust){
+      //   for(i=0;i<=self.cust.length-1;i++){
+      //     self.cust.last_seen = new Date(self.cust.last_seen).toISOString();
+      //   }
+      // }
+      // console.log(self.cust);
+
       $scope.numberOfPages = function () {
         return Math.ceil(self.cust.length / $scope.pageSize);
       }
@@ -195,3 +202,15 @@ function CustomerControllerDialog($scope, $mdDialog, services, $mdToast, $route,
     }
   };
 }
+
+app.filter('mysqlToJS', function () {
+  return function (mysqlStr) {
+    var t, result = null;
+    if (typeof mysqlStr === 'string') {
+      t = mysqlStr.split(/[- :]/);
+      //when t[3], t[4] and t[5] are missing they defaults to zero
+      result = new Date(t[0], t[1] - 1, t[2], t[3] || 0, t[4] || 0, t[5] || 0);
+    }
+    return result;
+  };
+});

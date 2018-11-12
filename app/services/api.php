@@ -536,11 +536,15 @@
 			$id = (int)$this->_request['id'];
 			$booking['booking']['customer_amount'] = $this->_request['customer_amount'];
 			$booking['booking']['customer_amount_1'] = $this->_request['customer_amount_1'];
+			$booking['booking']['customer_amount_2'] = $this->_request['customer_amount_2'];
+			$booking['booking']['customer_amount_3'] = $this->_request['customer_amount_3'];
 			$booking['booking']['dispute'] = $this->_request['dispute'];
 			$booking['booking']['discount'] = $this->_request['discount'];
 			$booking['booking']['discount_1'] = $this->_request['discount_1'];
+			$booking['booking']['discount_2'] = $this->_request['discount_2'];
+			$booking['booking']['discount_3'] = $this->_request['discount_3'];
 			$booking['booking']['totalpaid'] = $this->_request['totalpaid'];
-			$column_names = array('customer_amount','customer_amount_1','dispute','dispute_1','totalpaid', 'discount', 'discount_1');
+			$column_names = array('customer_amount','customer_amount_1','customer_amount_2','customer_amount_3','dispute','dispute_1','totalpaid','discount','discount_1','discount_2','discount_3');
 			$table_name = 'booking';
 			$this->post_update($id, $booking, $column_names, $table_name);
 		}

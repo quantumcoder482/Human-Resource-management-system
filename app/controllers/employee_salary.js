@@ -8,12 +8,14 @@ var app = angular.module('App').controller('EmployeeSalaryController',
     var root = $rootScope;
     self.loading = true;
     self.month = toISOLocal(new Date()).split("T")[0].slice(0, 7); //new Date().toISOString().split("T")[0]
+    self.month = self.month.split('-').reverse().join('-');
 
     self.add = $routeParams.add;
     $rootScope.pagetitle = 'Employee Salary';
 
     services.getEmployeeSalary().then(function (data) {
-      services.getMonthAttendance(self.month).then(function (resp) {
+      var month = self.month.split('-').reverse().join('-');
+      services.getMonthAttendance(month).then(function (resp) {
         for (var j = 0; j < data.data.length; j++) {
           var absent = 0;
           for (var i = 0; i < resp.data.length; i++) {
@@ -26,7 +28,7 @@ var app = angular.module('App').controller('EmployeeSalaryController',
           data.data[j].second = false;
           data.data[j].third = false;
         }
-        services.getMonthSalary(self.month).then(function (rep) {
+        services.getMonthSalary(month).then(function (rep) {
           if (rep.data != '') {
             var att = rep.data[0].due.split(",");
             for (var k = 0; k < att.length; k++) {
@@ -62,6 +64,7 @@ var app = angular.module('App').controller('EmployeeSalaryController',
     self.loadmonthsalary = function (m) {
       $mdToast.show($mdToast.simple().content("Process...").position('bottom right'));
       self.loader = true;
+      m = m.split('-').reverse().join('-'); 
 
       services.getEmployeeSalary().then(function (data) {
         services.getMonthAttendance(m).then(function (resp) {
@@ -118,6 +121,7 @@ var app = angular.module('App').controller('EmployeeSalaryController',
     }
 
     self.Updatesalarydue = function (ev, x, month) {
+      month = month.split('-').reverse().join('-');
       console.log(x);
       if (x.first) {
         services.getMonthSalary(month).then(function (resp) {
@@ -146,6 +150,7 @@ var app = angular.module('App').controller('EmployeeSalaryController',
     }
 
     self.Updatesalarypaid = function (ev, x, month) {
+      month = month.split('-').reverse().join('-');
       if (x.second) {
         services.getMonthSalary(month).then(function (resp) {
           var att = resp.data[0].paid.replace(',' + x.id + ',', ',');
@@ -173,6 +178,7 @@ var app = angular.module('App').controller('EmployeeSalaryController',
     }
 
     self.Updatesalarydispute = function (ev, x, month) {
+      month = month.split('-').reverse().join('-');
       if (x.third) {
         services.getMonthSalary(month).then(function (resp) {
           var att = resp.data[0].dispute.replace(',' + x.id + ',', ',');

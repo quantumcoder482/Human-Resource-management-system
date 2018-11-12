@@ -29,12 +29,12 @@
           </div>
         </md-input-container>
         <md-input-container flex="40">
-          <label> Payment Date(yyyy-mm-dd format)</label>
-          <input name="paydate" ng-model="emp_pay.date" datetime-picker date-format="yyyy-mm-dd" date-only required
+          <label> Payment Date(dd-mm-yyyy format)</label>
+          <input name="paydate" ng-model="emp_pay.date" datetime-picker date-format="dd-mm-yyyy" date-only required
             onkeydown="return !(event.keyCode==13)" class="datepicker-layout" />
           <div ng-messages="thisForm.paydate.$error">
             <div ng-message='required'>required.</div>
-            <div ng-message='pattern'>Enter a Valid Date. (yyyy-mm-dd format)</div>
+            <div ng-message='pattern'>Enter a Valid Date. (dd-mm-yyyy format)</div>
           </div>
         </md-input-container>
         <md-input-container flex="30">
